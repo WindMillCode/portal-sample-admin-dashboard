@@ -18,5 +18,45 @@
             }
         ],
         "submit":"Submit"
+    },
+    "users":{
+        "title":"Users",
+        "form":{
+            "query":{
+                "search":{
+                    "label":"Search",
+                    "button":"Search"
+                },
+                "reset":"Reset",
+                "sortBy":{
+                    "title":"Sort By",
+                    "items":[
+                        "User",
+                        "OrderId"
+                    ]
+                }
+            },
+            "headers":[
+                {
+                    "label":"User"
+                },
+                {
+                    "label":"OrderId",
+                    "view":"View"
+                },
+                {
+                    "label":"All Orders",
+                    "view":"View"
+                },
+                {
+                    "label":"shipping",
+                    "view":"View"
+                },
+                {
+                    "label":"billing",
+                    "view":"View"
+                }
+            ]
+        }
     }
 }

@@ -14,9 +14,19 @@ public class HelloController {
 
   private static final Logger logger = LogManager.getLogger();
 
+
+
+
   @GetMapping("/helloworld")
   public String helloWorld() {
     return "Hello World!";
+  }
+
+  @GetMapping("user/purchcase")
+  public String purcahse() {
+    logger.entry();
+    logger.error("user." + x + "purchased .");
+    logger.exit();
   }
 
   @GetMapping("/log")

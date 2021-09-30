@@ -117,8 +117,9 @@ refer to README.md in ignore
 
 ## Site Navigation
 
-<!-- to navigate through the website the user does what  -->
-<!-- also include sub labels for each part of nav -->
+
+### Loading of users
+* handled in src\app\users\main\main.component.ts
 
 # Aspects
 

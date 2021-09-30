@@ -1,0 +1,82 @@
+<main [class]="prefix.view({val:'View'})">
+    <section [class]="prefix.main({val:'Pod'})">
+        <h1 [class]="prefix.main({val:'Title0'})">{{'users.title' | translate }}</h1>
+
+        <section
+        [class]= "prefix.pods[0]({val:''})"
+        >
+            <div
+            [class]= "prefix.pods[0]({val:'Item0'})"
+            >
+                <div
+                [class]= "prefix.pods[0]({val:'Item1'})"
+                >
+                    <label>{{'users.form.query.search.label' | translate}}</label>
+                    <input
+                    [class]= "prefix.pods[0]({val:'Input0'})"
+                    />
+                </div>
+                <button
+                [class]= "prefix.pods[0]({val:'Button1'})"
+                >
+                {{'users.form.query.search.button' | translate}}
+                </button>
+                <button
+                [class]= "prefix.pods[0]({val:'Button0'})"
+                *ngFor="let x of users.query.sortBy.items;let i = index"
+                >{{'users.form.query.sortBy.items.' + i   | translate}}</button>
+                <button
+                [class]= "prefix.pods[0]({val:'Button2'})"
+                >
+                {{'users.form.query.reset' | translate}}
+                </button>
+
+            </div>
+        </section>
+        <section [class]="prefix.pods[1]({val:''})">
+            <div
+            [class]= "prefix.pods[1]({val:'Item'+i})"
+            *ngFor="let x of users.table.header.items;let i = index"
+            >
+                <div
+                [class]= "prefix.pods[1]({val:'Item5'})"
+                >
+                    <h2
+                    [class]= "prefix.pods[1]({val:'Text0'})"
+                    >{{ 'users.form.headers.' + i + '.label' | translate}} </h2>
+
+
+                    <div
+                    [class]= "prefix.pods[1]({val:'Item'+ (6+i)})"
+                    [ngSwitch]="i"
+                    *ngFor ="let y of users.table.db.items;let j = index"
+                    >
+                        <h2
+                        *ngSwitchCase="0"
+                        >{{y.user}}</h2>
+
+                        <h2
+                        *ngSwitchCase="1"
+                        [class]= "prefix.pods[1]({val:'Text1'})"
+                        >{{y.orderId[0]}}</h2>
+
+                        <button
+                        [class]= "prefix.pods[1]({val:'Button0'})"
+                        *ngSwitchCase="2"
+                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
+
+                        <button
+                        [class]= "prefix.pods[1]({val:'Button0'})"
+                        *ngSwitchCase="3"
+                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
+
+                        <button
+                        [class]= "prefix.pods[1]({val:'Button0'})"
+                        *ngSwitchCase="4"
+                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
