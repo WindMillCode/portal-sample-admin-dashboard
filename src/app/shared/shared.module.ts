@@ -16,6 +16,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 //
 
+// dev addtions
+import { UpdateInputValDirective } from './update-input-val.directive';
+
 
 @NgModule({
     declarations: [
@@ -24,7 +27,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SanitizedComponent,
         SanitizeUrlPipe,
         PenroseComponent,
-        NavComponent
+        NavComponent,
+        UpdateInputValDirective
     ],
     providers:[TranslateService],
     imports: [
@@ -46,7 +50,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SanitizeUrlPipe,
         PenroseComponent,
         TranslateModule,
-        NavComponent
+        NavComponent,
+        UpdateInputValDirective
+
     ]
 })
 export class SharedModule {

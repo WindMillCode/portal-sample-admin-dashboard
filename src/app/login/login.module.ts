@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SampleRoutingModule } from './sample-routing.module';
+import { LoginRoutingModule } from './login-routing.module';
 import { MainComponent } from './main/main.component';
+import {SharedModule} from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,10 +12,11 @@ import { MainComponent } from './main/main.component';
   ],
   imports: [
     CommonModule,
-    SampleRoutingModule
+    LoginRoutingModule,
+    SharedModule
   ],
   exports: [
     MainComponent
   ]
 })
-export class SampleModule { }
+export class LoginModule { }

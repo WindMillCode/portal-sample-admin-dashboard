@@ -2,17 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 
 const routes: Routes = [
-    // {
-    //     path:'scratchpad',
-    //     // loadChildren: () => import('./scratchpad/scratchpad.module').then(m => m.ScratchpadModule)
-    // },
+
     {
-        path:'sample',
-        loadChildren: () => import('./sample/sample.module').then(m => m.SampleModule)
+        path:'login',
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
     },
     {
         path: '',
-        loadChildren: () => import('./sample/sample.module').then(m => m.SampleModule)
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
       }
 ]; // sets up routes constant where you define your routes
 

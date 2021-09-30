@@ -9,7 +9,8 @@
 @import "assets/styles/fonts";
 
 :root{
-    --color0:black
+    --color0:black;
+    --width0:1200px;
 }
 
 
@@ -31,6 +32,17 @@
 }
 
 
+@mixin view0{
+    position:relative;
+    display: flex;
+    width: 100vw;
+}
+
+
+@mixin button0{
+    padding:20px;
+
+}
 
 .a_p_p_{
     &Specific{
@@ -41,7 +53,7 @@
 
     &Nav{
         &View{
-            position:absolute;
+            position:relative;
             width:100vw;
             z-index:5;
             display:flex;
@@ -54,7 +66,8 @@
                 flex:1 0 100%;
                 padding:20px ;
                 background-color: var(--color0);
-                justify-content: space-around;
+                justify-content: center;
+
 
 
             }
@@ -75,11 +88,66 @@
                 &0{
                     justify-self: flex-end;
                 }
+                &1{
+                    display:flex;
+                    max-width: var(--width0);
+                    flex:1 0 100%;
+                    justify-content: space-between;
+                }
             }
         }
         &Pod{
             &0{
 
+            }
+        }
+    }
+
+    &Login{
+        &View{
+            @include view0;
+            font-size:16px;
+        }
+        &Main{
+            &Pod{
+                display:flex;
+                padding:20px;
+                justify-content: center;
+                align-items: center;
+                flex:1 0 100%;
+                height:600px;
+            }
+        }
+        &Pod{
+            &0{
+                display: flex;
+                flex-flow: column wrap;
+                border:3px solid var(--color0);
+                padding:20px;
+                border-radius: 10px;
+                flex: 0 0 50%;
+
+                &Item{
+                    &0{
+                        display: flex;
+                        flex-flow: column wrap;
+                        margin:0  0 30px 0;
+                    }
+                }
+
+                &Input{
+                    &0{
+                        font-size: 1.5em;
+                    }
+                }
+
+                &Button{
+                    &0{
+                        @include button0;
+                        background: var(--radial-bg-blue);
+                        font-size:2em;
+                    }
+                }
             }
         }
     }

@@ -4,16 +4,22 @@
     <section
     [class]= "prefix.main({val:'Pod'})"
     >
-        <h1
-        [class]= "prefix.main({val:'Title0'})"
-        >{{"nav.title" | translate}}</h1>
+
         <div
-        [class]= "prefix.main({val:'Item0'})"
+        [class]= "prefix.main({val:'Item1'})"
         >
-            <a
-            [class]= "prefix.main({val:'Link0'})"
-            *ngFor="let x of nav.links.items;let i = index"
-            >{{ 'nav.links.'+i | translate}}</a>
+
+            <h1
+            [class]= "prefix.main({val:'Title0'})"
+            >{{"nav.title" | translate}}</h1>
+            <div
+            [class]= "prefix.main({val:'Item0'})"
+            >
+                <a
+                [class]= "prefix.main({val:'Link0'})"
+                *ngFor="let x of nav.links.items;let i = index"
+                >{{ 'nav.links.'+i | translate}}</a>
+            </div>
         </div>
     </section>
 </nav>

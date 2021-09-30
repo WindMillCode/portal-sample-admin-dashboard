@@ -7,5 +7,16 @@
             "ORDERS",
             "PRODUCTS"
         ]
+    },
+    "login":{
+        "form":[
+            {
+                "label":"Username"
+            },
+            {
+                "label":"Password"
+            }
+        ],
+        "submit":"Submit"
     }
 }

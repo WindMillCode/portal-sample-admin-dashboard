@@ -1,0 +1,26 @@
+<main
+[class]= "prefix.view({val:'View'})"
+>
+
+    <section
+    [class]= "prefix.main({val:'Pod'})"
+    >
+        <section
+        [class]= "prefix.pods[0]({val:''})"
+        >
+            <div
+            [class]= "prefix.pods[0]({val:'Item0'})"
+            *ngFor="let x of login.form.items;let i = index"
+            >
+                <label>{{'login.form.'+ i +'.label' | translate }}</label>
+                <input
+                [class]= "prefix.pods[0]({val:'Input0'})"
+                appUpdateInputVal [updateInputVal]="x.input.updateInputVal"
+                />
+            </div>
+            <button
+            [class]= "prefix.pods[0]({val:'Button0'})"
+            >{{ 'login.submit' | translate}}</button>
+        </section>
+    </section>
+</main>
