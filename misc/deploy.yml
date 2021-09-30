@@ -1,0 +1,5 @@
+      - run:
+          . /etc/profile.d/01-custom-docker-setup.sh;
+          cd ~/project/AngularApp;
+          npx ng run AngularApp:judima:firebaseprod;
+          npx firebase deploy --project auxillary-305605 --token $FIREBASE_TOKEN;

@@ -1,0 +1,19 @@
+<nav
+[class]= "prefix.view({val:'View'})"
+>
+    <section
+    [class]= "prefix.main({val:'Pod'})"
+    >
+        <h1
+        [class]= "prefix.main({val:'Title0'})"
+        >{{"nav.title" | translate}}</h1>
+        <div
+        [class]= "prefix.main({val:'Item0'})"
+        >
+            <a
+            [class]= "prefix.main({val:'Link0'})"
+            *ngFor="let x of nav.links.items;let i = index"
+            >{{ 'nav.links.'+i | translate}}</a>
+        </div>
+    </section>
+</nav>

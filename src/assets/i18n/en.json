@@ -1,0 +1,11 @@
+{
+    "nav": {
+        "title": "Admin User Interface",
+        "links":[
+            "LOGIN",
+            "USERS",
+            "ORDERS",
+            "PRODUCTS"
+        ]
+    }
+}
