@@ -33,16 +33,11 @@ export class MainComponent implements OnInit {
         form:{
             items:Array(2).fill(null)
             .map((x:any,i)=>{
-                let myX:any =  {
+                return {
                     input:{
                         value:"",
                     }
                 }
-                let updateInputVal = {
-                    value:myX.input.value,
-                }
-                myX.input.updateInputVal = updateInputVal
-                return myX
             })
         }
     }

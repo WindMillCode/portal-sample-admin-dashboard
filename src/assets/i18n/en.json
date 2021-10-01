@@ -28,7 +28,7 @@
                     "button":"Search"
                 },
                 "reset":"Reset",
-                "sortBy":{
+                "searchBy":{
                     "title":"Sort By",
                     "items":[
                         "User",
@@ -41,8 +41,7 @@
                     "label":"User"
                 },
                 {
-                    "label":"OrderId",
-                    "view":"View"
+                    "label":"Latest OrderId"
                 },
                 {
                     "label":"All Orders",

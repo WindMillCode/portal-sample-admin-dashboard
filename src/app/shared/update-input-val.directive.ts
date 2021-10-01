@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { ChangeDetectorRef, Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
     selector: '[appUpdateInputVal]'
@@ -9,17 +9,24 @@ export class UpdateInputValDirective {
     extras:any;
 
     @HostListener('focusout', ['$event']) onFocusout(evt:FocusEvent) {
-        this.updateInputVal.value = (evt!.target as HTMLInputElement).value
+
+        this.extras.value = (evt!.target as HTMLInputElement).value
+        this.ref.detectChanges()
     }
 
     @HostListener('blur', ['$event']) onBlur(evt:FocusEvent) {
-        this.updateInputVal.value = (evt!.target as HTMLInputElement).value
+
+        this.extras.value = (evt!.target as HTMLInputElement).value
+        this.ref.detectChanges()
     }
 
-    constructor() { }
+    constructor(
+        private ref:ChangeDetectorRef
+    ) { }
 
     ngOnInit(){
         this.extras = this.updateInputVal
+        console.log(this.extras)
     }
 
 }

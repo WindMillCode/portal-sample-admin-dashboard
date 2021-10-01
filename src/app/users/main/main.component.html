@@ -13,18 +13,19 @@
                 >
                     <label>{{'users.form.query.search.label' | translate}}</label>
                     <input
+                    appUpdateInputVal [updateInputVal]="users.query.input"
                     [class]= "prefix.pods[0]({val:'Input0'})"
                     />
                 </div>
                 <button
-                [class]= "prefix.pods[0]({val:'Button1'})"
-                >
+                (click)="users.query.search.click($event)"
+                [class]= "prefix.pods[0]({val:'Button1'})">
                 {{'users.form.query.search.button' | translate}}
                 </button>
                 <button
                 [class]= "prefix.pods[0]({val:'Button0'})"
-                *ngFor="let x of users.query.sortBy.items;let i = index"
-                >{{'users.form.query.sortBy.items.' + i   | translate}}</button>
+                *ngFor="let x of users.query.searchBy.items;let i = index">
+                {{'users.form.query.searchBy.items.' + i   | translate}}</button>
                 <button
                 [class]= "prefix.pods[0]({val:'Button2'})"
                 >
@@ -41,16 +42,27 @@
                 <div
                 [class]= "prefix.pods[1]({val:'Item5'})"
                 >
-                    <h2
-                    [class]= "prefix.pods[1]({val:'Text0'})"
-                    >{{ 'users.form.headers.' + i + '.label' | translate}} </h2>
 
+                    <div
+                    [class]= "prefix.pods[1]({val:'Item11'})"
+                    >
+                        <h2
+                        [class]= "prefix.pods[1]({val:'Text0'})"
+                        >{{ 'users.form.headers.' + i + '.label' | translate}} </h2>
+                        <i
+                        (click)="users.table.header.items[i].sort.click($event)"
+                        *ngIf="users.table.header.items[i].sort.confirm"
+                        [class]= "'pi pi-sort-alt '+ prefix.pods[1]({val:'Icon0'})"
+                        ></i>
+
+                    </div>
 
                     <div
                     [class]= "prefix.pods[1]({val:'Item'+ (6+i)})"
                     [ngSwitch]="i"
-                    *ngFor ="let y of users.table.db.items;let j = index"
+                    *ngFor ="let y of users.table.db.displayItems;let j = index"
                     >
+
                         <h2
                         *ngSwitchCase="0"
                         >{{y.user}}</h2>
@@ -58,7 +70,7 @@
                         <h2
                         *ngSwitchCase="1"
                         [class]= "prefix.pods[1]({val:'Text1'})"
-                        >{{y.orderId[0]}}</h2>
+                        >{{y.latestOrderId}}</h2>
 
                         <button
                         [class]= "prefix.pods[1]({val:'Button0'})"

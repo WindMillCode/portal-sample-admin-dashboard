@@ -33,19 +33,52 @@ import {tap} from 'rxjs/operators'
             header:{
                 items:Array(5).fill(null)
                 .map((x:any,i)=>{
-                    return {}
+                    let item = {
+                        sort:{
+                            state:"ascend",  // ascend or descend
+                            confirm:[true,true,false,false,false][i],
+                            click:(evt:MouseEvent)=>{
+                                let {users,ref} = this
+                                let key = ["user","latestOrderId"][i]
+                                users.table.db.displayItems =users.table.db.displayItems
+                                .sort((a, b)=> {
+                                    if(item.sort.state === "ascend"){
+                                        return a[key] > b[key] ? 1 : -1 ;
+                                    }
+                                    else{
+                                        return a[key] < b[key] ? 1 : -1 ;
+                                    }
+                                });
+                                item.sort.state = item.sort.state === "ascend" ? "descend" : "ascend"
+                                ref.detectChanges()
+                            },
+
+                        }
+                    }
+                    return item
                 })
             },
             db:{
-                items:[]
+                items:[],
+                displayItems:[]
             }
         },
         query:{
-            sortBy:{
+            searchBy:{
                 items:Array(2).fill(null)
                 .map((x:any,i)=>{
-                    
+
                 })
+            },
+            input:{
+                value:"",
+            },
+            search:{
+                click:(evt:MouseEvent)=>{
+                    let {users} = this
+                    console.log(users.query.input.value)
+                    console.log(users.table.db.items)
+                }
             }
         }
     }
@@ -57,13 +90,26 @@ import {tap} from 'rxjs/operators'
     ) { }
 
     ngOnInit(): void {
-        let {ryber,ref}= this
-        ryber.http.post(`${env.backend.url}/users/list`,{})
+        let {ryber,ref,users}= this
+        ryber.http.post(`${env.backend.url}/users/list`,
+            {
+                data:{
+                    filter:['myPass']
+                }
+            }
+        )
         .pipe(
             tap((res:any)=>{
                 let {message} = res
-                this.users.table.db.items = message.list
-                console.log(this.users.table.db.items[3])
+
+                users.table.db.items = message.list
+                // proivde for the latest orderId
+                users.table.db.items.forEach((x:any,i)=>{
+                    x.latestOrderId = x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:null
+                    users.table.db.displayItems.push(x)
+                })
+                //
+                console.log(users.table.db.items[3])
                 ref.detectChanges()
             })
         )
