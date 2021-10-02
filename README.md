@@ -142,6 +142,7 @@ refer to README.md in ignore
 
 
 # TODO
+* users.details.values.target needs an present prop and a metadata prop
 
 ## Template Updates
 Team members refer to the [Trello workspace](https://trello.com/b/AFCBbcL4/angular-template-project-updates)

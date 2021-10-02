@@ -9,5 +9,15 @@ export const environment = {
     },
     testing:{
         confirm:false
+    },
+    mock:{
+        general:{
+            fn:()=>{
+                alert("There was an error please try again later")
+            }
+        },
+        adminDeleteUser:{
+            confirm:true
+        }
     }
 };

@@ -94,7 +94,7 @@
                         >{{'users.form.headers.' + i + '.view' | translate}}</button>
 
                         <button
-                        (click)="y.meta.interact.click({perm:'edit'})($event)"
+                        (click)="y.meta.interact.click({key:'modify',perm:'edit'})($event)"
                         [class]= "prefix.pods[1]({val:'Button1'})"
                         *ngSwitchCase="5"
                         >{{'users.form.headers.' + i + '.view' | translate}}</button>
@@ -116,30 +116,49 @@
         [class]= "'pi pi-times ' + prefix.pods[2]({val:'Icon0'})">
         </i>
         <div
-        [class]= "prefix.pods[2]({val:'Item1'})"
-        >
+        [class]= "prefix.pods[2]({val:'Item1'})">
             <div
             [class]= "prefix.pods[2]({val:'Item2'})"
-            *ngFor="let x of users.details.values.target | keyvalue;let i = index"
-            >
+            *ngFor="let x of users.details.values.target | keyvalue;let i = index">
                 <h2>{{x.key}}: </h2>
                 <div
-                [class]= "prefix.pods[2]({val:'Item3'})"
-                >
+                [ngSwitch]="users.details.values.state"
+                [class]= "prefix.pods[2]({val:'Item3'})">
                     <div
+
                     *ngFor="let y of x.value | keyvalue;let j = index"
-                    [class]= "prefix.pods[2]({val:'Item4'})"
-                    >
+                    [class]= "prefix.pods[2]({val:'Item4'})">
                         <h3>{{y.key | titlecase }}:</h3>
                         <div
+
                         [class]= "prefix.pods[2]({val:'Item5'})"
                         >
                             <h3
+                            *ngSwitchCase="'view'"
                             >{{y.value}}</h3>
+                            <textarea
+                            *ngSwitchCase="'edit'"
+                            [class]= "prefix.pods[2]({val:'Input0'})"
+                            >{{y.value}}</textarea>
                         </div>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>
+        <button
+        *ngIf="users.details.values.state === 'edit'"
+        [class]= "prefix.pods[2]({val:'Button0'})"
+        >{{ 'users.form.details.update'| translate}}</button>
+        <button
+        *ngIf="users.details.values.state === 'edit'"
+        (click)="users.details.delete.click($event)"
+        [class]= "prefix.pods[2]({val:'Button1'})"
+        >{{ 'users.form.details.delete'| translate}}</button>
+
     </div>
+
 </aside>

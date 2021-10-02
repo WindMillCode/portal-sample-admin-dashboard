@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+export const environment:any = {
     production: false,
     startURL:"/users",
     backend:{
@@ -13,6 +13,16 @@ export const environment = {
     },
     testing:{
         confirm:false
+    },
+    mock:{
+        general:{
+            fn:()=>{
+                alert("There was an error please try again later")
+            }
+        },
+        adminDeleteUser:{
+            confirm:true
+        }
     }
 };
 

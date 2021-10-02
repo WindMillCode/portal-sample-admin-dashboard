@@ -33,6 +33,7 @@
     "@types/node": "^12.11.1",
     "codesandbox": "^2.2.3",
     "firebase-tools": "^9.16.6",
+    "gh-pages": "^3.2.3",
     "ngrok": "^4.1.0",
     "source-map-explorer": "^2.5.2",
     "typescript": "~4.2.3"

@@ -59,11 +59,7 @@
                     "label":"Modify",
                     "view":"Modify"
                 }
-            ],
-            "details":{
-                "update":"Save",
-                "delete":"Delete"
-            }
+            ]
         }
     }
 }

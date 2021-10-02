@@ -3,7 +3,9 @@ import {fromEvent,iif,Subscription,of} from 'rxjs';
 import { RyberService } from 'src/app/ryber.service';
 import { classPrefix, MyTable } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
-import {tap} from 'rxjs/operators'
+import {catchError, tap,delay,concatMap,take} from 'rxjs/operators'
+import { usersList } from 'src/app/usersList';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-main',
@@ -60,7 +62,12 @@ import {tap} from 'rxjs/operators'
             },
             db:{
                 items:[],
-                displayItems:[]
+                displayItems:[],
+                updateDisplayItems:()=>{
+                    let {users,ref} = this
+                    users.table.db.displayItems =users.table.db.items.map(x => x)
+                    ref.detectChanges()
+                }
             }
         },
         query:{
@@ -125,6 +132,75 @@ import {tap} from 'rxjs/operators'
             values:{
                 target:{},
                 state:"view" // ["view","edit"]
+            },
+            update:{
+                url:""
+            },
+            delete:{
+                click:()=>{
+                    let deleteChoice = confirm("Are you sure you want to delete this item from the resource");
+                    if(deleteChoice){
+                        let {users,ref,ryber} = this
+                        let deleteUser:any = {
+                            username:users.details.values.target.user.username,
+                            index:-1
+                        }
+                        deleteUser.target =users.table.db.items
+                        .filter((x:any,i)=>{
+                            return x.user === deleteUser.username
+                        })[0],
+
+                        deleteUser.index =users.table.db.items.indexOf(deleteUser.target)
+                        users.table.db.items.splice(deleteUser.index,1)
+
+                        // xhr to delete user then update the table
+                        of({})
+                        .pipe(
+                            take(1),
+                            tap(()=>{
+                                users.details.view.style.display = "none"
+                                ryber.loading.view.style.display = "flex"
+                                ref.detectChanges()
+                            }),
+                            concatMap(()=>{
+                                return iif(
+                                    ()=> env?.mock?.adminDeleteUser.confirm ?? true,
+                                    ryber.http.request(
+                                        users.details.delete.method,
+                                        users.details.delete.url,
+                                        {
+                                            body:{
+                                                data:{user:deleteUser.username}
+                                            }
+                                        }
+                                    ),
+                                    of({}).pipe(delay(2000))
+                                )
+                            }),
+                            tap(
+                                ()=>{
+                                    // update display items
+                                    users.table.db.updateDisplayItems()
+                                    //
+
+                                    // remove the modify panel
+                                    ryber.loading.view.style.display = "none"
+                                    ref.detectChanges()
+                                    //
+                                },
+                                (err:HttpErrorResponse)=>{
+                                    ryber.loading.view.style.display = "none"
+                                    ref.detectChanges()
+                                    env.mock.general.fn()
+                                }
+                            )
+                        )
+                        .subscribe()
+
+                    }
+                },
+                url:`${env.backend.url}/users/adminDelete`,
+                method:"DELETE"
             }
         }
     }
@@ -140,11 +216,21 @@ import {tap} from 'rxjs/operators'
         ryber.http.post(`${env.backend.url}/users/list`,
             {
                 data:{
-                    filter:['myPass','shipping_same_as_billing']
+                    filter:['myPass','shipping_same_as_billing','cartId']
                 }
             }
         )
         .pipe(
+            catchError(()=>{
+                if(env.production){
+                    alert("this is a sample userList reload and try again")
+                }
+                return of({
+                    message:{
+                        list:usersList
+                    }
+                })
+            }),
             tap((res:any)=>{
                 let {message} = res
 
@@ -156,12 +242,12 @@ import {tap} from 'rxjs/operators'
                             value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
                         },
                         interact : {
+
                             click:(devObj:any)=>{
                                 let {key,perm} = devObj
                                 return (evt:MouseEvent)=>{
                                     let {ryber,ref,users} = this
                                     users.details.view.style.display = "flex"
-
                                     users.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
 
                                     // custom mods to see the approiate data with component
@@ -172,6 +258,17 @@ import {tap} from 'rxjs/operators'
                                                 sameAsBilling:users.details.values.target.sameAsBilling
                                             }
                                             break;
+                                        case "modify":
+                                            users.details.values.target = {
+                                                user:{username:x.user},
+                                                billing:x.billing.items,
+                                                shipping:{
+                                                    ...x.shipping.info.items,
+                                                    sameAsBilling:x.shipping.sameAsBilling.checked // cant use this either true or false
+                                                },
+
+                                            }
+                                            break
 
                                         default:
                                             break;

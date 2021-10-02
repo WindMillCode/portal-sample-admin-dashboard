@@ -90,7 +90,7 @@
                             "outputHashing": "all"
                         },
                         "githubprod": {
-                            "outputPath":"../docs",
+                            "outputPath":"./dist/github",
                             "baseHref":"/Website/",
                             "deployUrl":"/Website/",
                             "budgets": [

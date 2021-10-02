@@ -1,0 +1,165 @@
+{
+    "footer": {
+        "langs": {
+            "items": [
+                "Anglais",
+                "Chinois",
+                "Espanol",
+                "hindi",
+                "russe",
+                "arabe",
+                "bengali",
+                "malais",
+                "fran\u00e7ais",
+                "Allemand",
+                "Swahili",
+                "Amharique",
+                "Oromo",
+                "Igbo"
+            ]
+        },
+        "siteMap": {
+            "title": "Boulot \u00e0 vent",
+            "nav": {
+                "items": [
+                    "DOMICILE",
+                    "\u00c0 PROPOS",
+                    "BLOG",
+                    "\u00c9V\u00c9NEMENTS",
+                    "Laboratoires",
+                    "MAGASIN"
+                ]
+            }
+        },
+        "contact": {
+            "title": "Contact",
+            "anchor": "Envoyez-nous un email ici"
+        },
+        "connect": {
+            "title": "Relier"
+        }
+    },
+    "home": {
+        "info": {
+            "items": [
+                {
+                    "desc": "Si vous avez une petite pratique priv\u00e9e et recherchez un moyen d'apporter vos ressources en ligne, ici\n                    Au code WindMillcode, notre \u00e9quipe de support vous donne les r\u00e9agissions dont vous aurez besoin d'enregistrer vos clients,\n                    Organisez votre travail et d\u00e9veloppez votre entreprise.Notre \u00e9quipe s'assure ici que votre site est un site avec Viusal\n                    pr\u00e9sentation d'un style moderne et professionnel.Notre \u00e9quipe garantit la communication de votre r\u00e9ception\n                    de vos visiteurs en ligne en temps r\u00e9el.Nous utilisons les derniers outils de l'industrie pour vous assurer que vos ressources\n                    d\u00e9passe le plus \u00e9lev\u00e9 des normes et de la conformit\u00e9",
+                    "title": "Pratique professionnelle"
+                },
+                {
+                    "desc": "La mise en place d'un site Web est jug\u00e9e n\u00e9cessaire pour une vari\u00e9t\u00e9 de raisons.\n                    Chaque jour, plus de 547 000 nouveaux sites Web sont cr\u00e9\u00e9s. La plupart d'entre eux sont\n                    Affaires et services li\u00e9s au service, que ce soit pour le d\u00e9ployer une nouvelle startup, publier un\n                    Blog professionnel, mettant en place une boutique en ligne, voire \u00e0 introduire un but non lucratif\n                    organisation. Mais qu'en est-il de cr\u00e9er un site Web personnel?\n                    Il existe de nombreux avantages \u00e0 la mise en place d'un site Web personnel. Cr\u00e9ation\n                    On est consid\u00e9r\u00e9 comme une n\u00e9cessit\u00e9 pour de nombreuses cat\u00e9gories de personnes, y compris des entrepreneurs,\n                    Professionnels des champs num\u00e9riques, m\u00e9dias, divertissements et cr\u00e9atifs, et m\u00eame les amateurs.\n                    Pourtant, beaucoup de baisse de r\u00e9clamer leur espace personnel sur le Web. Ici chez WindMillcode\n                    Vous nous donnez votre contenu et nous vous donnons des r\u00e9sultats. Bas\u00e9 sur nos plans que votre peut modifier\n                    votre site Web du texte, des m\u00e9dias et m\u00eame du style lui-m\u00eame",
+                    "title": "Page personnelle"
+                },
+                {
+                    "desc0": "Divertissement est finalement une activit\u00e9 d'attention et la concurrence pour\n                    L'attention n'a jamais \u00e9t\u00e9 f\u00e9roce avec de nouveaux entrants des entreprises de technologie et des marques non m\u00e9diatiques\n                    sauter dans la production de contenu.Pris ensemble, il est clair de voir que le secteur du contenu\n                    traverse un changement sismique et avec le changement vient beaucoup de\n                    Des opportunit\u00e9s pour les marques d'essayer de nouvelles choses et de se connecter aupr\u00e8s des publics.\n                    Afin d'identifier les principales tendances et les pilotes de valeur, nous devrions d'abord\n                    Examinez le paysage de l'industrie changeante.Ici chez WindMillcode, nous cr\u00e9ons",
+                    "desc1": "beaucoup de contenu",
+                    "desc2": "en plus de notre travail quotidien.Vous pouvez voir notre travail quotidien \u00e0\n                    Windmillcode et l'inspiration que nous obtenons.Vous pouvez obtenir des id\u00e9es sur la mani\u00e8re de faire votre propre contenu.\n                    Travaillez avec nous et prenez votre pr\u00e9scence des m\u00e9dias sociaux pour les nouveaux haugs enrichissant vos utilisateurs avec plus\n                    contenu que jamais possible.",
+                    "title": "Divertissement"
+                }
+            ]
+        }
+    },
+    "mobileNav": {
+        "title": "Menu",
+        "items": [
+            "DOMICILE",
+            "\u00c0 PROPOS",
+            "BLOG",
+            "\u00c9V\u00c9NEMENTS",
+            "Laboratoires",
+            "MAGASIN"
+        ]
+    },
+    "nav": {
+        "items": [
+            "DOMICILE",
+            "\u00c0 PROPOS",
+            "BLOG",
+            "\u00c9V\u00c9NEMENTS",
+            "Laboratoires",
+            "MAGASIN"
+        ],
+        "title": "Boulot \u00e0 vent"
+    },
+    "about": {
+        "info": {
+            "title": "\u00c0 propos de nous",
+            "items": [
+                {
+                    "val": [
+                        "200+",
+                        "Projets"
+                    ]
+                },
+                {
+                    "val": [
+                        "40+",
+                        "Clients"
+                    ]
+                },
+                {
+                    "val": [
+                        "du quotidien",
+                        "Croissance"
+                    ]
+                }
+            ]
+        },
+        "mission": {
+            "title": "Mission",
+            "desc": "Le freelance chaleureux et sympathique de Windmillcode aligne bien avec leur \u00e9nonc\u00e9 de mission.\n            Ils ont adapt\u00e9 le sentiment de la technologie commune de \"faire un meilleur endroit\", \"\n            mais ils ont incorpor\u00e9 leur propre spin unique sur cette valeur en tournant son accent vers\n            leur produit.Alors que cette d\u00e9claration de mission pourrait \u00eatre vague, ils affrontent leur concentration juste\n             assez pour faire sentir leur d\u00e9claration de mission\n            personnalis\u00e9 \u00e0 leur entreprise."
+        },
+        "values": {
+            "title": "Valeurs",
+            "desc": "La culture de WindMillcode est conduite par respect, transparence, collaboration et commentaires directs.\n            Nous n'avons aucune place sur notre \u00e9quipe pour le manque de respect, la politique de bureau ou la discrimination de quelque nature que ce soit.\n             Nous sommes obs\u00e9d\u00e9s par la communication avec nos utilisateurs ainsi que dans l'\u00e9quipe.Nous aimons maigre,\n            Des am\u00e9liorations it\u00e9ratives et le succ\u00e8s sont mesur\u00e9s par la valeur que nous cr\u00e9ons pour nos utilisateurs.C'est un\n            5 approche Finn si vous voulez"
+        },
+        "vision": {
+            "title": "Vision",
+            "desc": "Windmillcode est une entreprise de technologie dont la mission est de responsabiliser\n            chaque personne et chaque organisation de la plan\u00e8te pour atteindre plus.\n            Nous nous effor\u00e7ons de cr\u00e9er des opportunit\u00e9s locales, une croissance et un impact sur tout ce que nous faisons\n            .Notre strat\u00e9gie consiste \u00e0 cr\u00e9er des plates-formes et de la productivit\u00e9 des meilleures classe\n            Pour cr\u00e9er des applications, le r\u00e9pond \u00e0 toutes les cibles et objectifs du client final"
+        }
+    },
+    "blog": {
+        "title": "Blog"
+    },
+    "events": {
+        "title": "\u00c9v\u00e9nements"
+    },
+    "labs": {
+        "title": "Laboratoires"
+    },
+    "shop": {
+        "title": "Merch arrive bient\u00f4t"
+    },
+    "contact": {
+        "title": "Contact",
+        "submit": "Soumettre",
+        "form": {
+            "items": [
+                {
+                    "label": "E-mail",
+                    "placeholder": "Entrez le courrier \u00e9lectronique ici"
+                },
+                {
+                    "label": "Sujet",
+                    "placeholder": "Entrez le sujet ici"
+                },
+                {
+                    "label": "Un message",
+                    "placeholder": "Tapez votre message"
+                }
+            ]
+        }
+    },
+    "app": {
+        "labs": {
+            "close": "proche"
+        },
+        "dialog": {
+            "title": {
+                "emailSuccess": "E-mail envoy\u00e9 avec succ\u00e8s",
+                "failure": "Il y avait une erreur s'il vous pla\u00eet r\u00e9essayer plus tard"
+            },
+            "close": "proche"
+        }
+    }
+}

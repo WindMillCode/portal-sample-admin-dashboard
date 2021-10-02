@@ -18,5 +18,14 @@ export class RyberService {
         translate.setDefaultLang("en")
     }
 
+    loading:any = {
+        view:{
+            style:{
+                
+            }
+        }
+    }
+
+
 
 }
