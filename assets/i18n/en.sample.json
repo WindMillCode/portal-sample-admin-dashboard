@@ -1,0 +1,165 @@
+{
+    "footer": {
+        "langs": {
+            "items": [
+                "English",
+                "Chinese",
+                "Spanish",
+                "Hindi",
+                "Russian",
+                "Arabic",
+                "Bengali",
+                "Malay",
+                "French",
+                "German",
+                "Swahili",
+                "Amharic",
+                "Oromo",
+                "Igbo"
+            ]
+        },
+        "siteMap":{
+            "title":"WindMillCode",
+            "nav":{
+                "items": [
+                    "HOME",
+                    "ABOUT",
+                    "BLOG",
+                    "EVENTS",
+                    "LABS",
+                    "SHOP"
+                ]
+            }
+        },
+        "contact":{
+            "title":"Contact",
+            "anchor":"Email Us Here"
+        },
+        "connect":{
+            "title":"Connect"
+        }
+    },
+    "home": {
+        "info": {
+            "items": [
+                {
+                    "desc": "If you have a small private practice and are looking for a way to bring your resources online, here\n                    at WindMillCode code our support team gives you the reosurces you will need to register your clients,\n                    organize your work and grow your business. Our team here ensures that your site is a site with viusal\n                    presentation of a modern and professional style. Our team ensures that your receive communication\n                    from your online visiitors real time. We use the latest industry tools to ensure that your resources\n                    exceeds the highest of standards and compliance",
+                    "title": "Professional Practice"
+                },
+                {
+                    "desc": "Setting up a website is considered necessary for a variety of reasons.\n                    Every day, more than 547,000 new websites are created. Most of these are\n                    business and service-related, whether for rolling out a new startup, publishing a\n                    professional blog, setting up an online store, or even to introduce a non-profit\n                    organization. But what about creating a personal website?\n                    There are numerous benefits to setting up a personal website. Creating\n                    one is considered a necessity for many categories of people, including entrepreneurs,\n                    professionals in digital, media, entertainment, and creative fields, and even hobbyists.\n                    Yet, many decline to claim their personal space on the web. Here at WindMillCode\n                    you give us your content and we give you results. Based on our plans your can edit\n                    your website from the the text, media and even to the style itself",
+                    "title": "Personal Page"
+                },
+                {
+                    "desc0": "Entertainment is ultimately an attention business, and the competition for\n                    attention has never been fiercer with new entrants from tech firms and non-media brands\n                    jumping into content production. Taken together, it is clear to see that the content industry\n                    is going through a seismic change, and with change comes a lot of\n                    opportunities for brands to try new things and connect with audiences.\n                    In order to identify the key trends and value drivers, we should first\n                    examine the shifting industry landscape. Here at WindMillCode we create",
+                    "desc1": "plenty of content",
+                    "desc2": "in addition to our daily work. You can get to see our daily work at\n                    WindMillCode and the inspiration we get. You can get ideas on how to make your own content.\n                    Work with us and take your social media prescence to new heighs enriching your users with more\n                    content than ever possible.",
+                    "title": "Entertainment"
+                }
+            ]
+        }
+    },
+    "mobileNav":{
+        "title":"Menu",
+        "items": [
+            "HOME",
+            "ABOUT",
+            "BLOG",
+            "EVENTS",
+            "LABS",
+            "SHOP"
+        ]
+    },
+    "nav": {
+        "items": [
+            "HOME",
+            "ABOUT",
+            "BLOG",
+            "EVENTS",
+            "LABS",
+            "SHOP"
+        ],
+        "title": "WindMillCode"
+    },
+    "about": {
+        "info": {
+            "title": "About Us",
+            "items": [
+                {
+                    "val": [
+                        "200+",
+                        "Projects"
+                    ]
+                },
+                {
+                    "val": [
+                        "40+",
+                        "Clients"
+                    ]
+                },
+                {
+                    "val": [
+                        "Daily",
+                        "Growth"
+                    ]
+                }
+            ]
+        },
+        "mission": {
+            "title": "Mission",
+            "desc": "WindMillCode's warm and friendly freelancing aligns well with their mission statement.\n            They have adapted the common tech-friendly sentiment of “making the world a better place,”\n            but they have incorporated their own unique spin on this value by turning its focus toward\n            their product. While this mission statement might be vague, they narrow their focus just\n             enough to make their mission statement feel\n            personalized to their company."
+        },
+        "values": {
+            "title": "Values",
+            "desc": "WindMillCode's culture is driven by respect, transparency, collaboration and direct feedback.\n            We have no room on our team for disrespect, office politics or discrimination of any kind.\n             We’re obsessed with communicating with our users as well as within the team . We love lean,\n            iterative improvements, and success is measured by the value we create for our users. It's a\n            5 finn approach if you will"
+        },
+        "vision": {
+            "title": "Vision",
+            "desc": "WindMillCode's is a technology company whose mission is to empower\n            every person and every organization on the planet to achieve more.\n            We strive to create local opportunity, growth, and impact in everything we do\n            . Our strategy is to build best-in-class platforms and productivity\n            to create applications the meets all the targets and goals of the end client"
+        }
+    },
+    "blog":{
+        "title":"Blog"
+    },
+    "events":{
+        "title":"Events"
+    },
+    "labs":{
+        "title":"Labs"
+    },
+    "shop":{
+        "title":"Merch is coming soon"
+    },
+    "contact":{
+        "title":"Contact",
+        "submit":"Submit",
+        "form":{
+            "items":[
+                {
+                    "label":"Email",
+                    "placeholder":"Enter Email Here"
+                },
+                {
+                    "label":"Subject",
+                    "placeholder":"Enter Topic Here"
+                },
+                {
+                    "label":"Message",
+                    "placeholder":"Type Your Message"
+                }
+            ]
+        }
+    },
+    "app":{
+        "labs":{
+            "close":"Close"
+        },
+        "dialog":{
+            "title":{
+                "emailSuccess":"Email Sent Sucessfully",
+                "failure":"There was an error please try again later"
+            },
+            "close":"Close"
+        }
+    }
+}

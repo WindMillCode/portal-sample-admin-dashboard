@@ -1,0 +1,65 @@
+{
+    "nav": {
+        "title": "Admin User Interface",
+        "links":[
+            "LOGIN",
+            "USERS",
+            "ORDERS",
+            "PRODUCTS"
+        ]
+    },
+    "login":{
+        "form":[
+            {
+                "label":"Username"
+            },
+            {
+                "label":"Password"
+            }
+        ],
+        "submit":"Submit"
+    },
+    "users":{
+        "title":"Users",
+        "form":{
+            "query":{
+                "search":{
+                    "label":"Search",
+                    "button":"Search"
+                },
+                "reset":"Reset",
+                "searchBy":{
+                    "title":"Sort By",
+                    "items":[
+                        "User",
+                        "Latest OrderId"
+                    ]
+                }
+            },
+            "headers":[
+                {
+                    "label":"User"
+                },
+                {
+                    "label":"Latest OrderId"
+                },
+                {
+                    "label":"All Orders",
+                    "view":"View"
+                },
+                {
+                    "label":"Shipping",
+                    "view":"View"
+                },
+                {
+                    "label":"Billing",
+                    "view":"View"
+                },
+                {
+                    "label":"Modify",
+                    "view":"Modify"
+                }
+            ]
+        }
+    }
+}
