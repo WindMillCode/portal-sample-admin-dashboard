@@ -13,10 +13,10 @@
     --color0:black;
     --color1:white;
     --color2:lightblue;
+    --color3:rgba(169,169,169,.6);
+    --color4:#85FFC7;
     --width0:1200px;
 }
-
-
 
 @function my_prod($step){
     $type: prod;
@@ -71,6 +71,7 @@
             display:flex;
             color:white;
             font-size:16px;
+            z-index:3;
         }
         &Main{
             &Pod{
@@ -190,7 +191,7 @@
 
             &0{
                 display:flex;
-                width:70%;
+                max-width:var(--width0);
 
                 &Button{
                     @for $i from 0 through 2 {
@@ -198,6 +199,7 @@
                             @include button0;
                             font-size:1.5em;
                             margin:0px 40px;
+                            white-space: nowrap;
                         }
                     }
 
@@ -274,39 +276,51 @@
                         background: var(--radial-bg-blue);
                         font-size: 1em;
                     }
+
+                    &1{
+                        padding:10px 20px;
+                        background: var(--radial-bg-green);
+                        font-size: 1em;
+                    }
                 }
 
 
                 &Item{
-                    @for $i from 0 through 4 {
-                        &#{$i}{
-                            display:flex;
-                            flex-flow:column wrap;
-                            position:relative;
-                            // flex: 0 0 20%;
-                            border-left: 1px solid var(--color1);
+
+                    &A{
+                        @for $i from 0 through 5 {
+                            &#{$i}{
+                                display:flex;
+                                flex-flow:column wrap;
+                                position:relative;
+                                // flex: 0 0 20%;
+                                border-left: 1px solid var(--color1);
+                            }
                         }
                     }
+
                     &5{
                         display:flex;
                         flex-flow:column wrap;
                         justify-content: center;
                         align-items: center;
                     }
-
-                    @for $i from 6 through 10 {
-                        &#{$i}{
-                            display:flex;
-                            position:relative;
-                            background-color:var(--color2);
-                            width:100%;
-                            border-bottom: 1px solid var(--color1);
-                            justify-content: center;
-                            align-items: center;
-                            height:68px;
-                            overflow-y: scroll;
+                    &B{
+                        @for $i from 6 through 11 {
+                            &#{$i}{
+                                display:flex;
+                                position:relative;
+                                background-color:var(--color2);
+                                width:100%;
+                                border-bottom: 1px solid var(--color1);
+                                justify-content: center;
+                                align-items: center;
+                                height:68px;
+                                overflow-y: scroll;
+                            }
                         }
                     }
+
                     &7{
                         // overflow-x: scroll;
 
@@ -322,6 +336,78 @@
                     }
 
                 }
+            }
+            &2{
+
+                &View{
+                    background: var(--color3);
+                    z-index:5;
+                    position:fixed;
+                    top: 0;
+                    left: 0;
+                    height:100vh;
+                    width:100vw;
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                &Icon{
+                    &0{
+                        justify-self: flex-end;
+                        font-size: 3em;
+                        margin: 0 0 20px auto;
+                    }
+                }
+
+                &Item{
+                    &0{
+                        @include glassmorphism;
+                        border-radius: 10px;
+                        flex:0 0 45%;
+                        height: 90%;
+                        background-color:var(--color4);
+                        padding:20px;
+                        display: flex;
+                        align-content: flex-start;
+                        flex-wrap: wrap;
+                    }
+                    &1{
+                        border:1px solid var(--color0);
+                        flex:1 0 100%;
+                        display:flex;
+                        flex-flow: column ;
+                        overflow: scroll;
+                        max-height:90%;
+                    }
+                    &2{
+                        display:flex;
+                        padding:20px;
+                        justify-content: space-between;
+
+
+                    }
+                    &3{
+                        flex:0 0 65%;
+                    }
+
+                    &4{
+                        display: flex;
+                        justify-content: space-between;
+                        padding:10px 20px;
+                        margin:0 0 10px  0;
+                        border:1px solid var(--color0);
+                    }
+
+                    &5{
+                        overflow:scroll;
+                        flex: 0 0 65%;
+                        max-height:70px;
+
+                    }
+                }
+
+
             }
         }
     }

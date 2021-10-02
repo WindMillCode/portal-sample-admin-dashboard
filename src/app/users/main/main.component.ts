@@ -1,7 +1,7 @@
 import { Component, OnInit,ChangeDetectionStrategy,ChangeDetectorRef,HostBinding, HostListener,ViewContainerRef } from '@angular/core';
 import {fromEvent,iif,Subscription,of} from 'rxjs';
 import { RyberService } from 'src/app/ryber.service';
-import { classPrefix } from 'src/app/customExports';
+import { classPrefix, MyTable } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import {tap} from 'rxjs/operators'
 
@@ -20,7 +20,7 @@ import {tap} from 'rxjs/operators'
     prefix ={
         main:classPrefix( {view:`${this.meta.name}Main`}),
         view: classPrefix({view:`${this.meta.name}`}),
-        pods:Array(2).fill(null)
+        pods:Array(3).fill(null)
         .map((x:any,i)=>{
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
@@ -28,10 +28,10 @@ import {tap} from 'rxjs/operators'
     subs: Subscription[] = [];
     //
 
-    users:any = {
+    users:MyTable = {
         table:{
             header:{
-                items:Array(5).fill(null)
+                items:Array(6).fill(null)
                 .map((x:any,i)=>{
                     let item = {
                         sort:{
@@ -64,21 +64,67 @@ import {tap} from 'rxjs/operators'
             }
         },
         query:{
-            searchBy:{
-                items:Array(2).fill(null)
-                .map((x:any,i)=>{
-
-                })
-            },
             input:{
                 value:"",
             },
+            searchBy:{
+                items:Array(2).fill(null)
+                .map((x:any,i)=>{
+                    let item =  {
+                        style:{
+                            background:["var(--radial-bg-viogreen)",""][i],
+                        },
+                        click:(evt:MouseEvent)=>{
+                            let {users,ref} = this
+                            users.query.searchBy.items.forEach((x:any,i)=>{
+                                x.style.background = ""
+                            })
+                            item.style.background = "var(--radial-bg-viogreen)"
+                            users.query.search.state = ["user","latestOrderId"][i]
+                            ref.detectChanges()
+                        }
+                    }
+                    return item
+                })
+            },
+            reset:{
+                click:(evt:MouseEvent)=>{
+                    let{users,ref} = this
+                    users.table.db.displayItems = []
+                    users.table.db.items
+                    .map((x:any,i)=>{
+                        users.table.db.displayItems.push(x)
+                    })
+                    ref.detectChanges()
+                }
+            },
             search:{
                 click:(evt:MouseEvent)=>{
-                    let {users} = this
-                    console.log(users.query.input.value)
-                    console.log(users.table.db.items)
-                }
+                    let {users,ref} = this
+                    users.table.db.displayItems = users.table.db.items
+                    .filter((x:any,i)=>{
+                        return x[users.query.search.state].toLowerCase().startsWith(users.query.input.value.toLowerCase())
+                    })
+                    ref.detectChanges()
+                },
+                state:"user"
+            }
+        },
+        details:{
+            view:{
+                style:{}
+            },
+            close:{
+
+                click:(evt:MouseEvent)=>{
+                    let {users,ref} = this
+                    users.details.view.style.display = "none"
+                    ref.detectChanges()
+                },
+            },
+            values:{
+                target:{},
+                state:"view" // ["view","edit"]
             }
         }
     }
@@ -94,7 +140,7 @@ import {tap} from 'rxjs/operators'
         ryber.http.post(`${env.backend.url}/users/list`,
             {
                 data:{
-                    filter:['myPass']
+                    filter:['myPass','shipping_same_as_billing']
                 }
             }
         )
@@ -105,7 +151,39 @@ import {tap} from 'rxjs/operators'
                 users.table.db.items = message.list
                 // proivde for the latest orderId
                 users.table.db.items.forEach((x:any,i)=>{
-                    x.latestOrderId = x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:null
+                    x.meta = {
+                        latestOrderId :{
+                            value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
+                        },
+                        interact : {
+                            click:(devObj:any)=>{
+                                let {key,perm} = devObj
+                                return (evt:MouseEvent)=>{
+                                    let {ryber,ref,users} = this
+                                    users.details.view.style.display = "flex"
+
+                                    users.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
+
+                                    // custom mods to see the approiate data with component
+                                    switch (key) {
+                                        case "shipping":
+                                            users.details.values.target = {
+                                                info:users.details.values.target.info.items,
+                                                sameAsBilling:users.details.values.target.sameAsBilling
+                                            }
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    //
+                                    users.details.values.state = perm ?? "view"
+
+                                    ref.detectChanges()
+                                }
+                            }
+                        }
+                    }
                     users.table.db.displayItems.push(x)
                 })
                 //

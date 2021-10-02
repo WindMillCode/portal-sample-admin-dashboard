@@ -8,6 +8,9 @@
 * test that when I complted the quest the game is finished
 * test that when I click instructions, I am brought to the instructions page
 
+## users
+* tests that billing and shipping values make sense
+
 # Unit Tests
 
 # Integration Tests

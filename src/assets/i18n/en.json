@@ -32,7 +32,7 @@
                     "title":"Sort By",
                     "items":[
                         "User",
-                        "OrderId"
+                        "Latest OrderId"
                     ]
                 }
             },
@@ -48,12 +48,16 @@
                     "view":"View"
                 },
                 {
-                    "label":"shipping",
+                    "label":"Shipping",
                     "view":"View"
                 },
                 {
-                    "label":"billing",
+                    "label":"Billing",
                     "view":"View"
+                },
+                {
+                    "label":"Modify",
+                    "view":"Modify"
                 }
             ]
         }

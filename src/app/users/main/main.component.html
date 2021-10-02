@@ -13,6 +13,7 @@
                 >
                     <label>{{'users.form.query.search.label' | translate}}</label>
                     <input
+
                     appUpdateInputVal [updateInputVal]="users.query.input"
                     [class]= "prefix.pods[0]({val:'Input0'})"
                     />
@@ -23,12 +24,14 @@
                 {{'users.form.query.search.button' | translate}}
                 </button>
                 <button
+                (click)="x.click($event)"
+                [ngStyle]="x.style"
                 [class]= "prefix.pods[0]({val:'Button0'})"
                 *ngFor="let x of users.query.searchBy.items;let i = index">
                 {{'users.form.query.searchBy.items.' + i   | translate}}</button>
                 <button
-                [class]= "prefix.pods[0]({val:'Button2'})"
-                >
+                (click)="users.query.reset.click($event)"
+                [class]= "prefix.pods[0]({val:'Button2'})">
                 {{'users.form.query.reset' | translate}}
                 </button>
 
@@ -36,7 +39,7 @@
         </section>
         <section [class]="prefix.pods[1]({val:''})">
             <div
-            [class]= "prefix.pods[1]({val:'Item'+i})"
+            [class]= "prefix.pods[1]({val:'ItemA'+i})"
             *ngFor="let x of users.table.header.items;let i = index"
             >
                 <div
@@ -58,7 +61,7 @@
                     </div>
 
                     <div
-                    [class]= "prefix.pods[1]({val:'Item'+ (6+i)})"
+                    [class]= "prefix.pods[1]({val:'ItemB'+ (6+i)})"
                     [ngSwitch]="i"
                     *ngFor ="let y of users.table.db.displayItems;let j = index"
                     >
@@ -70,21 +73,30 @@
                         <h2
                         *ngSwitchCase="1"
                         [class]= "prefix.pods[1]({val:'Text1'})"
-                        >{{y.latestOrderId}}</h2>
+                        >{{y.meta.latestOrderId.value}}</h2>
 
                         <button
+                        (click)="y.meta.interact.click({key:'orderId'})($event)"
                         [class]= "prefix.pods[1]({val:'Button0'})"
                         *ngSwitchCase="2"
                         >{{'users.form.headers.' + i + '.view' | translate}}</button>
 
                         <button
+                        (click)="y.meta.interact.click({key:'shipping'})($event)"
                         [class]= "prefix.pods[1]({val:'Button0'})"
                         *ngSwitchCase="3"
                         >{{'users.form.headers.' + i + '.view' | translate}}</button>
 
                         <button
+                        (click)="y.meta.interact.click({key:'billing'})($event)"
                         [class]= "prefix.pods[1]({val:'Button0'})"
                         *ngSwitchCase="4"
+                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
+
+                        <button
+                        (click)="y.meta.interact.click({perm:'edit'})($event)"
+                        [class]= "prefix.pods[1]({val:'Button1'})"
+                        *ngSwitchCase="5"
                         >{{'users.form.headers.' + i + '.view' | translate}}</button>
                     </div>
                 </div>
@@ -92,3 +104,42 @@
         </section>
     </section>
 </main>
+<aside
+[ngStyle]="users.details.view.style"
+[class]= "prefix.pods[2]({val:'View'})"
+>
+    <div
+    [class]= "prefix.pods[2]({val:'Item0'})"
+    >
+        <i
+        (click)="users.details.close.click($event)"
+        [class]= "'pi pi-times ' + prefix.pods[2]({val:'Icon0'})">
+        </i>
+        <div
+        [class]= "prefix.pods[2]({val:'Item1'})"
+        >
+            <div
+            [class]= "prefix.pods[2]({val:'Item2'})"
+            *ngFor="let x of users.details.values.target | keyvalue;let i = index"
+            >
+                <h2>{{x.key}}: </h2>
+                <div
+                [class]= "prefix.pods[2]({val:'Item3'})"
+                >
+                    <div
+                    *ngFor="let y of x.value | keyvalue;let j = index"
+                    [class]= "prefix.pods[2]({val:'Item4'})"
+                    >
+                        <h3>{{y.key | titlecase }}:</h3>
+                        <div
+                        [class]= "prefix.pods[2]({val:'Item5'})"
+                        >
+                            <h3
+                            >{{y.value}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

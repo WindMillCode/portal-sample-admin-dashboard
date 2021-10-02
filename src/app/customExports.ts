@@ -83,3 +83,19 @@ type RequireOnlyOne<T, Keys extends keyof T = keyof T> =
 type SamePropTypeOnly<T> = {
     [P: string]: T;
 }
+
+
+export type  MyTable ={
+    [k:string]:any
+    details:{
+        [k:string]:any
+        values:{
+            target:{
+                [k:string]:{
+                    [k:string]:any
+                } 
+            },
+            state:string
+        }
+    }
+}
