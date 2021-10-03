@@ -18,6 +18,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 // dev addtions
 import { UpdateInputValDirective } from './update-input-val.directive';
+import { PlusMinusComponent } from './plus-minus/plus-minus.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { UpdateInputValDirective } from './update-input-val.directive';
         SanitizeUrlPipe,
         PenroseComponent,
         NavComponent,
-        UpdateInputValDirective
+        UpdateInputValDirective,
+        PlusMinusComponent
     ],
     providers:[TranslateService],
     imports: [
@@ -51,7 +53,8 @@ import { UpdateInputValDirective } from './update-input-val.directive';
         PenroseComponent,
         TranslateModule,
         NavComponent,
-        UpdateInputValDirective
+        UpdateInputValDirective,
+        PlusMinusComponent
 
     ]
 })

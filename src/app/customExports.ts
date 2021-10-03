@@ -1,3 +1,5 @@
+import { MonoTypeOperatorFunction, OperatorFunction } from "rxjs"
+
 export  function mediaPrefix(devObj){
     let {media} = devObj
     return "./assets/media/"+media
@@ -91,7 +93,14 @@ type SamePropTypeOnly<T> = {
 
 
 export type  MyTable ={
-    [k:string]:any
+    [k:string]:any,
+    pages:{
+        [k:string]:any,
+        list:{
+            retrived:number[]
+            pipeFns:[OperatorFunction<Object, Object>,OperatorFunction<Object, Object>]
+        }
+    },
     details:{
         [k:string]:any
         values:{

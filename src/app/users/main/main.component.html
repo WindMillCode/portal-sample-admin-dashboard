@@ -42,6 +42,24 @@
 
             </div>
         </section>
+        <section
+        [class]= "prefix.pods[3]({val:''})"
+        >
+            <div
+            [class]= "prefix.pods[3]({val:'Item0'})"
+            >
+                <h2>{{'users.form.pages.perPage' | translate }}:</h2>
+                <input
+                appUpdateInputVal [updateInputVal]="users.pages.perPage.input"
+                [class]= "prefix.pods[3]({val:'Input0'})"
+                type="number"
+                [value]="users.pages.perPage.input.value"
+                />
+                <app-plus-minus
+                [input]="users.pages.current.input"
+                ></app-plus-minus>
+            </div>
+        </section>
         <section [class]="prefix.pods[1]({val:''})">
             <div
             [class]= "prefix.pods[1]({val:'ItemA'+i})"

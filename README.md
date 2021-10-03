@@ -138,6 +138,7 @@ refer to README.md in ignore
 
 
 # Issues 
+* for users.pages.list.pipeFns not allowing for the MonoTypeOperatorFunction
 
 
 

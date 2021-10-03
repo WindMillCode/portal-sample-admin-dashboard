@@ -22,7 +22,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     prefix ={
         main:classPrefix( {view:`${this.meta.name}Main`}),
         view: classPrefix({view:`${this.meta.name}`}),
-        pods:Array(3).fill(null)
+        pods:Array(4).fill(null)
         .map((x:any,i)=>{
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
@@ -416,6 +416,157 @@ import { HttpErrorResponse } from '@angular/common/http';
                 url:`${env.backend.url}/users/adminDelete`,
                 method:"DELETE"
             }
+        },
+        pages:{
+            perPage:{
+                input:{
+                    value:20,
+                    focusout:()=>{
+                        let {ryber,ref,users}= this
+                        ryber.http.post(`${env.backend.url}/users/list`,
+                            {
+                                data:{
+                                    filter:['myPass','shipping_same_as_billing','cartId'],
+                                    pages:{
+                                        page:parseInt(users.pages.current.input.value) -1,
+                                        per_page:parseInt(users.pages.perPage.input.value)
+                                    }
+                                }
+                            }
+                        )
+                        .pipe(
+                            ...users.pages.list.pipeFns,
+                        )
+                        .subscribe()
+                    }
+                }
+            },
+            current:{
+                input:{
+                    value:1,
+                    onAdd:()=>{
+                        let {users,ref,ryber} = this
+                        ryber.http.post(`${env.backend.url}/users/list`,
+                            {
+                                data:{
+                                    filter:['myPass','shipping_same_as_billing','cartId'],
+                                    pages:{
+                                        page:parseInt(users.pages.current.input.value) -1,
+                                        per_page:parseInt(users.pages.perPage.input.value)
+                                    }
+                                }
+                            }
+                        )
+                        .pipe(
+                            ...users.pages.list.pipeFns,
+                        )
+                        .subscribe()
+                    },
+                    onMinus:()=>{
+                        let {users,ref,ryber} = this
+                        ryber.http.post(`${env.backend.url}/users/list`,
+                            {
+                                data:{
+                                    filter:['myPass','shipping_same_as_billing','cartId'],
+                                    pages:{
+                                        page:parseInt(users.pages.current.input.value) -1,
+                                        per_page:parseInt(users.pages.perPage.input.value)
+                                    }
+                                }
+                            }
+                        )
+                        .pipe(
+                            ...users.pages.list.pipeFns,
+                        )
+                        .subscribe()
+                    }
+                }
+            },
+            list:{
+                retrived:[],
+                pipeFns:[
+                    // take(1),  we have ts issue
+                    catchError(()=>{
+                        if(env.production){
+                            alert("this is a sample userList reload and try again")
+                        }
+                        return of({
+                            message:{
+                                list:usersList
+                            }
+                        })
+                    }),
+                    tap((res:any)=>{
+                        let {users,ref} = this
+                        let {message} = res
+
+                        users.table.db.items = message.list
+                        users.table.db.displayItems = []
+                        // proivde for the latest orderId
+                        users.table.db.items.forEach((x:any,i)=>{
+                            x.meta = {
+                                latestOrderId :{
+                                    value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
+                                },
+                                interact : {
+                                    click:(devObj:any)=>{
+                                        let {key,perm} = devObj
+                                        return (evt:MouseEvent)=>{
+                                            let {ryber,ref,users} = this
+                                            users.details.view.style.display = "flex"
+                                            users.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
+
+                                            // custom mods to see the approiate data with component
+                                            switch (key) {
+                                                case "shipping":
+                                                    users.details.values.target = {
+                                                        info:users.details.values.target.info.items,
+                                                        sameAsBilling:users.details.values.target.sameAsBilling
+                                                    }
+                                                    break;
+                                                case "modify":
+                                                    users.details.values.meta.user = x.user
+                                                    users.details.values.target = {
+                                                        user:{username:x.user},
+                                                        billing:x.billing.items,
+                                                        shipping:{
+                                                            ...x.shipping.info.items,
+                                                            sameAsBilling:x.shipping.sameAsBilling.checked // cant use this either true or false
+                                                        },
+                                                    }
+                                                    Object.entries(users.details.values.target)
+                                                    .forEach((x:any,i)=>{
+                                                        let [keyx,valx]= x
+                                                        Object.entries(valx)
+                                                        .forEach((y:any,j)=>{
+                                                            let [keyy,valy] = y
+                                                            users.details.values.target[keyx][keyy] = {
+                                                                input:{
+                                                                    value:valy
+                                                                }
+                                                            }
+                                                        })
+                                                    })
+                                                    break
+
+                                                default:
+                                                    break;
+                                            }
+                                            //
+                                            users.details.values.state = perm ?? "view"
+                                            ref.detectChanges()
+                                        }
+                                    }
+                                }
+                            }
+                            users.table.db.displayItems.push(x)
+                        })
+                        //
+                        console.log(users.table.db.items)
+                        ref.detectChanges()
+                    })
+                ]
+            }
         }
     }
 
@@ -430,88 +581,16 @@ import { HttpErrorResponse } from '@angular/common/http';
         ryber.http.post(`${env.backend.url}/users/list`,
             {
                 data:{
-                    filter:['myPass','shipping_same_as_billing','cartId']
+                    filter:['myPass','shipping_same_as_billing','cartId'],
+                    pages:{
+                        page:0,
+                        per_page:users.pages.perPage.input.value
+                    }
                 }
             }
         )
         .pipe(
-            catchError(()=>{
-                if(env.production){
-                    alert("this is a sample userList reload and try again")
-                }
-                return of({
-                    message:{
-                        list:usersList
-                    }
-                })
-            }),
-            tap((res:any)=>{
-                let {message} = res
-
-                users.table.db.items = message.list
-                // proivde for the latest orderId
-                users.table.db.items.forEach((x:any,i)=>{
-                    x.meta = {
-                        latestOrderId :{
-                            value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
-                        },
-                        interact : {
-                            click:(devObj:any)=>{
-                                let {key,perm} = devObj
-                                return (evt:MouseEvent)=>{
-                                    let {ryber,ref,users} = this
-                                    users.details.view.style.display = "flex"
-                                    users.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
-
-                                    // custom mods to see the approiate data with component
-                                    switch (key) {
-                                        case "shipping":
-                                            users.details.values.target = {
-                                                info:users.details.values.target.info.items,
-                                                sameAsBilling:users.details.values.target.sameAsBilling
-                                            }
-                                            break;
-                                        case "modify":
-                                            users.details.values.meta.user = x.user
-                                            users.details.values.target = {
-                                                user:{username:x.user},
-                                                billing:x.billing.items,
-                                                shipping:{
-                                                    ...x.shipping.info.items,
-                                                    sameAsBilling:x.shipping.sameAsBilling.checked // cant use this either true or false
-                                                },
-                                            }
-                                            Object.entries(users.details.values.target)
-                                            .forEach((x:any,i)=>{
-                                                let [keyx,valx]= x
-                                                Object.entries(valx)
-                                                .forEach((y:any,j)=>{
-                                                    let [keyy,valy] = y
-                                                    users.details.values.target[keyx][keyy] = {
-                                                        input:{
-                                                            value:valy
-                                                        }
-                                                    }
-                                                })
-                                            })
-                                            break
-
-                                        default:
-                                            break;
-                                    }
-                                    //
-                                    users.details.values.state = perm ?? "view"
-                                    ref.detectChanges()
-                                }
-                            }
-                        }
-                    }
-                    users.table.db.displayItems.push(x)
-                })
-                //
-                console.log(users.table.db.items[3])
-                ref.detectChanges()
-            })
+            ...users.pages.list.pipeFns,
         )
         .subscribe()
     }

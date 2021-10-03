@@ -1,0 +1,21 @@
+<div
+[class]= "prefix.pods[0]({val:'Item0'})"
+>
+    <button
+    (click)="pM.minus.click()"
+    [class]= "prefix.pods[0]({val:'Button0'})"
+    >
+        <i class="pi pi-minus-circle"></i>
+    </button>
+    <input
+    type="number"
+    [class]= "prefix.pods[0]({val:'Input0'})"
+    [value]="pM.input.value"
+    />
+    <button
+    (click)="pM.add.click()"
+    [class]= "prefix.pods[0]({val:'Button1'})"
+    >
+        <i class="pi pi-plus-circle"></i>
+    </button>
+</div>

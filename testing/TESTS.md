@@ -15,6 +15,9 @@
 ### Table Update
 * make sure lookup key is seperate from the actual updated resource
 
+### Table create
+* MAKE SURE, you send correct data structure to backend
+
 # Unit Tests
 
 # Integration Tests

@@ -5,8 +5,8 @@
 // @import "../node_modules/primeng/resources/themes/saga-blue/theme.css";
 // @import "../node_modules/primeng/resources/primeng.min.css";
 @import "../node_modules/primeicons/primeicons.css";
-@import "assets/styles/util";
-@import "assets/styles/fonts";
+@import "src/assets/styles/util";
+@import "src/assets/styles/fonts";
 
 :root{
 
@@ -39,6 +39,11 @@
 	padding: 5px 10px;
 	font-family: Tahoma, sans-serif;
     resize: none;
+}
+
+@mixin input0{
+    @include textarea0();
+    min-width: 0;
 }
 
 @mixin view0{
@@ -450,6 +455,36 @@
                 }
 
 
+            }
+            &3{
+                display: flex;
+                margin:0 0 20px 0;
+                &Input{
+                    &0{
+                        @include input0();
+                        flex:0 0 70px;
+                        margin:0 0 0 20px;
+                        -webkit-appearance: none;
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button,
+                        &[type="number"]{
+                            -webkit-appearance: none;
+                            margin: 0;
+                            -moz-appearance: textfield;
+                        }
+
+
+                    }
+                }
+                &Item{
+                    &0{
+                        border:1px solid var(--color0);
+                        border-radius: 10px;
+                        display:flex;
+                        padding:20px;
+                    }
+                }
             }
         }
     }

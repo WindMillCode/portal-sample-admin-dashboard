@@ -67,6 +67,9 @@
             "details":{
                 "update":"Save",
                 "delete":"Delete"
+            },
+            "pages":{
+                "perPage":"Per Page"
             }
         }
     }
