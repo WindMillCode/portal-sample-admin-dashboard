@@ -34,6 +34,11 @@
                 [class]= "prefix.pods[0]({val:'Button2'})">
                 {{'users.form.query.reset' | translate}}
                 </button>
+                <button
+                (click)="users.query.create.request.click()"
+                [class]= "prefix.pods[0]({val:'Button3'})">
+                {{'users.form.query.create.request' | translate}}
+                </button>
 
             </div>
         </section>
@@ -119,14 +124,14 @@
         [class]= "prefix.pods[2]({val:'Item1'})">
             <div
             [class]= "prefix.pods[2]({val:'Item2'})"
-            *ngFor="let x of users.details.values.target | keyvalue;let i = index">
+            *ngFor="let x of users.details.values.target | keyvalue:ryber.meta.keyvaluePipe.unsorted;let i = index">
                 <h2>{{x.key}}: </h2>
                 <div
                 [ngSwitch]="users.details.values.state"
                 [class]= "prefix.pods[2]({val:'Item3'})">
                     <div
 
-                    *ngFor="let y of x.value | keyvalue;let j = index"
+                    *ngFor="let y of x.value | keyvalue:ryber.meta.keyvaluePipe.unsorted;let j = index"
                     [class]= "prefix.pods[2]({val:'Item4'})">
                         <h3>{{y.key | titlecase }}:</h3>
                         <div
@@ -137,25 +142,34 @@
                             *ngSwitchCase="'view'"
                             >{{y.value}}</h3>
                             <textarea
+                            appUpdateInputVal [updateInputVal]="y.value.input"
                             *ngSwitchCase="'edit'"
                             [class]= "prefix.pods[2]({val:'Input0'})"
-                            >{{y.value}}</textarea>
+                            >{{y.value.input.value}}</textarea>
+                            <textarea
+                            appUpdateInputVal [updateInputVal]="y.value.input"
+                            *ngSwitchCase="'create'"
+                            [class]= "prefix.pods[2]({val:'Input0'})"
+                            >{{y.value.input.value}}</textarea>
                         </div>
                     </div>
-
-
-
 
                 </div>
             </div>
         </div>
         <button
+        (click)="users.query.create.confirm.click()"
+        *ngIf="users.details.values.state === 'create'"
+        [class]= "prefix.pods[2]({val:'Button0'})"
+        >{{ 'users.form.query.create.confirm'| translate}}</button>
+        <button
+        (click)="users.details.update.click()"
         *ngIf="users.details.values.state === 'edit'"
         [class]= "prefix.pods[2]({val:'Button0'})"
         >{{ 'users.form.details.update'| translate}}</button>
         <button
         *ngIf="users.details.values.state === 'edit'"
-        (click)="users.details.delete.click($event)"
+        (click)="users.details.delete.click()"
         [class]= "prefix.pods[2]({val:'Button1'})"
         >{{ 'users.form.details.delete'| translate}}</button>
 

@@ -36,7 +36,7 @@
 
 @mixin textarea0{
     border: 3px solid #cccccc;
-	padding: 5px;
+	padding: 5px 10px;
 	font-family: Tahoma, sans-serif;
     resize: none;
 }
@@ -197,10 +197,10 @@
 
             &0{
                 display:flex;
-                max-width:var(--width0);
+                // max-width:var(--width0);
 
                 &Button{
-                    @for $i from 0 through 2 {
+                    @for $i from 0 through 3 {
                         &#{$i}{
                             @include button0;
                             font-size:1.5em;
@@ -220,6 +220,10 @@
                     &2{
                         background: var(--radial-bg-red);
                     }
+
+                    &3{
+                        background: var(--radiial-bg-ripebanana);
+                    }
                 }
                 &Input{
                     &0{
@@ -237,6 +241,7 @@
                         border: 1px solid var(--color0);
                         padding:20px;
                         justify-content: center;
+                        // @include outline;
                     }
 
                     &1{

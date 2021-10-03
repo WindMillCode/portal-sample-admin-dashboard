@@ -28,6 +28,10 @@
                     "button":"Search"
                 },
                 "reset":"Reset",
+                "create":{
+                    "request":"Create",
+                    "confirm":"Create"
+                },
                 "searchBy":{
                     "title":"Sort By",
                     "items":[

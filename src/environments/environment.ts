@@ -22,6 +22,12 @@ export const environment:any = {
         },
         adminDeleteUser:{
             confirm:true
+        },
+        adminUpdateUser:{
+            confirm:true
+        },
+        adminCreateUser:{
+            confirm:true
         }
     }
 };

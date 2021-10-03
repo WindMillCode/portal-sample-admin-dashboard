@@ -17,6 +17,11 @@ export function numberParse(   devObj:any  ){
     }
 }
 
+export function flatDeep(arr, d = Infinity) { // polyfill for arr.flat
+    return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+                 : arr.slice();
+};
+
 export function classPrefix(devObj:{view:string}){
     let {view} = devObj
     let prefix = "a_p_p_"+view
@@ -93,8 +98,9 @@ export type  MyTable ={
             target:{
                 [k:string]:{
                     [k:string]:any
-                } 
-            },
+                }
+            } ,
+            meta:any,
             state:string
         }
     }

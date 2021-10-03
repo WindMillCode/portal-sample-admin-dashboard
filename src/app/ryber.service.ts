@@ -21,8 +21,14 @@ export class RyberService {
     loading:any = {
         view:{
             style:{
-                
+
             }
+        }
+    }
+
+    meta:any={
+        keyvaluePipe:{
+            unsorted:()=>{}
         }
     }
 

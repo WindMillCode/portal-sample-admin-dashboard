@@ -8,8 +8,12 @@
 * test that when I complted the quest the game is finished
 * test that when I click instructions, I am brought to the instructions page
 
-## users
-* tests that billing and shipping values make sense
+## table
+* tests that related values make sense
+* test that during sorting and pagination values still delete appropriately
+
+### Table Update
+* make sure lookup key is seperate from the actual updated resource
 
 # Unit Tests
 
