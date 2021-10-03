@@ -39,20 +39,30 @@ import { HttpErrorResponse } from '@angular/common/http';
                         sort:{
                             state:"ascend",  // ascend or descend
                             confirm:[true,true,false,false,false][i],
-                            click:(evt:MouseEvent)=>{
+                            click:(devObj:any ={})=>{
                                 let {users,ref} = this
                                 let key = ["user","latestOrderId"][i]
-                                users.table.db.displayItems =users.table.db.displayItems
+                                let current = parseInt(users.pages.current.input.value) -1
+                                let myWindow = parseInt(users.pages.perPage.input.value)
+
+                                users.table.db.displayItems =users.table.db.items
                                 .sort((a, b)=> {
-                                    if(item.sort.state === "ascend"){
+                                    if( item.sort.state === "ascend"){
                                         return a[key] > b[key] ? 1 : -1 ;
                                     }
                                     else{
                                         return a[key] < b[key] ? 1 : -1 ;
                                     }
-                                });
-                                item.sort.state = item.sort.state === "ascend" ? "descend" : "ascend"
+                                })
+                                .slice(
+                                    (current)*myWindow,
+                                    (current+1)*myWindow
+                                )
+                                item.sort.state =  item.sort.state === "ascend" ? "descend" : "ascend"
                                 ref.detectChanges()
+
+
+
                             },
 
                         }
@@ -97,12 +107,12 @@ import { HttpErrorResponse } from '@angular/common/http';
             reset:{
                 click:(evt:MouseEvent)=>{
                     let{users,ref} = this
-                    users.table.db.displayItems = []
-                    users.table.db.items
-                    .map((x:any,i)=>{
-                        users.table.db.displayItems.push(x)
-                    })
-                    ref.detectChanges()
+                    of({})
+                    .pipe(
+                        take(1),
+                        ...users.pages.list.pipeFns,
+                    )
+                    .subscribe()
                 }
             },
             search:{
@@ -110,7 +120,10 @@ import { HttpErrorResponse } from '@angular/common/http';
                     let {users,ref} = this
                     users.table.db.displayItems = users.table.db.items
                     .filter((x:any,i)=>{
-                        return x[users.query.search.state].toLowerCase().startsWith(users.query.input.value.toLowerCase())
+                        return x.meta[users.query.search.state]
+                        .value
+                        .toLowerCase()
+                        .startsWith(users.query.input.value.toLowerCase())
                     })
                     ref.detectChanges()
                 },
@@ -444,52 +457,18 @@ import { HttpErrorResponse } from '@angular/common/http';
             current:{
                 input:{
                     value:1,
+                    disabled:true,
                     onAdd:()=>{
-                        let {users,ref,ryber} = this
-                        let current = parseInt(users.pages.current.input.value) -1
-                        let myWindow = parseInt(users.pages.perPage.input.value)
-
-                        iif(
-                            () => !users.pages.list.retrived.has(current) ,
-                            ryber.http.post(`${env.backend.url}/users/list`,
-                            {
-                                data:{
-                                    filter:['myPass','shipping_same_as_billing','cartId'],
-                                    pages:{
-                                        page:current,
-                                        per_page:myWindow
-                                    }
-                                }
-                            }),
-                            of({})
-                        )
-                        .pipe(
-                            ...users.pages.list.pipeFns,
-                        )
-                        .subscribe()
+                        let {users} = this
+                        users.util.listItems()
                     },
                     onMinus:()=>{
-                        let {users,ref,ryber} = this
-                        let current = parseInt(users.pages.current.input.value) -1
-                        let myWindow = parseInt(users.pages.perPage.input.value)
-                        iif(
-                            () => !users.pages.list.retrived.has(current) ,
-                            ryber.http.post(`${env.backend.url}/users/list`,
-                            {
-                                data:{
-                                    filter:['myPass','shipping_same_as_billing','cartId'],
-                                    pages:{
-                                        page:current,
-                                        per_page:myWindow
-                                    }
-                                }
-                            }),
-                            of({})
-                        )
-                        .pipe(
-                            ...users.pages.list.pipeFns,
-                        )
-                        .subscribe()
+                        let {users} = this
+                        users.util.listItems()
+                    },
+                    focusout:()=>{
+                        let {users} = this
+                        users.util.listItems()
                     }
                 }
             },
@@ -512,7 +491,7 @@ import { HttpErrorResponse } from '@angular/common/http';
                         let {message} = res
                         let current = parseInt(users.pages.current.input.value) -1
                         let myWindow = parseInt(users.pages.perPage.input.value)
-
+                        let retrieved = users.pages.list.retrived
                         if(!users.pages.list.retrived.has(current)){
                             // update retrieved array
                             users.pages.list.retrived.add(
@@ -532,6 +511,9 @@ import { HttpErrorResponse } from '@angular/common/http';
                             x.meta = {
                                 latestOrderId :{
                                     value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
+                                },
+                                user:{
+                                    value:x.user
                                 },
                                 interact : {
                                     click:(devObj:any)=>{
@@ -586,11 +568,42 @@ import { HttpErrorResponse } from '@angular/common/http';
                             }
                             users.table.db.displayItems.push(x)
                         })
+
+                        // sort for prettiness
+
                         //
+
                         // console.log(users.table.db.items)
                         ref.detectChanges()
                     })
                 ]
+            }
+        },
+        util:{
+            listItems:()=>{
+                let {users,ref,ryber} = this
+                let current = parseInt(users.pages.current.input.value) -1
+                let myWindow = parseInt(users.pages.perPage.input.value)
+
+                iif(
+                    () => !users.pages.list.retrived.has(current) ,
+                    ryber.http.post(`${env.backend.url}/users/list`,
+                    {
+                        data:{
+                            filter:['myPass','shipping_same_as_billing','cartId'],
+                            pages:{
+                                page:current,
+                                per_page:myWindow
+                            }
+                        }
+                    }),
+                    of({})
+                )
+                .pipe(
+                    take(1),
+                    ...users.pages.list.pipeFns,
+                )
+                .subscribe()
             }
         }
     }

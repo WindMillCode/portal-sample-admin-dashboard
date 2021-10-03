@@ -28,7 +28,6 @@ export class UpdateInputValDirective {
 
     ngOnInit(){
         this.extras = this.updateInputVal
-        console.log(this.extras)
     }
 
 }

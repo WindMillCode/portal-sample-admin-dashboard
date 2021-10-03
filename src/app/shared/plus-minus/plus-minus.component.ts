@@ -19,6 +19,8 @@ export class PlusMinusComponent implements OnInit {
     }
     @Input() onAdd:Function
     @Input() onMinus:Function
+    @Input() focusout:Function
+    @Input() blur:Function
     // metadata
     meta = {
         name:"plusMinus"
@@ -67,12 +69,14 @@ export class PlusMinusComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        let {pM,input,ref,onAdd,onMinus} = this;
+        let {pM,input,ref,onAdd,onMinus,focusout,blur} = this;
         // initalize the actual value from the parennt logic
 
         pM.input = input
         pM.input.onAdd = onAdd ?? pM.input.onAdd ?? (()=>{})
         pM.input.onMinus = onMinus ?? pM.input.onMinus ?? (()=>{})
+        pM.input.focusout = focusout ?? pM.input.focusout ?? (()=>{})
+        pM.input.blur = blur ?? pM.input.blur ?? (()=>{})
         ref.detectChanges()
         //
     }

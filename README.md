@@ -121,6 +121,9 @@ refer to README.md in ignore
 ### Loading of users
 * handled in src\app\users\main\main.component.ts
 
+
+
+
 # Aspects
 
 ## Challenges
@@ -139,16 +142,18 @@ refer to README.md in ignore
 
 # Issues 
 * for users.pages.list.pipeFns not allowing for the MonoTypeOperatorFunction
-
+* if you try to paginate by typing in, your kinda of confuse the application, mabye it should fill at the appropriate length so we disabled for now
 
 
 # TODO
 * users.details.values.target needs an present prop and a metadata prop
+* try to figure out how reading new items and sort can work together
 
 ## Template Updates
 Team members refer to the [Trello workspace](https://trello.com/b/AFCBbcL4/angular-template-project-updates)
 
 ## Notes
+* as you grab new users, you need to hit the sort buttons  to sort accordingly, once sorted it wont go to original sorted position
 
 
 ## Terminal workspace

@@ -76,7 +76,7 @@
                         [class]= "prefix.pods[1]({val:'Text0'})"
                         >{{ 'users.form.headers.' + i + '.label' | translate}} </h2>
                         <i
-                        (click)="users.table.header.items[i].sort.click($event)"
+                        (click)="users.table.header.items[i].sort.click()"
                         *ngIf="users.table.header.items[i].sort.confirm"
                         [class]= "'pi pi-sort-alt '+ prefix.pods[1]({val:'Icon0'})"
                         ></i>

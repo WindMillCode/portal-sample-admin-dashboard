@@ -114,3 +114,8 @@ export type  MyTable ={
         }
     }
 }
+
+(Array.prototype as any).insert = function(i,...rest){
+    this.splice(i,0,...rest)
+    return this
+  } //modify in place

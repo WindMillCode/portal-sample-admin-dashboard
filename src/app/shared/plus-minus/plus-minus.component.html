@@ -9,6 +9,8 @@
     </button>
     <input
     type="number"
+    [disabled]="pM.input.disabled"
+    appUpdateInputVal [updateInputVal]="pM.input"
     [class]= "prefix.pods[0]({val:'Input0'})"
     [value]="pM.input.value"
     />
