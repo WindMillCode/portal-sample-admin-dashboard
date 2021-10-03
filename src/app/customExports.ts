@@ -97,7 +97,7 @@ export type  MyTable ={
     pages:{
         [k:string]:any,
         list:{
-            retrived:number[]
+            retrived:Set<number>,
             pipeFns:[OperatorFunction<Object, Object>,OperatorFunction<Object, Object>]
         }
     },

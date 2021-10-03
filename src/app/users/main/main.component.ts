@@ -446,16 +446,22 @@ import { HttpErrorResponse } from '@angular/common/http';
                     value:1,
                     onAdd:()=>{
                         let {users,ref,ryber} = this
-                        ryber.http.post(`${env.backend.url}/users/list`,
+                        let current = parseInt(users.pages.current.input.value) -1
+                        let myWindow = parseInt(users.pages.perPage.input.value)
+
+                        iif(
+                            () => !users.pages.list.retrived.has(current) ,
+                            ryber.http.post(`${env.backend.url}/users/list`,
                             {
                                 data:{
                                     filter:['myPass','shipping_same_as_billing','cartId'],
                                     pages:{
-                                        page:parseInt(users.pages.current.input.value) -1,
-                                        per_page:parseInt(users.pages.perPage.input.value)
+                                        page:current,
+                                        per_page:myWindow
                                     }
                                 }
-                            }
+                            }),
+                            of({})
                         )
                         .pipe(
                             ...users.pages.list.pipeFns,
@@ -464,16 +470,21 @@ import { HttpErrorResponse } from '@angular/common/http';
                     },
                     onMinus:()=>{
                         let {users,ref,ryber} = this
-                        ryber.http.post(`${env.backend.url}/users/list`,
+                        let current = parseInt(users.pages.current.input.value) -1
+                        let myWindow = parseInt(users.pages.perPage.input.value)
+                        iif(
+                            () => !users.pages.list.retrived.has(current) ,
+                            ryber.http.post(`${env.backend.url}/users/list`,
                             {
                                 data:{
                                     filter:['myPass','shipping_same_as_billing','cartId'],
                                     pages:{
-                                        page:parseInt(users.pages.current.input.value) -1,
-                                        per_page:parseInt(users.pages.perPage.input.value)
+                                        page:current,
+                                        per_page:myWindow
                                     }
                                 }
-                            }
+                            }),
+                            of({})
                         )
                         .pipe(
                             ...users.pages.list.pipeFns,
@@ -483,7 +494,7 @@ import { HttpErrorResponse } from '@angular/common/http';
                 }
             },
             list:{
-                retrived:[],
+                retrived:new Set(),
                 pipeFns:[
                     // take(1),  we have ts issue
                     catchError(()=>{
@@ -499,11 +510,25 @@ import { HttpErrorResponse } from '@angular/common/http';
                     tap((res:any)=>{
                         let {users,ref} = this
                         let {message} = res
+                        let current = parseInt(users.pages.current.input.value) -1
+                        let myWindow = parseInt(users.pages.perPage.input.value)
 
-                        users.table.db.items = message.list
+                        if(!users.pages.list.retrived.has(current)){
+                            // update retrieved array
+                            users.pages.list.retrived.add(
+                                current
+                            )
+                            //
+                            users.table.db.items.push(...message.list)
+                        }
                         users.table.db.displayItems = []
-                        // proivde for the latest orderId
-                        users.table.db.items.forEach((x:any,i)=>{
+                        // proivde for metadata
+                        users.table.db.items
+                        .slice(
+                            (current)*myWindow,
+                            (current + 1) *myWindow
+                        )
+                        .forEach((x:any,i)=>{
                             x.meta = {
                                 latestOrderId :{
                                     value: x.orderId.length !== 0  ?  x.orderId[x.orderId.length-1]:""
@@ -562,7 +587,7 @@ import { HttpErrorResponse } from '@angular/common/http';
                             users.table.db.displayItems.push(x)
                         })
                         //
-                        console.log(users.table.db.items)
+                        // console.log(users.table.db.items)
                         ref.detectChanges()
                     })
                 ]
@@ -578,13 +603,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 
     ngOnInit(): void {
         let {ryber,ref,users}= this
+        let current = parseInt(users.pages.current.input.value) -1
+        let myWindow = parseInt(users.pages.perPage.input.value)
         ryber.http.post(`${env.backend.url}/users/list`,
             {
                 data:{
                     filter:['myPass','shipping_same_as_billing','cartId'],
                     pages:{
-                        page:0,
-                        per_page:users.pages.perPage.input.value
+                        page:current,
+                        per_page:myWindow
                     }
                 }
             }
