@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 
 const routes: Routes = [
     {
+        path:'orders',
+        loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)
+    },
+    {
         path:'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
     },

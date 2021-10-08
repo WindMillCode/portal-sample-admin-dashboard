@@ -72,5 +72,21 @@
                 "perPage":"Per Page"
             }
         }
+    },
+    "orders":{
+        "title":"Orders",
+        "search":{
+            "label":"Search",
+            "button":"Search"
+        },
+        "searchBy":{
+            "placeholder":"Search By",
+            "options":[
+                "User",
+                "Total",
+                "OrderId"
+            ]
+        }
+
     }
 }

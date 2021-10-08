@@ -141,9 +141,19 @@ refer to README.md in ignore
 
 
 # Issues 
+* in the orders main component, if you run ref.detectChanges(), the updates wont gon properly in the inventory component however if you dont run it, the change gets detected somehow 
+* use this code as an @Input in invertory if you have change detection issues later
+```ts
+this.parentChange = ()=>{
+    console.log("rewritten")
+    this.parentChange()
+    ref.detectChanges()
+}
+```
+
 * for users.pages.list.pipeFns not allowing for the MonoTypeOperatorFunction
 * if you try to paginate by typing in, your kinda of confuse the application, mabye it should fill at the appropriate length so we disabled for now
-
+* might incorrectly track when changing the page range please fix
 
 # TODO
 * users.details.values.target needs an present prop and a metadata prop

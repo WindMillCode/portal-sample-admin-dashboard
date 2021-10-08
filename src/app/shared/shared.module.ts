@@ -19,7 +19,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 // dev addtions
 import { UpdateInputValDirective } from './update-input-val.directive';
 import { PlusMinusComponent } from './plus-minus/plus-minus.component';
-
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,8 @@ import { PlusMinusComponent } from './plus-minus/plus-minus.component';
         PenroseComponent,
         NavComponent,
         UpdateInputValDirective,
-        PlusMinusComponent
+        PlusMinusComponent,
+        InventoryComponent
     ],
     providers:[TranslateService],
     imports: [
@@ -47,6 +48,7 @@ import { PlusMinusComponent } from './plus-minus/plus-minus.component';
         })
     ],
     exports: [
+
         MediaPrefixPipe,
         SanitizedComponent,
         SanitizeUrlPipe,
@@ -54,7 +56,8 @@ import { PlusMinusComponent } from './plus-minus/plus-minus.component';
         TranslateModule,
         NavComponent,
         UpdateInputValDirective,
-        PlusMinusComponent
+        PlusMinusComponent,
+        InventoryComponent
 
     ]
 })

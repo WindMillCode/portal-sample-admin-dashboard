@@ -1,0 +1,46 @@
+<main
+[class]= "prefix.main({val:'Pod'})"
+>
+
+    <section
+    [class]= "prefix.pods[0]({val:''})"
+    >
+        <div
+        [class]= "prefix.pods[0]({val:'Item0'})"
+        >
+            <label>{{table.search.label.text}}</label>
+            <input
+            [class]= "prefix.pods[0]({val:'Input0'})"
+            />
+        </div>
+        <button
+        [class]= "prefix.pods[0]({val:'Button0'})"
+        >{{table.search.button.text}}</button>
+        <div
+        [class]= "prefix.pods[0]({val:'Item1'})"
+        >
+            <div
+            [class]= "prefix.pods[0]({val:'Item2'})"
+            >
+                <input
+                [placeholder]="table.searchBy.placeholder.text"
+                [class]= "prefix.pods[0]({val:'Input0'})"
+                />
+                <i
+                [class]= "'pi pi-chevron-down '+prefix.pods[0]({val:'Icon0'})"
+                ></i>
+            </div>
+            <div
+            *ngFor="let x of table.searchBy.options.items"
+            >
+                <h2>{{x.text}}</h2>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- <ng-content select="[text]"></ng-content>
+    <ng-content select="[question]"></ng-content> -->
+
+</main>
+

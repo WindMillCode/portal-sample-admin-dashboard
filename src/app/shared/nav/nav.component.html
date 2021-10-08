@@ -16,6 +16,7 @@
             [class]= "prefix.main({val:'Item0'})"
             >
                 <a
+                [routerLink]= x.routerLink
                 [class]= "prefix.main({val:'Link0'})"
                 *ngFor="let x of nav.links.items;let i = index"
                 >{{ 'nav.links.'+i | translate}}</a>

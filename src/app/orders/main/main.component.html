@@ -1,0 +1,21 @@
+<main
+[class]= "prefix.main({val:'Pod'})"
+>
+
+    <section
+    [class]= "prefix.pods[0]({val:''})"
+    >
+        <h1
+        [class]= "prefix.pods[0]({val:'Title0'})"
+        >{{orders.title.text | translate}}</h1>
+    </section>
+
+    <app-inventory
+    [table]= "orders.table"
+    
+    >
+
+        <h1 text >Some Text</h1>
+        <button question>A button</button>
+    </app-inventory>
+</main>

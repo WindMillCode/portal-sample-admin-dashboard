@@ -1,4 +1,5 @@
 import { MonoTypeOperatorFunction, OperatorFunction } from "rxjs"
+import { InventoryTable } from "./shared/inventory/inventory.component"
 
 export  function mediaPrefix(devObj){
     let {media} = devObj
@@ -90,8 +91,10 @@ type RequireOnlyOne<T, Keys extends keyof T = keyof T> =
 type SamePropTypeOnly<T> = {
     [P: string]: T;
 }
-
-
+export type Orders = {
+    [k: string]: any;
+    table:InventoryTable
+}
 export type  MyTable ={
     [k:string]:any,
     pages:{

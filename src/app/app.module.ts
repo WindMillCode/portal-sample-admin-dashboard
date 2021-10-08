@@ -14,6 +14,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 //
 
 // dev addtions
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //
 
@@ -34,8 +35,10 @@ if (env.production) {
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         SharedModule,
+
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

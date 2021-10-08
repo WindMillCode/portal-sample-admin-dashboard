@@ -60,7 +60,7 @@
                         ],
                         "scripts": [
                             "src/assets/scripts/pikaday.js",
-                            "src/assets/scripts/polyfills/object.js",
+                            "src/assets/scripts/polyfills/object.js"
                             // dev additions
 
                             //
@@ -183,8 +183,6 @@
                         // dev additions
 
                         //
-
-
                         "development": {
                             "buildOptimizer": false,
                             "optimization": false,
