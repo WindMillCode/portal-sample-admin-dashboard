@@ -52,6 +52,7 @@
                 flex-flow:wrap;
                 flex:1 0 100%;
                 max-width:  1200px;
+                justify-content: center;
             }
         }
         &Pod{
@@ -173,9 +174,10 @@
 
             &2{
                 position:relative;
-                // font-size:12px;
+                font-size:12px;
                 justify-content:flex-start;
                 max-width: 1200px;
+                flex: 0 0 auto;
                 overflow:scroll;
 
 

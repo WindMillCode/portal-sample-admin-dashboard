@@ -81,6 +81,10 @@ export class InventoryComponent implements OnInit {
         table.details = {}
         //
 
+        // disabled the plus minus
+        table.pages.current.input.disabled = true;
+        //
+
         // setup up data modification to be entered into table
         table.db.xhrItems = new Subject<{data:any[]}>();
         table.pages.list ={
