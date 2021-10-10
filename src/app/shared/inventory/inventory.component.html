@@ -23,21 +23,94 @@
             [class]= "prefix.pods[0]({val:'Item2'})"
             >
                 <input
+                disabled
                 [placeholder]="table.searchBy.placeholder.text"
                 [class]= "prefix.pods[0]({val:'Input0'})"
                 />
                 <i
+                (click)="table.searchBy.icon.click()"
                 [class]= "'pi pi-chevron-down '+prefix.pods[0]({val:'Icon0'})"
                 ></i>
             </div>
-            <div
+            <h2
+            [ngStyle]=x.style
+            (click)="x.click()"
+            [class]= "prefix.pods[0]({val:'Text0'})"
             *ngFor="let x of table.searchBy.options.items"
-            >
-                <h2>{{x.text}}</h2>
-            </div>
-
+            >{{x.text}}</h2>
         </div>
+        <button
+        [class]= "prefix.pods[0]({val:'Button1'})"
+        >
+        {{table.reset.text}}
+        </button>
+        <button
+        [class]= "prefix.pods[0]({val:'Button2'})"
+        >
+        {{table.create.text}}
+        </button>
 
+    </section>
+    <section
+    [class]= "prefix.pods[1]({val:''})"
+    >
+        <label
+        [class]= "prefix.pods[1]({val:'Label0'})"
+        >{{table.pages.per.label.text}}</label>
+        <input
+        appUpdateInputVal [updateInputVal]="table.pages.per.input"
+        [class]= "prefix.pods[1]({val:'Input0'})"
+        type="number"
+        [value]="table.pages.per.input.value"
+        />
+        <app-plus-minus
+        [input]="table.pages.current.input"
+        ></app-plus-minus>
+    </section>
+    <section
+    [class]= "prefix.pods[2]({val:''})"
+    >
+        <div
+        [class]= "prefix.pods[2]({val:'ItemA'+i})"
+        *ngFor="let x of table.headers.items;let i = index"
+        >
+            <div
+            [class]= "prefix.pods[2]({val:'Item5'})"
+            >
+                <div
+                [class]= "prefix.pods[2]({val:'Item11'})"
+                >
+                    <h2
+                    [class]= "prefix.pods[2]({val:'Text0'})"
+                    >{{ x.title.text}} </h2>
+                    <i
+                    *ngIf="x.sort.confirm"
+                    [class]= "'pi pi-sort-alt '+ prefix.pods[2]({val:'Icon0'})"
+                    ></i>
+
+                </div>
+
+
+                <div
+                [class]= "prefix.pods[2]({val:'ItemB'+ (6+i)})"
+                [ngSwitch]="x.view.type"
+                *ngFor ="let y of table.db.displayItems;let j = index"
+                >
+                    <h2
+                    [class]= "prefix.pods[2]({val:'Text1'})"
+                    *ngSwitchCase="'text'"
+                    >{{y[x.view.subProp]}}</h2>
+                    <button
+                    [class]= "prefix.pods[2]({val:'Button0'})"
+                    *ngSwitchCase="'view'"
+                    >{{x.view.text}}</button>
+                    <button
+                    [class]= "prefix.pods[2]({val:'Button1'})"
+                    *ngSwitchCase="'modify'"
+                    >{{x.view.text}}</button>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- <ng-content select="[text]"></ng-content>
     <ng-content select="[question]"></ng-content> -->

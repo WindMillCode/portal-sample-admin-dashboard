@@ -1,8 +1,6 @@
 @import "src/assets/styles/util";
 // @import "/node_modules/primeicons/primeicons.css";
 @import "../../../../node_modules/primeicons/primeicons.css";
-@import "../../../../node_modules/primeng/resources/themes/saga-blue/theme.css";
-@import "../../../../node_modules/primeng/resources/primeng.min.css";
 
 :host{
 
@@ -17,6 +15,26 @@
 
     }
 
+    @mixin textarea0{
+        border: 3px solid #cccccc;
+        padding: 5px 10px;
+        font-family: Tahoma, sans-serif;
+        resize: none;
+    }
+
+    @mixin input0{
+        @include textarea0();
+        min-width: 0;
+    }
+
+
+
+
+    --color0:rgb(230, 232, 240);
+    --color1:black;
+    --color2:white;
+    --color3:lightblue;
+
     input{
         min-width: 0;
     }
@@ -25,7 +43,7 @@
     .a_p_p_Inventory{
         &View{
             @include view0;
-            @include outline;
+
             font-size: 16px;
         }
         &Main{
@@ -33,6 +51,7 @@
                 display: flex;
                 flex-flow:wrap;
                 flex:1 0 100%;
+                max-width:  1200px;
             }
         }
         &Pod{
@@ -47,9 +66,12 @@
             }
 
             &0{
-                border:1px solid black;
+                border:1px solid var(--color1);;
                 border-radius: 10px;
                 padding:10px;
+                align-items: flex-start;
+                height:94px;
+                z-index: 5;
 
                 &Button{
                     @for $i from 0 through 3 {
@@ -63,7 +85,15 @@
 
                     &0{
                         background: var(--radial-bg-blue);
+                    }
 
+                    &1{
+                        background: var(--radial-bg-red);
+                    }
+
+
+                    &2{
+                        background: var(--radiial-bg-ripebanana);
                     }
                 }
 
@@ -74,7 +104,24 @@
                     }
 
                     &1{
-                        @include outline;
+                        display:flex;
+                        flex-flow: column wrap;
+                        margin:20px 0 0 0;
+                    }
+
+                    &2{
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+
+                &Text{
+                    &0{
+                        padding:5px;
+                        border:1px solid var(--color0);
+                        display:none;
+                        z-index: 5;
+                        background-color:var(--color2);
                     }
                 }
 
@@ -89,6 +136,140 @@
                         font-size:1.2em;
                         padding:2px 5px;
                     }
+                }
+            }
+
+            &1{
+                border:1px solid var(--color1);;
+                border-radius: 10px;
+                padding:10px;
+                align-items: center;
+                height:94px;
+
+                &Label{
+                    &0{
+                        font-weight: bold;
+                    }
+                }
+
+                &Input{
+                    &0{
+                        @include input0();
+                        flex:0 0 70px;
+                        margin:0 0 0 20px;
+                        -webkit-appearance: none;
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button,
+                        &[type="number"]{
+                            -webkit-appearance: none;
+                            margin: 0;
+                            -moz-appearance: textfield;
+                        }
+
+                    }
+                }
+            }
+
+            &2{
+                position:relative;
+                // font-size:12px;
+                justify-content:flex-start;
+                max-width: 1200px;
+                overflow:scroll;
+
+
+                &Icon{
+                    &0{
+                        color:var(--color1);
+                        border:1px solid var(--color1);
+                        padding:5px;
+                    }
+                }
+
+                &Text{
+                    &0{
+                        color:var(--color1);
+                        padding:20px ;
+                        background-color: var(--color0);
+                        height:68px;
+                        @include tac;
+                        white-space: nowrap;
+
+                    }
+
+                    &1{
+                        word-break: keep-all;
+                        white-space: nowrap;
+                    }
+
+                }
+
+                &Button{
+                    &0{
+                        padding:10px 20px;
+                        background: var(--radial-bg-blue);
+                        font-size: 1em;
+                    }
+
+                    &1{
+                        padding:10px 20px;
+                        background: var(--radial-bg-green);
+                        font-size: 1em;
+                    }
+                }
+
+
+                &Item{
+
+                    &A{
+                        @for $i from 0 through 5 {
+                            &#{$i}{
+                                display:flex;
+                                flex-flow:column wrap;
+                                position:relative;
+                                // flex: 0 0 20%;
+                                border-left: 1px solid var(--color1);
+                            }
+                        }
+                    }
+
+                    &5{
+                        display:flex;
+                        flex-flow:column wrap;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    &B{
+                        @for $i from 6 through 11 {
+                            &#{$i}{
+                                display:flex;
+                                position:relative;
+                                background-color:var(--color3);
+                                width:100%;
+                                border-bottom: 1px solid var(--color1);
+                                justify-content: center;
+                                align-items: center;
+                                height:68px;
+                                overflow-y: scroll;
+                            }
+                        }
+                    }
+
+                    &7{
+                        // overflow-x: scroll;
+
+                    }
+
+                    &11{
+                        background-color: var(--color0);
+                        width:100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding:0 20px ;
+                    }
+
                 }
             }
         }

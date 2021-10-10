@@ -4,7 +4,7 @@ import { RyberService } from 'src/app/ryber.service';
 import { classPrefix, Orders } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { merge } from 'rxjs';
-import { catchError, combineAll, tap } from 'rxjs/operators';
+import { catchError, combineAll, tap,pluck } from 'rxjs/operators';
 import { InventoryTable } from 'src/app/shared/inventory/inventory.component';
 @Component({
     selector: 'app-main',
@@ -41,8 +41,15 @@ export class MainComponent implements OnInit {
                     text:""
                 },
                 options:{
-                    items:[]
-                }
+                    items:Array(3).fill(null)
+                    .map((x:any,i)=>{
+                        return {
+                            text:"",
+                            style:{}
+                        }
+                    })
+                },
+                icon:{}
             },
             search:{
                 label:{
@@ -51,6 +58,49 @@ export class MainComponent implements OnInit {
                 button:{
                     text:""
                 }
+            },
+            reset:{
+                text:""
+            },
+            create:{
+                text:""
+            },
+            pages:{
+                per:{
+                    input:{
+                        value:20
+                    },
+                    label:{
+                        text:""
+                    }
+                },
+                current:{
+                    input:{
+                        value:1
+                    }
+                }
+            },
+            headers:{
+                items:Array(6).fill(null)
+                .map((x:any,i)=>{
+                    return {
+                        title:{
+                            text:""
+                        },
+                        sort:{
+                            confirm:[true,true,true,false,false,false][i]
+                        },
+                        view:{
+                            subProp:["user","total","orderId","cart","billing","shipping"][i],
+                            text:"",
+                            type:["text","text","text","view","view","view","modify"][i]
+                        }
+                    }
+                })
+            },
+            db:{
+                items:[],
+                displayItems:[],
             }
         }
     }
@@ -79,22 +129,60 @@ export class MainComponent implements OnInit {
             })),
             ryber.translate.get("orders.searchBy.options")
             .pipe(tap((result:string[])=>{
-                
-                orders.table.searchBy.options.items =
-                result
-                .map((x:any,i)=>{
-                    return {
-                        text:x
-                    }
+
+                orders.table.searchBy.options.items
+                .forEach((x:any,i)=>{
+                    x.text = result[i]
+                })
+
+            })),
+            ryber.translate.get("orders.reset")
+            .pipe(tap((result:string)=>{
+
+                orders.table.reset.text = result;
+            })),
+            ryber.translate.get("orders.create")
+            .pipe(tap((result:string)=>{
+                orders.table.create.text = result;
+            })),
+            ryber.translate.get("orders.pages.per.label")
+            .pipe(tap((result:string)=>{
+                orders.table.pages.per.label.text = result;
+            })),
+            ryber.translate.get("orders.headers")
+            .pipe(tap((result:any[])=>{
+
+                orders.table.headers.items
+                .forEach((x:any,i)=>{
+                    x.title.text = result[i].title
+                    x.view.text = result[i].view
                 })
 
             })),
         ]
         .map((x:any,i)=>{
-            x
-            .subscribe()
-            subs.push(x)
+            subs.push(x.subscribe())
         })
+
+        let current = parseInt( orders.table.pages.current.input.value) -1
+        let myWindow = parseInt(orders.table.pages.per.input.value)
+        ryber.http.post(`${env.backend.url}/order/list`,
+            {
+                data:{
+                    pages:{
+                        page:current,
+                        per_page:myWindow
+                    }
+                }
+            }
+        )
+        .pipe(
+            pluck("message","list"),
+            tap((result)=>{
+                orders.table.db.xhrItems.next({data:result})
+            })
+        )
+        .subscribe()
 
 
     }

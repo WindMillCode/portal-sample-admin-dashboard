@@ -473,7 +473,6 @@
                             -moz-appearance: textfield;
                         }
 
-
                     }
                 }
                 &Item{
@@ -500,7 +499,13 @@
                 width: 100%;
                 flex-flow:wrap;
                 justify-content: center;
+
+                &0{
+                    max-width: 1200px;
+                }
             }
+
+
         }
         &Pod{
 
@@ -512,7 +517,7 @@
                     margin:40px 0 0 0;
                 }
             }
-            
+
             &0{
                 &Title{
                     &0{

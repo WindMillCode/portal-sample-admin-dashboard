@@ -86,7 +86,37 @@
                 "Total",
                 "OrderId"
             ]
-        }
+        },
+        "reset":"Reset",
+        "create":"Create",
+        "pages":{
+            "per":{
+                "label":"Per Page:"
+            }
+        },
+        "headers":[
+            {
+                "title":"User"
+            },
+            {
+                "title":"Total"
+            },
+            {
+                "title":"OrderId"
+            },
+            {
+                "title":"Cart",
+                "view":"View"
+            },
+            {
+                "title":"Billing",
+                "view":"View"
+            },
+            {
+                "title":"Shipping",
+                "view":"View"
+            }
+        ]
 
     }
 }

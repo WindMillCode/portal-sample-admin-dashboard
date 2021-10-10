@@ -475,7 +475,6 @@ import { HttpErrorResponse } from '@angular/common/http';
             list:{
                 retrived:new Set(),
                 pipeFns:[
-                    // take(1),  we have ts issue
                     catchError(()=>{
                         if(env.production){
                             alert("this is a sample userList reload and try again")
