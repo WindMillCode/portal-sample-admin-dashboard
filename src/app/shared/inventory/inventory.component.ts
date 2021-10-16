@@ -81,8 +81,35 @@ export class InventoryComponent implements OnInit {
         table.details = {}
         //
 
-        // disabled the plus minus
+        // setup for the pagination
         table.pages.current.input.disabled = true;
+        table.pages.current.input.onAdd =  ()=>{
+
+            table.util.listItems()
+
+        }
+        table.pages.current.input.onMinus = ()=>{
+            table.util.listItems()
+        }
+        table.pages.current.lastPageSet = false
+        table.pages.current.setLastPage = (devObj)=>{
+            if(!table.pages.current.lastPageSet){
+                table.pages.current.lastPageSet = true
+                let {max,lastResultSize} = devObj
+                if(lastResultSize === 0){
+                    table.pages.current.input.range.max = max
+                }
+                else{
+                    table.pages.current.input.range.max = max +1
+                }
+            }
+        }
+        //
+
+        // setup for the perPage
+        table.pages.per.input.focusout=()=>{
+            table.util.listItems()
+        }
         //
 
         // setup up data modification to be entered into table
@@ -106,6 +133,13 @@ export class InventoryComponent implements OnInit {
                         table.db.items.push(...data)
                     }
                     table.db.displayItems = []
+
+                    // if data is empty we know where to set the max for the pagination
+                    if(data?.length !== myWindow){
+                        table.pages.current.setLastPage({max:current,lastResultSize:data?.length})
+                    }
+                    //
+
                     // proivde for metadata
                     table.db.items
                     .slice(
@@ -139,8 +173,8 @@ export class InventoryComponent implements OnInit {
                     // sort for prettiness
 
                     //
-                    console.log(table.headers.items)
-                    console.log(table.db.items[3])
+                    // console.log(table.headers.items)
+                    // console.log(table.db.items[3])
                     ref.detectChanges()
                 })
             ]
@@ -152,6 +186,10 @@ export class InventoryComponent implements OnInit {
         )
         .subscribe()
         subs.push(sub0)
+        //
+
+        // initalize the table
+        table.util.listItems()
         //
 
     }

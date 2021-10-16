@@ -1,4 +1,5 @@
 <main
+
 [class]= "prefix.main({val:'Pod'})"
 >
 
@@ -58,6 +59,7 @@
         [class]= "prefix.pods[1]({val:'Label0'})"
         >{{table.pages.per.label.text}}</label>
         <input
+        disabled
         appUpdateInputVal [updateInputVal]="table.pages.per.input"
         [class]= "prefix.pods[1]({val:'Input0'})"
         type="number"
@@ -67,12 +69,14 @@
         [input]="table.pages.current.input"
         ></app-plus-minus>
     </section>
+
     <section
     [class]= "prefix.pods[2]({val:''})"
     >
         <div
         [class]= "prefix.pods[2]({val:'ItemA'+i})"
         *ngFor="let x of table.headers.items;let i = index"
+
         >
             <div
             [class]= "prefix.pods[2]({val:'Item5'})"
@@ -81,6 +85,7 @@
                 [class]= "prefix.pods[2]({val:'Item11'})"
                 >
                     <h2
+
                     [class]= "prefix.pods[2]({val:'Text0'})"
                     >{{ x.title.text}} </h2>
                     <i

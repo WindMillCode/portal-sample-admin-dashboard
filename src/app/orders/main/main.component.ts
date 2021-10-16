@@ -4,7 +4,7 @@ import { RyberService } from 'src/app/ryber.service';
 import { classPrefix, Orders } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { merge } from 'rxjs';
-import { catchError, combineAll, tap,pluck } from 'rxjs/operators';
+import { catchError, combineAll, tap,pluck,take } from 'rxjs/operators';
 import { InventoryTable } from 'src/app/shared/inventory/inventory.component';
 @Component({
     selector: 'app-main',
@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
     }
-    subs: Subscription[] = [];
+    subs: Subscription = new Subscription();
     //
 
     // table
@@ -67,7 +67,7 @@ export class MainComponent implements OnInit {
             },
             pages:{
                 per:{
-                    input:{
+                input:{
                         value:20
                     },
                     label:{
@@ -101,6 +101,38 @@ export class MainComponent implements OnInit {
             db:{
                 items:[],
                 displayItems:[],
+            },
+            util:{
+                listItems:(devObj)=>{
+
+                    let {orders,ryber} = this
+                    let current = parseInt( orders.table.pages.current.input.value) -1
+                    let myWindow = parseInt(orders.table.pages.per.input.value)
+
+
+                    iif(
+                        () => !orders.table.pages.list.retrieved.has(current),
+                        ryber.http.post(`${env.backend.url}/order/list`,
+                            {
+                                data:{
+                                    pages:{
+                                        page:current,
+                                        per_page:myWindow
+                                    }
+                                }
+                            }
+                        ),
+                        of({})
+                    )
+                    .pipe(
+                        take(1),
+                        pluck("message","list"),
+                        tap((result)=>{
+                            orders.table.db.xhrItems.next({data:result})
+                        })
+                    )
+                    .subscribe()
+                }
             }
         }
     }
@@ -161,37 +193,16 @@ export class MainComponent implements OnInit {
             })),
         ]
         .map((x:any,i)=>{
-            subs.push(x.subscribe())
+            subs.add(x.subscribe())
         })
 
-        let current = parseInt( orders.table.pages.current.input.value) -1
-        let myWindow = parseInt(orders.table.pages.per.input.value)
-        ryber.http.post(`${env.backend.url}/order/list`,
-            {
-                data:{
-                    pages:{
-                        page:current,
-                        per_page:myWindow
-                    }
-                }
-            }
-        )
-        .pipe(
-            pluck("message","list"),
-            tap((result)=>{
-                orders.table.db.xhrItems.next({data:result})
-            })
-        )
-        .subscribe()
+
 
 
     }
 
     ngOnDestroy(): void {
-        this.subs
-        .forEach((x:any,i)=>{
-            x?.unsubscribe();
-        })
+        this.subs.unsubscribe();
     }
 
 }

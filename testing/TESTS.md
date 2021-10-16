@@ -21,6 +21,11 @@
 ### Table search
 * test that topics are properly supported
 * test that when we search with startsWith we get corrently values
+
+### Table paginate
+* test that when I pagniate to the last of results I dont make xhr for more results the max is set at that last page
+    * if the last page results is 0, the max is the previous page
+
 # Unit Tests
 
 # Integration Tests
