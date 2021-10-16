@@ -12,9 +12,11 @@
             <label>{{table.search.label.text}}</label>
             <input
             [class]= "prefix.pods[0]({val:'Input0'})"
+            appUpdateInputVal [updateInputVal]="table.search.query.input"
             />
         </div>
         <button
+        (click)=table.search.button.click()
         [class]= "prefix.pods[0]({val:'Button0'})"
         >{{table.search.button.text}}</button>
         <div
@@ -41,6 +43,7 @@
             >{{x.text}}</h2>
         </div>
         <button
+        (click)="table.search.reset.click()"
         [class]= "prefix.pods[0]({val:'Button1'})"
         >
         {{table.reset.text}}

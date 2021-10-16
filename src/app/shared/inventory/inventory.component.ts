@@ -3,7 +3,8 @@ import {fromEvent,iif,Subscription,of,Subject} from 'rxjs';
 import { RyberService } from 'src/app/ryber.service';
 import { classPrefix } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
-import { catchError,tap } from 'rxjs/operators';
+import { catchError,tap,take } from 'rxjs/operators';
+import { InventoryTable } from './inventory.model';
 
 @Component({
     selector: 'app-inventory',
@@ -32,7 +33,7 @@ export class InventoryComponent implements OnInit {
     //
 
     // parent values
-    @Input() table:any
+    @Input() table:InventoryTable
 
     //
 
@@ -62,8 +63,7 @@ export class InventoryComponent implements OnInit {
         }
         //
 
-
-        //  setup click functionality
+        //  setup click functionality in dropdown
         table.searchBy.options.items
         .forEach((x:any,i)=>{
             x.click = ()=>{
@@ -73,9 +73,45 @@ export class InventoryComponent implements OnInit {
                 .forEach((y:any,j)=>{
                     y.style.display = "none";
                 })
+                table.search.query.state = x.stateText
             }
         })
         //
+
+        // initalize the dropdown
+        table.searchBy.placeholder.text =  table.searchBy.options.items[0].text
+        //
+
+        // setup search functionality
+        table.search.query = {
+            input:{
+                value:"",
+            },
+            state:table.searchBy.options.items[0].stateText
+        }
+        table.search.button.click =()=>{
+            table.db.displayItems = table.db.items
+            .filter((x:any,i)=>{
+                return x.meta[table.search.query.state]
+                .value
+                .toLowerCase()
+                .startsWith(table.search.query.input.value.toLowerCase())
+            })
+            ref.detectChanges()
+        }
+        //
+
+        // setup reset functionality
+        table.search.reset = {
+            click:()=>{
+                of({})
+                .pipe(
+                    take(1),
+                    ...table.pages.list.pipeFns,
+                )
+                .subscribe()
+            }
+        }
 
         // setup the details modal
         table.details = {}
@@ -147,23 +183,19 @@ export class InventoryComponent implements OnInit {
                         (current + 1) *myWindow
                     )
                     .forEach((x:any,i)=>{
-                        // user should have a role in deining this
-                        x.meta = {
-
-                            user:{
-                                value:x.user
-                            },
-                            interact : {
-                                click:(devObj:any)=>{
-                                    let {key,perm} = devObj
-                                    return (evt:MouseEvent)=>{
-                                        table.details.view.style.display = "flex"
-                                        table.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
+                        // user defined meta vlaues
+                        x.meta = table.util.metaForEntry({entry:x}) ?? {}
+                        //
+                        x.meta.interact = {
+                            click:(devObj:any)=>{
+                                let {key,perm} = devObj
+                                return (evt:MouseEvent)=>{
+                                    table.details.view.style.display = "flex"
+                                    table.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
 
 
-                                        table.details.values.state = perm ?? "view"
-                                        ref.detectChanges()
-                                    }
+                                    table.details.values.state = perm ?? "view"
+                                    ref.detectChanges()
                                 }
                             }
                         }
@@ -205,25 +237,4 @@ export class InventoryComponent implements OnInit {
 
 }
 
-export type InventoryTable ={
-    [k:string]:any,
-    searchBy:{
-        placeholder:{
-            text:string
-        },
-        options:{
-            items:Array<{
-                text:string
-            }>
-        },
-        icon:{}
-    },
-    search:{
-        label:{
-            text:string
-        },
-        button:{
-            text:string
-        },
-    }
-}
+

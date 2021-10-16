@@ -5,7 +5,7 @@ import { classPrefix, Orders } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { merge } from 'rxjs';
 import { catchError, combineAll, tap,pluck,take } from 'rxjs/operators';
-import { InventoryTable } from 'src/app/shared/inventory/inventory.component';
+
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
@@ -45,7 +45,8 @@ export class MainComponent implements OnInit {
                     .map((x:any,i)=>{
                         return {
                             text:"",
-                            style:{}
+                            style:{},
+                            stateText:["user","total","orderId"][i]
                         }
                     })
                 },
@@ -127,11 +128,22 @@ export class MainComponent implements OnInit {
                     .pipe(
                         take(1),
                         pluck("message","list"),
-                        tap((result)=>{
+                        tap((result:any)=>{
                             orders.table.db.xhrItems.next({data:result})
                         })
                     )
                     .subscribe()
+                },
+                metaForEntry:(devObj)=>{
+                    let {entry} = devObj;
+                    let result = {};
+                    ["user","total","orderId"]
+                    .map((x:any,i)=>{
+                        result[x] ={
+                            value: entry[x].toString()
+                        }
+                    })
+                    return result
                 }
             }
         }
@@ -149,20 +161,20 @@ export class MainComponent implements OnInit {
         let my_subs = [
             ryber.translate.get("orders.search.button")
             .pipe(tap((result:string)=>{
-                orders.table.search.button.text = result;
+                orders.table.search!.button.text = result;
             })),
             ryber.translate.get("orders.search.label")
             .pipe(tap((result:string)=>{
-                orders.table.search.label.text = result;
+                orders.table.search!.label.text = result;
             })),
             ryber.translate.get("orders.searchBy.placeholder")
             .pipe(tap((result:string)=>{
-                orders.table.searchBy.placeholder.text = result;
+                orders.table.searchBy!.placeholder.text = result;
             })),
             ryber.translate.get("orders.searchBy.options")
             .pipe(tap((result:string[])=>{
 
-                orders.table.searchBy.options.items
+                orders.table.searchBy!.options.items
                 .forEach((x:any,i)=>{
                     x.text = result[i]
                 })

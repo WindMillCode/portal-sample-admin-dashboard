@@ -13,9 +13,7 @@ import { environment as env } from 'src/environments/environment';
 export class PlusMinusComponent implements OnInit {
 
     @Input() input!:{
-        input:{
-            value:any
-        }
+        value:any
     }
     @Input() onAdd:Function
     @Input() onMinus:Function
