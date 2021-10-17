@@ -156,8 +156,8 @@ this.parentChange = ()=>{
 * might incorrectly track when changing the page range please fix
 
 # TODO
-* users.details.values.target needs an present prop and a metadata prop
-* try to figure out how reading new items and sort can work together
+* provide to add a section when creating or modifying an entry in a resource
+
 
 ## Template Updates
 Team members refer to the [Trello workspace](https://trello.com/b/AFCBbcL4/angular-template-project-updates)

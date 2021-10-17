@@ -6,7 +6,6 @@ import { environment as env } from 'src/environments/environment';
 import { catchError,tap,take, concatMap,delay } from 'rxjs/operators';
 import {
     InventoryTable,
-    InventoryTableDetailsUpdatePullValuesTarget
 } from './inventory.model';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 
@@ -137,22 +136,11 @@ export class InventoryComponent implements OnInit {
                 },
             },
             update:{
-                pullValues:(devObj)=>{
-                    let {target}= devObj
-                    let result = Object.fromEntries(
-                        Object.entries(target)
-                        .map((x:any,i)=>{
-                            let [keyx,valx] = x
-                            return [keyx,valx.input.value]
-                        })
-                    )
-                    return result
-                },
+
                 click:()=>{
                     let updateChoice = confirm("Are you sure you want to update this item from the resource?");
                     if(updateChoice){
                         let resource = table.details.update.clickAux()
-                        console.log(resource.body.data)
 
                         // now make xhr
                         of({})
@@ -187,6 +175,38 @@ export class InventoryComponent implements OnInit {
                     }
                 },
                 ...table.details.delete as any,
+            },
+            create:{
+                ...table.details.create,
+                request:{
+                    text:"Create",
+                    click:()=>{
+                        table.details.view.style.display = "flex"
+                        table.details.values.state = "create"
+                        table.details.values.target = table.details.create.request.clickAux()
+                        ref.detectChanges()
+                    },
+                    ...table.details.create.request as any,
+                },
+                confirm:{
+                    text:"Create",
+                    click:()=>{
+                        let confirmChoice = confirm("Are you sure you want to create this item on the resource")
+                        if(confirmChoice){
+                            let resource = table.details.create.confirm.clickAux()
+                            of({})
+                            .pipe(
+                                ...table.util.modifyResorucePipeFns({
+                                    resource,
+                                    action:"create"
+                                })
+                            )
+                            .subscribe()
+                        }
+                    },
+                    ...table.details.create.confirm as any,
+                },
+
             }
         }
         //
@@ -345,6 +365,17 @@ export class InventoryComponent implements OnInit {
 
         // additional util
         table.util ={
+            pullValues:(devObj)=>{
+                let {target}= devObj
+                let result = Object.fromEntries(
+                    Object.entries(target)
+                    .map((x:any,i)=>{
+                        let [keyx,valx] = x
+                        return [keyx,valx.input.value]
+                    })
+                )
+                return result
+            },
             keyvaluePipe :{
                 unsorted:()=>{}
             },
@@ -375,7 +406,6 @@ export class InventoryComponent implements OnInit {
                     }),
                     concatMap(()=>{
 
-                        let action = "delete"
                         return iif(
                             () => table.util.mock[action].confirm,
                             http.request(
@@ -407,6 +437,28 @@ export class InventoryComponent implements OnInit {
                         }
                     )
                 ]
+            },
+            toInputInPlace:(devObj)=>{
+                // modifies myResult in place
+                let {myResult} = devObj
+                Object.entries(myResult)
+                .forEach((x:any,i)=>{
+                    let [keyx,valx]= x
+                    myResult[keyx] = Object.fromEntries(
+                        Object.entries(valx)
+                        .map((y:any,j)=>{
+                            let [keyy,valy] = y
+                            return [
+                                keyy,
+                                {
+                                    input:{
+                                        value:valy
+                                    }
+                                }
+                            ]
+                        })
+                    )
+                })
             },
             ...table.util as any
         }

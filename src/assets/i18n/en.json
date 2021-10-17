@@ -89,6 +89,8 @@
         },
         "reset":"Reset",
         "create":"Create",
+        "update":"Save",
+        "delete":"Delete",
         "pages":{
             "per":{
                 "label":"Per Page:"

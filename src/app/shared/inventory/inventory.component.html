@@ -49,9 +49,10 @@
         {{table.reset.text}}
         </button>
         <button
+        (click)="table.details.create.request.click()"
         [class]= "prefix.pods[0]({val:'Button2'})"
         >
-        {{table.create.text}}
+        {{table.details.create.request.text}}
         </button>
 
     </section>
@@ -178,10 +179,10 @@
             </div>
         </div>
         <button
-        (click)="table.query.create.confirm.click()"
+        (click)="table.details.create.confirm.click()"
         *ngIf=  "table.details.values.state === 'create'"
         [class]= "prefix.pods[3]({val:'Button0'})"
-        >{{ 'users.form.query.create.confirm'| translate}}</button>
+        >{{ table.details.create.confirm.text}}</button>
         <button
         (click)="table.details.update.click()"
         *ngIf=  "table.details.values.state === 'edit'"

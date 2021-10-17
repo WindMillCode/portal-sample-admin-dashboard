@@ -5,7 +5,7 @@ import { classPrefix, Orders } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { merge } from 'rxjs';
 import { catchError, combineAll, tap,pluck,take } from 'rxjs/operators';
-import { InventoryTableDetailsUpdateClickAuxReturn } from 'src/app/shared/inventory/inventory.model';
+
 
 @Component({
     selector: 'app-main',
@@ -28,12 +28,47 @@ export class MainComponent implements OnInit {
         })
     }
     subs: Subscription = new Subscription();
+
     //
 
     // table
     orders:Orders= {
         title:{
             text:"orders.title"
+        },
+        fn0:(devObj)=>{
+            let {table,target} = devObj
+            return {
+                user:table.util.pullValues({
+                    target:target.user
+                }).username,
+                total:table.util.pullValues({
+                    target:target.total
+                }).value,
+                billing:{
+                    items:table.util.pullValues({
+                        target:target.billing
+                    })
+                },
+                shipping:{
+                    info:{
+                        items:table.util.pullValues({
+                            target:target.shipping
+                        })
+                    }
+                },
+                cart:Object.entries(target)
+                .filter((x:[string,any],i)=>{
+                    let [keyx,valx]= x
+                    return keyx.startsWith("cart Item")
+                })
+                .map((x:[string,any],i)=>{
+                    let [keyx,valx]= x
+                    return table.util.pullValues({
+                        target:valx
+                    })
+                })
+            }
         },
         table:{
 
@@ -64,53 +99,87 @@ export class MainComponent implements OnInit {
             reset:{
                 text:""
             },
-            create:{
-                text:""
-            },
             details:{
+                create:{
+
+                    loading:this.ryber.loading,
+                    url:`${env.backend.url}/order/create`,
+                    method:"PUT",
+                    request:{
+                        text:"",
+                        clickAux:()=>{
+                            let {table} = this.orders
+                            let billing = Object.fromEntries(
+                                ["First Name","Last Name","Email","Phone","Address","City","State","Zip Code","Country"]
+                                .map((x:any,i)=>{
+                                    return [
+                                        x.toLowerCase().split(" ").join("_"),
+                                        ""
+                                    ]
+                                })
+                            )
+                            let shipping =Object.fromEntries(
+                                ["First Name","Last Name","Email","Phone","Address","City","State","Zip Code","Country"]
+                                .map((x:any,i)=>{
+                                    return [
+                                        x.toLowerCase().split(" ").join("_"),
+                                        ""
+                                    ]
+                                })
+                            )
+                            let myResult = {
+                                user:{
+                                    username:""
+                                },
+                                billing,
+                                shipping,
+                                total:{
+                                    value:""
+                                },
+                                "cart Item 1":{
+                                    name:"",
+                                    price:"",
+                                    quantity:""
+                                }
+                            }
+
+                            table.util.toInputInPlace({myResult})
+
+                            return myResult
+                        },
+                    },
+                    confirm:{
+                        text:"",
+                        clickAux:()=>{
+                            let {table,fn0} = this.orders
+                            let {target} = table.details.values
+                            let data =  fn0({table,target})
+                            data.shipping.sameAsBilling = {
+                                checked:false
+                            }
+                            let resource = {
+                                body:{
+                                    data
+                                }
+                            }
+                            return resource
+                        }
+                    },
+                },
                 update:{
+                    text:"",
                     loading:this.ryber.loading,
                     url:`${env.backend.url}/order/adminUpdate`,
                     method:"PATCH",
                     clickAux:()=>{
-                        let {table} = this.orders
+                        let {table,fn0} = this.orders
                         let {target,meta} = table.details.values
 
                         let resource ={
                             body:{
                                 data:{
                                     orderId:meta.orderId.value,
-                                    update_body:{
-                                        user:table.details.update.pullValues({
-                                            target:target.user
-                                        }).username,
-                                        total:table.details.update.pullValues({
-                                            target:target.total
-                                        }).value,
-                                        billing:{
-                                            items:table.details.update.pullValues({
-                                                target:target.billing
-                                            })
-                                        },
-                                        shipping:{
-                                            info:{
-                                                items:table.details.update.pullValues({
-                                                    target:target.shipping
-                                                })
-                                            }
-                                        },
-                                        cart:Object.entries(target)
-                                        .filter((x:[string,any],i)=>{
-                                            let [keyx,valx]= x
-                                            return keyx.startsWith("cart Item")
-                                        })
-                                        .map((x:[string,any],i)=>{
-                                            let [keyx,valx]= x
-                                            return table.details.update.pullValues({
-                                                target:valx
-                                            })
-                                        })
-                                    }
+                                    update_body:fn0({table,target})
                                 }
                             }
                         }
@@ -118,6 +187,7 @@ export class MainComponent implements OnInit {
                     },
                 },
                 delete:{
+                    text:"",
                     loading:this.ryber.loading,
                     url:`${env.backend.url}/order/adminDelete`,
                     method:"DELETE",
@@ -251,24 +321,8 @@ export class MainComponent implements OnInit {
                             .forEach((x:any,i)=>{
                                 myResult["cart Item " +(i+1)] =x
                             })
-                            Object.entries(myResult)
-                            .forEach((x:any,i)=>{
-                                let [keyx,valx]= x
-                                myResult[keyx] = Object.fromEntries(
-                                    Object.entries(valx)
-                                    .map((y:any,j)=>{
-                                        let [keyy,valy] = y
-                                        return [
-                                            keyy,
-                                            {
-                                                input:{
-                                                    value:valy
-                                                }
-                                            }
-                                        ]
-                                    })
-                                )
-                            })
+                            orders.table.util.toInputInPlace({myResult})
+
                             return myResult
                             break;
                         default:
@@ -319,7 +373,16 @@ export class MainComponent implements OnInit {
             })),
             ryber.translate.get("orders.create")
             .pipe(tap((result:string)=>{
-                orders.table.create.text = result;
+                orders.table.details.create.request.text = result;
+                orders.table.details.create.confirm.text = result
+            })),
+            ryber.translate.get("orders.delete")
+            .pipe(tap((result:string)=>{
+                orders.table.details.delete.text = result;
+            })),
+            ryber.translate.get("orders.update")
+            .pipe(tap((result:string)=>{
+                orders.table.details.update.text = result;
             })),
             ryber.translate.get("orders.pages.per.label")
             .pipe(tap((result:string)=>{

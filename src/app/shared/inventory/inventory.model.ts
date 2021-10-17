@@ -92,6 +92,7 @@ export type InventoryTable ={
         },
         [k:string]:any,
         update:{
+            text:string,
             url:string,
             method:string,
             loading:{
@@ -100,13 +101,11 @@ export type InventoryTable ={
                     style:{[k:string]:any}
                 }
             }
-            pullValues:({
-                target:InventoryTableDetailsUpdatePullValuesTarget
-            })=>InventoryTableDetailsUpdatePullValuesReturn,
             click:()=> void,
             clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn,
         },
         delete:{
+            text:string,
             loading:{
                 view:{
                     [k:string]:any,
@@ -117,7 +116,27 @@ export type InventoryTable ={
             method:string,
             click:()=> void,
             clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn
-        }
+        },
+        create:{
+            loading:{
+                view:{
+                    [k:string]:any,
+                    style:{[k:string]:any}
+                }
+            },
+            request:{
+                text:string,
+                click:()=>void,
+                clickAux:()=>InventoryTableDetailsCreateRequestClickAuxReturn
+            },
+            confirm:{
+                text:string,
+                click:()=>void,
+                clickAux:()=>InventoryTableDetailsCreateConfirmClickAuxReturn
+            },
+            url:string,
+            method:string,
+        },
         values:{
             [k:string]:any,
             state:"view"|"edit" |"create",
@@ -143,6 +162,10 @@ export type InventoryTable ={
                 confirm:boolean
             }
         },
+        pullValues:({
+            target:InventoryTableUtilPullValuesTarget
+        })=>InventoryTableUtilPullValuesReturn,
+        toInputInPlace:({myResult:any})=> InventoryTableUtilToInputInPlaceReturn,
         modifyResorucePipeFns:(devObj:{
             resource:InventoryTableUtilModifyResorucePipeFnsResource,
             action:string | "create"| "update"|"delete"
@@ -161,29 +184,41 @@ export type InventoryTable ={
     }
 }
 
-export type InventoryTableDetailsUpdatePullValuesTarget={
+
+export type InventoryTableUtilToInputInPlaceReturn = {
+    [k:string] :{
+        [k:string]:{
+            input:{
+                value:string|number
+            }
+        }
+    }
+}
+export type InventoryTableUtilPullValuesTarget={
     [k:string]:{
         input:{
             value:string|number
         }
     }
 }
+export type InventoryTableDetailsCreateRequestClickAuxReturn = InventoryTableUtilPullValuesTarget
+
 
 export type InventoryTableUtilMetaForEntryEntry ={
     [k:string]:any
 }
 
-export type InventoryTableDetailsUpdatePullValuesReturn={
+export type InventoryTableUtilPullValuesReturn={
     [k:string]:string|number
 }
 
+export type InventoryTableDetailsDeleteClickAuxReturn = InventoryTableDetailsUpdateClickAuxReturn
+export type InventoryTableUtilModifyResorucePipeFnsResource = InventoryTableDetailsUpdateClickAuxReturn
 
 export type InventoryTableDetailsUpdateClickAuxReturn ={
     body:any
 }
+export type InventoryTableDetailsCreateConfirmClickAuxReturn =InventoryTableDetailsUpdateClickAuxReturn
 
-export type InventoryTableDetailsDeleteClickAuxReturn = InventoryTableDetailsUpdateClickAuxReturn
 
-export type InventoryTableUtilModifyResorucePipeFnsResource =
-InventoryTableDetailsDeleteClickAuxReturn |
-InventoryTableDetailsUpdateClickAuxReturn
+
