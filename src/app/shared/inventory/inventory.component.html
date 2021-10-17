@@ -77,7 +77,7 @@
     [class]= "prefix.pods[2]({val:''})"
     >
         <div
-        [class]= "prefix.pods[2]({val:'ItemA'+i})"
+        [class]= "prefix.pods[2]({val:'ItemA'})"
         *ngFor="let x of table.headers.items;let i = index"
 
         >
@@ -108,7 +108,7 @@
 
 
                 <div
-                [class]= "prefix.pods[2]({val:'ItemB'+ (6+i)})"
+                [class]= "prefix.pods[2]({val:'ItemB'})"
                 [ngSwitch]="x.view.type"
                 *ngFor ="let y of table.db.displayItems;let j = index"
                 >

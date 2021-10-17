@@ -225,13 +225,15 @@
                 &Item{
 
                     &A{
+
+                        display:flex;
+                        flex-flow:column wrap;
+                        position:relative;
+                        // flex: 0 0 20%;
+                        border-left: 1px solid var(--color1);
                         @for $i from 0 through 5 {
                             &#{$i}{
-                                display:flex;
-                                flex-flow:column wrap;
-                                position:relative;
-                                // flex: 0 0 20%;
-                                border-left: 1px solid var(--color1);
+
                             }
                         }
                     }
@@ -243,17 +245,19 @@
                         align-items: center;
                     }
                     &B{
-                        @for $i from 6 through 11 {
+
+                        display:flex;
+                        position:relative;
+                        background-color:var(--color3);
+                        width:100%;
+                        border-bottom: 1px solid var(--color1);
+                        justify-content: center;
+                        align-items: center;
+                        height:68px;
+                        overflow-y: scroll;
+                        @for $i from 0 through 11 {
                             &#{$i}{
-                                display:flex;
-                                position:relative;
-                                background-color:var(--color3);
-                                width:100%;
-                                border-bottom: 1px solid var(--color1);
-                                justify-content: center;
-                                align-items: center;
-                                height:68px;
-                                overflow-y: scroll;
+
                             }
                         }
                     }

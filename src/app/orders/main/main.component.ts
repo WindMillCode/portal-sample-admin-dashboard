@@ -82,7 +82,7 @@ export class MainComponent implements OnInit {
                 }
             },
             headers:{
-                items:Array(6).fill(null)
+                items:Array(7).fill(null)
                 .map((x:any,i)=>{
                     return {
                         title:{
@@ -92,7 +92,7 @@ export class MainComponent implements OnInit {
                             confirm:[true,true,true,false,false,false][i]
                         },
                         view:{
-                            subProp:["user","total","orderId","cart","billing","shipping"][i],
+                            subProp:["user","total","orderId","cart","billing","shipping","modify"][i],
                             text:"",
                             type:["text","text","text","view","view","view","modify"][i]
                         }
