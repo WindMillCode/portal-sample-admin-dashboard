@@ -140,6 +140,43 @@
         (click)="table.details.close.click()"
         [class]= "'pi pi-times ' + prefix.pods[3]({val:'Icon0'})">
         </i>
+        <div
+        [class]= "prefix.pods[3]({val:'Item1'})">
+            <div
+            [class]= "prefix.pods[3]({val:'Item2'})"
+            *ngFor="let x of table.details.values.target | keyvalue:table.util.keyvaluePipe.unsorted;let i = index">
+                <h2>{{x.key}}: </h2>
+                <div
+                [ngSwitch]="table.details.values.state"
+                [class]= "prefix.pods[3]({val:'Item3'})">
+                    <div
+
+                    *ngFor="let y of x.value | keyvalue:table.util.keyvaluePipe.unsorted;let j = index"
+                    [class]= "prefix.pods[3]({val:'Item4'})">
+                        <h3>{{y.key | titlecase }}:</h3>
+                        <div
+
+                        [class]= "prefix.pods[3]({val:'Item5'})"
+                        >
+                            <h3
+                            *ngSwitchCase="'view'"
+                            >{{y.value}}</h3>
+                            <textarea
+                            appUpdateInputVal [updateInputVal]="y.value.input"
+                            *ngSwitchCase="'edit'"
+                            [class]= "prefix.pods[3]({val:'Input0'})"
+                            >{{y.value.input.value}}</textarea>
+                            <textarea
+                            appUpdateInputVal [updateInputVal]="y.value.input"
+                            *ngSwitchCase="'create'"
+                            [class]= "prefix.pods[3]({val:'Input0'})"
+                            >{{y.value.input.value}}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <button
         (click)="table.query.create.confirm.click()"
         *ngIf=  "table.details.values.state === 'create'"

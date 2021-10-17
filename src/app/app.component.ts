@@ -45,7 +45,34 @@ export class AppComponent {
 
         // e2e automation tests you wnat to remove these
 
+        of({})
+        .pipe(
+            delay(1000),
+            tap(
+                ()=>{
+                    let row = Math.floor(Math.random()*20);
 
+
+                    // let buttonArray = [cart0Button,shipping0Button,billing0Button,modify0Button]
+                    let buttonArray = Array(4).fill(null)
+                    .map((x: HTMLButtonElement,i=4)=>{
+
+                        return document
+                        .querySelector("app-inventory")!
+                        .shadowRoot!
+                        .querySelector(`main >
+                        section.a_p_p_InventoryPod2 >
+                        div:nth-child(${i+4}) > div > div:nth-child(${row}) > button`)
+
+                    })
+                    eventDispatcher({
+                        element:buttonArray[3] as HTMLButtonElement,
+                        event:"click"
+                    })
+                }
+            )
+        )
+        .subscribe()
 
         //
     }

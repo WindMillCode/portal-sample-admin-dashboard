@@ -91,9 +91,77 @@ export type InventoryTable ={
             click:()=>void
         },
         [k:string]:any,
+        update:{
+            url:string,
+            method:string,
+            loading:{
+                view:{
+                    [k:string]:any,
+                    style:{[k:string]:any}
+                }
+            }
+            pullValues:({
+                target:InventoryTableDetailsUpdatePullValuesTarget
+            })=>InventoryTableDetailsUpdatePullValuesReturn,
+            click:()=> void,
+            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn,
+        },
+        delete:{
+            url:string,
+            method:string,
+            click:()=> void
+        }
         values:{
             [k:string]:any,
-            state:"view"|"edit" |"create"
+            state:"view"|"edit" |"create",
+            target:{
+                [k:string]:{
+                    [k:string]:any
+                }
+            }
         },
+    },
+    util:{
+        mock:{
+            general:{
+                fn:()=>any
+            },
+            update:{
+                confirm:boolean
+            },
+            delete:{
+                confirm:boolean
+            },
+            create:{
+                confirm:boolean
+            }
+        },
+        keyvaluePipe:{
+            unsorted:()=> any
+        },
+        listItems:()=>any,
+        customInteractMods:({key:string,item:any})=> any,
+        metaForEntry:({entry:InventoryTableUtilMetaForEntryEntry}) => any
     }
+}
+
+export type InventoryTableDetailsUpdatePullValuesTarget={
+    [k:string]:{
+        input:{
+            value:string|number
+        }
+    }
+}
+
+export type InventoryTableUtilMetaForEntryEntry ={
+    [k:string]:any
+}
+
+export type InventoryTableDetailsUpdatePullValuesReturn={
+    [k:string]:string|number
+}
+
+
+export type InventoryTableDetailsUpdateClickAuxReturn ={
+    body:any
 }

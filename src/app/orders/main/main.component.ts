@@ -5,6 +5,7 @@ import { classPrefix, Orders } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { merge } from 'rxjs';
 import { catchError, combineAll, tap,pluck,take } from 'rxjs/operators';
+import { InventoryTableDetailsUpdateClickAuxReturn } from 'src/app/shared/inventory/inventory.model';
 
 @Component({
     selector: 'app-main',
@@ -66,11 +67,67 @@ export class MainComponent implements OnInit {
             create:{
                 text:""
             },
+            details:{
+                update:{
+                    loading:this.ryber.loading,
+                    url:`${env.backend.url}/order/adminUpdate`,
+                    method:"PATCH",
+                    clickAux:()=>{
+                        let {table} = this.orders
+                        let {target,meta} = table.details.values
+                        console.log(table.details.values)
+
+                        let resource ={
+                            body:{
+                                data:{
+                                    orderId:meta.orderId.value,
+                                    update_body:{
+                                        user:table.details.update.pullValues({
+                                            target:target.user
+                                        }).username,
+                                        total:table.details.update.pullValues({
+                                            target:target.total
+                                        }).value,
+                                        billing:{
+                                            items:table.details.update.pullValues({
+                                                target:target.billing
+                                            })
+                                        },
+                                        shipping:{
+                                            info:{
+                                                items:table.details.update.pullValues({
+                                                    target:target.shipping
+                                                })
+                                            }
+                                        },
+                                        cart:Object.entries(target)
+                                        .filter((x:[string,any],i)=>{
+                                            let [keyx,valx]= x
+                                            return keyx.startsWith("cart Item")
+                                        })
+                                        .map((x:[string,any],i)=>{
+                                            let [keyx,valx]= x
+                                            return table.details.update.pullValues({
+                                                target:valx
+                                            })
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                        return resource
+                    },
+                },
+                delete:{
+                    url:`${env.backend.url}/order/adminDelete`,
+                    method:"DELETE"
+                }
+            },
             pages:{
                 per:{
-                input:{
-                        value:20
-                    },
+                    input:{
+                            value:20
+                        },
                     label:{
                         text:""
                     }
@@ -104,7 +161,7 @@ export class MainComponent implements OnInit {
                 displayItems:[],
             },
             util:{
-                listItems:(devObj)=>{
+                listItems:()=>{
 
                     let {orders,ryber} = this
                     let current = parseInt( orders.table.pages.current.input.value) -1
@@ -144,6 +201,70 @@ export class MainComponent implements OnInit {
                         }
                     })
                     return result
+                },
+                customInteractMods:(devObj)=>{
+                    let {orders}= this
+                    let {key,item} = devObj
+
+                    switch (key) {
+                        case "cart":
+                            let result = {}
+                            item
+                            .forEach((x:any,i)=>{
+                                result[i+1] =x
+                            })
+                            return result
+                            break;
+                        case "shipping":
+                            return {
+                                info:item.info.items,
+                                sameAsBilling:item.sameAsBilling
+                            }
+                            break;
+                        case "modify":
+                            let myResult = {
+                                user:{
+                                    username:item.user
+                                },
+                                billing:item.billing.items,
+                                shipping:{
+                                    ...item.shipping.info.items,
+                                    sameAsBilling:item.shipping.sameAsBilling.checked // cant use this either true or false
+                                },
+                                total:{
+                                    value:item.total
+                                },
+
+                            }
+                            item.cart
+                            .forEach((x:any,i)=>{
+                                myResult["cart Item " +(i+1)] =x
+                            })
+                            Object.entries(myResult)
+                            .forEach((x:any,i)=>{
+                                let [keyx,valx]= x
+                                myResult[keyx] = Object.fromEntries(
+                                    Object.entries(valx)
+                                    .map((y:any,j)=>{
+                                        let [keyy,valy] = y
+                                        return [
+                                            keyy,
+                                            {
+                                                input:{
+                                                    value:valy
+                                                }
+                                            }
+                                        ]
+                                    })
+                                )
+                            })
+                            return myResult
+                            break;
+                        default:
+                            return false
+                            break
+                    }
+
                 }
             }
         }

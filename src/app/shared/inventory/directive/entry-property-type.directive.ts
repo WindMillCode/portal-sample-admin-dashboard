@@ -33,11 +33,13 @@ export class EntryPropertyTypeDirective {
             case "text":
                 vcf.createEmbeddedView(
                     extras.textEntry,
-                    {$implicit:{
-                        x:x,
-                        y:y,
-                        class:prefix.pods[2]({val:'Text1'})
-                    }}
+                        {
+                            $implicit:{
+                            x:x,
+                            y:y,
+                            class:x.title.class ?? prefix.pods[2]({val:'Text1'})
+                        }
+                    }
                 )
 
                 break;
@@ -48,8 +50,10 @@ export class EntryPropertyTypeDirective {
                     {
                         $implicit:{
                             x:x,
-                            class:prefix.pods[2]({val:'Button0'}),
-                            click:y.meta.interact.click({key:x.view.subProp})
+                            class:x.title.class ?? prefix.pods[2]({val:'Button0'}),
+                            click:y.meta.interact.click({
+                                key:x.view.subProp
+                            })
                         }
                     }
                 )
@@ -61,8 +65,10 @@ export class EntryPropertyTypeDirective {
                     {
                         $implicit:{
                             x:x,
-                            class:prefix.pods[2]({val:'Button1'}),
-                            click:y.meta.interact.click({key:x.view.subProp})
+                            class:x.title.class ??prefix.pods[2]({val:'Button1'}),
+                            click:y.meta.interact.click({
+                                key:x.view.subProp,perm:"edit"
+                            })
                         }
                     }
                 )

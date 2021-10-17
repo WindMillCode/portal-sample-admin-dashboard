@@ -1,10 +1,14 @@
 import { ViewEncapsulation,EventEmitter,Component,QueryList, OnInit,ChangeDetectionStrategy,Input,ChangeDetectorRef,HostBinding, HostListener,ViewContainerRef, Output, ViewChild, TemplateRef, ViewChildren } from '@angular/core';
-import {fromEvent,iif,Subscription,of,Subject} from 'rxjs';
+import {fromEvent,iif,Subscription,of,Subject, pipe} from 'rxjs';
 import { RyberService } from 'src/app/ryber.service';
 import { classPrefix } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
-import { catchError,tap,take } from 'rxjs/operators';
-import { InventoryTable } from './inventory.model';
+import { catchError,tap,take, concatMap,delay } from 'rxjs/operators';
+import {
+    InventoryTable,
+    InventoryTableDetailsUpdatePullValuesTarget
+} from './inventory.model';
+import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-inventory',
@@ -45,12 +49,11 @@ export class InventoryComponent implements OnInit {
 
     constructor(
         private ref: ChangeDetectorRef,
-        private vcf:ViewContainerRef,
-        public ryber: RyberService
+        private http: HttpClient
     ) { }
 
     ngOnInit(): void {
-        let {table,ref,subs,entryPropertyView,textEntry,viewEntry,modifyEntry}= this;
+        let {table,ref,subs,http}= this;
 
         // setup icon to open the dropdown
         table.searchBy.icon.click = ()=>{
@@ -125,40 +128,114 @@ export class InventoryComponent implements OnInit {
             values:{
                 meta:{},
                 target:{},
-                state:"view" // ["view","edit"]
+                state:"view"
             },
             close:{
                 click:()=>{
                     table.details.view.style.display = "none"
                     ref.detectChanges()
                 },
+            },
+            update:{
+                pullValues:(devObj)=>{
+                    let {target}= devObj
+                    let result = Object.fromEntries(
+                        Object.entries(target)
+                        .map((x:any,i)=>{
+                            let [keyx,valx] = x
+                            return [keyx,valx.input.value]
+                        })
+                    )
+                    return result
+                },
+                click:()=>{
+                    let updateChoice = confirm("Are you sure you want to update this item from the resource?");
+                    if(updateChoice){
+                        let resource = table.details.update.clickAux()
+                        console.log(resource.body.data)
+
+                        // now make xhr
+                        of({})
+                        .pipe(
+                            take(1),
+                            tap(()=>{
+                                table.details.view.style.display = "none"
+                                table.details.update.loading.view.style.display = "flex"
+                                ref.detectChanges()
+                            }),
+                            concatMap(()=>{
+                                return iif(
+                                    () => table.util.mock.update.confirm,
+                                    http.request(
+                                        table.details.update.method,
+                                        table.details.update.url,
+                                        {
+                                            body:resource.body
+                                        }
+                                    ),
+                                    of({}).pipe(delay(2000))
+                                )
+                            }),
+                            tap(
+                                ()=>{
+
+                                    // remove the modify panel
+                                    table.details.update.loading.view.style.display = "none"
+                                    ref.detectChanges()
+                                    //
+
+                                    // refresh page to see changes
+                                    alert("refresh page to see changes")
+                                    //
+                                },
+                                (err:HttpErrorResponse)=>{
+                                    table.details.update.loading.view.style.display = "none"
+                                    ref.detectChanges()
+                                    table.util.mock.general.fn()
+                                }
+                            )
+                        )
+                        .subscribe()
+                        //
+                    }
+                },
+                ...table.details.update as any,
+            },
+            delete:{
+                ...table.details.delete,
             }
         }
         //
 
         // setup for the pagination
-        table.pages.current.input.disabled = true;
-        table.pages.current.input.onAdd =  ()=>{
+        table.pages.current = {
+            input:{
 
-            table.util.listItems()
+                disabled:true,
+                onAdd: ()=>{
+                    table.util.listItems()
+                },
+                onMinus:()=>{
+                    table.util.listItems()
+                },
+                ...table.pages.current.input as any,
 
-        }
-        table.pages.current.input.onMinus = ()=>{
-            table.util.listItems()
-        }
-        table.pages.current.lastPageSet = false
-        table.pages.current.setLastPage = (devObj)=>{
-            if(!table.pages.current.lastPageSet){
-                table.pages.current.lastPageSet = true
-                let {max,lastResultSize} = devObj
-                if(lastResultSize === 0){
-                    table.pages.current.input.range.max = max
-                }
-                else{
-                    table.pages.current.input.range.max = max +1
+            },
+            lastPageSet:false,
+            setLastPage:(devObj)=>{
+                if(!table.pages.current.lastPageSet){
+                    table.pages.current.lastPageSet = true
+                    let {max,lastResultSize} = devObj
+                    if(lastResultSize === 0){
+                        table.pages.current.input.range.max = max
+                    }
+                    else{
+                        table.pages.current.input.range.max = max +1
+                    }
                 }
             }
         }
+
         //
 
         // setup for the perPage
@@ -217,9 +294,11 @@ export class InventoryComponent implements OnInit {
                                 let {key,perm} = devObj
                                 return (evt:MouseEvent)=>{
                                     table.details.view.style.display = "flex"
-                                    table.details.values.target = Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
+                                    let devCustom = table.util.customInteractMods({key,item:x[key] ??x})
+                                    table.details.values.target = devCustom ? devCustom :
+                                    Array.isArray(x[key]) ? Object.fromEntries([[key,x[key]]]) : x[key] ?? {}
 
-
+                                    table.details.values.meta = x.meta
                                     table.details.values.state = perm ?? "view"
                                     ref.detectChanges()
                                 }
@@ -278,6 +357,31 @@ export class InventoryComponent implements OnInit {
                 ...x.sort
             }
         })
+        //
+
+        // additional util
+        table.util ={
+            keyvaluePipe :{
+                unsorted:()=>{}
+            },
+            mock:{
+                general:{
+                    fn:()=>{
+                        alert("There was an error please try again later")
+                    }
+                },
+                delete:{
+                    confirm:true
+                },
+                update:{
+                    confirm:true
+                },
+                create:{
+                    confirm:true
+                }
+            },
+            ...table.util as any
+        }
         //
 
 

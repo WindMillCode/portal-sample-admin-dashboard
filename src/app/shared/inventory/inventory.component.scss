@@ -322,7 +322,7 @@
                         flex-wrap: wrap;
                     }
                     &1{
-                        border:1px solid var(--color0);
+                        border:1px solid var(--color1);
                         flex:1 0 100%;
                         display:flex;
                         flex-flow: column ;
@@ -344,7 +344,7 @@
                         justify-content: space-between;
                         padding:10px 20px;
                         margin:0 0 10px  0;
-                        border:1px solid var(--color0);
+                        border:1px solid var(--color1);
                     }
                     &5{
                         overflow:scroll;
