@@ -88,11 +88,8 @@
                 [class]= "prefix.pods[2]({val:'Item11'})"
                 >
                     <h2
-
                     [class]= "prefix.pods[2]({val:'Text0'})"
                     >{{ x.title.text}} </h2>
-
-
                     <ng-container
                     *ngFor="let y of ['up','down']"
                     >
@@ -105,8 +102,6 @@
 
 
                 </div>
-
-
                 <div
                 [class]= "prefix.pods[2]({val:'ItemB'})"
 
@@ -126,24 +121,41 @@
                     #entryPropertyView>
 
                     </ng-container>
-                    <!-- <h2
-                    [class]= "prefix.pods[2]({val:'Text1'})"
-                    *ngSwitchCase="'text'"
-                    >{{y[x.view.subProp]}}</h2>
-                    <button
-                    [class]= "prefix.pods[2]({val:'Button0'})"
-                    *ngSwitchCase="'view'"
-                    >{{x.view.text}}</button>
-                    <button
-                    [class]= "prefix.pods[2]({val:'Button1'})"
-                    *ngSwitchCase="'modify'"
-                    >{{x.view.text}}</button> -->
+
                 </div>
             </div>
         </div>
     </section>
-    <!-- <ng-content select="[text]"></ng-content>
-    <ng-content select="[question]"></ng-content> -->
 
 </main>
 
+<aside
+[ngStyle]="table.details.view.style"
+[class]= "prefix.pods[3]({val:'View'})"
+>
+    <div
+    [class]= "prefix.pods[3]({val:'Item0'})"
+    >
+        <i
+        (click)="table.details.close.click()"
+        [class]= "'pi pi-times ' + prefix.pods[3]({val:'Icon0'})">
+        </i>
+        <button
+        (click)="table.query.create.confirm.click()"
+        *ngIf=  "table.details.values.state === 'create'"
+        [class]= "prefix.pods[3]({val:'Button0'})"
+        >{{ 'users.form.query.create.confirm'| translate}}</button>
+        <button
+        (click)="table.details.update.click()"
+        *ngIf=  "table.details.values.state === 'edit'"
+        [class]= "prefix.pods[3]({val:'Button0'})"
+        >{{ 'users.form.details.update'| translate}}</button>
+        <button
+        *ngIf=  "table.details.values.state === 'edit'"
+        (click)="table.details.delete.click()"
+        [class]= "prefix.pods[3]({val:'Button1'})"
+        >{{ 'users.form.details.delete'| translate}}</button>
+
+    </div>
+
+</aside>

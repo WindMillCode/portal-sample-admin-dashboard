@@ -25,7 +25,7 @@ export class InventoryComponent implements OnInit {
     prefix ={
         main:classPrefix( {view:`${this.meta.name}Main`}),
         view: classPrefix({view:`${this.meta.name}`}),
-        pods:Array(3).fill(null)
+        pods:Array(4).fill(null)
         .map((x:any,i)=>{
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
@@ -118,7 +118,22 @@ export class InventoryComponent implements OnInit {
         }
 
         // setup the details modal
-        table.details = {}
+        table.details = {
+            view:{
+                style:{}
+            },
+            values:{
+                meta:{},
+                target:{},
+                state:"view" // ["view","edit"]
+            },
+            close:{
+                click:()=>{
+                    table.details.view.style.display = "none"
+                    ref.detectChanges()
+                },
+            }
+        }
         //
 
         // setup for the pagination
@@ -280,9 +295,6 @@ export class InventoryComponent implements OnInit {
         //
 
     }
-
-
-
 
 
     ngOnDestroy(): void {

@@ -68,7 +68,7 @@ export type InventoryTable ={
             setLastPage:({max,lastResultSize})=>void
         }
     },
-    headders:{
+    headers:{
         items:{
             title:{
                 text:string
@@ -82,5 +82,18 @@ export type InventoryTable ={
                 type:string
             }
         }[]
+    },
+    details:{
+        view:{
+            style:{ [klass: string]: any; }
+        },
+        close:{
+            click:()=>void
+        },
+        [k:string]:any,
+        values:{
+            [k:string]:any,
+            state:"view"|"edit" |"create"
+        },
     }
 }

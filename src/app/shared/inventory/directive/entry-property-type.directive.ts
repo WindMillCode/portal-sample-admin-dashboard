@@ -12,7 +12,8 @@ export class EntryPropertyTypeDirective {
         modifyEntry:TemplateRef<any>,
         y:any,
         x:any,
-        prefix:any
+        prefix:any,
+        click?:()=> void
     }
     extras:any;
 
@@ -27,25 +28,28 @@ export class EntryPropertyTypeDirective {
     ngAfterViewInit(){
         this.extras = this.entryPropertyType
         let {extras,vcf,ref} = this
+        let {prefix,x,y} = extras
         switch (extras.type) {
             case "text":
                 vcf.createEmbeddedView(
                     extras.textEntry,
                     {$implicit:{
-                        x:extras.x,
-                        y:extras.y,
-                        class:extras.prefix.pods[2]({val:'Text1'})
+                        x:x,
+                        y:y,
+                        class:prefix.pods[2]({val:'Text1'})
                     }}
                 )
 
                 break;
             case "view":
+
                 vcf.createEmbeddedView(
                     extras.viewEntry,
                     {
                         $implicit:{
-                            x:extras.x,
-                            class:extras.prefix.pods[2]({val:'Button0'})
+                            x:x,
+                            class:prefix.pods[2]({val:'Button0'}),
+                            click:y.meta.interact.click({key:x.view.subProp})
                         }
                     }
                 )
@@ -56,8 +60,9 @@ export class EntryPropertyTypeDirective {
                     extras.modifyEntry,
                     {
                         $implicit:{
-                            x:extras.x,
-                            class:extras.prefix.pods[2]({val:'Button1'})
+                            x:x,
+                            class:prefix.pods[2]({val:'Button1'}),
+                            click:y.meta.interact.click({key:x.view.subProp})
                         }
                     }
                 )
