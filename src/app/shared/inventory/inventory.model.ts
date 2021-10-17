@@ -67,5 +67,20 @@ export type InventoryTable ={
             lastPageSet:boolean,
             setLastPage:({max,lastResultSize})=>void
         }
+    },
+    headders:{
+        items:{
+            title:{
+                text:string
+            },
+            sort:{
+                confirm:boolean
+            },
+            view:{
+                subProp:string,
+                text:string,
+                type:string
+            }
+        }[]
     }
 }

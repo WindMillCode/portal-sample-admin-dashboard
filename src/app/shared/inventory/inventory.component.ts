@@ -29,7 +29,7 @@ export class InventoryComponent implements OnInit {
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
     }
-    subs: Subscription[] = [];
+    subs: Subscription =  new Subscription;
     //
 
     // parent values
@@ -170,8 +170,15 @@ export class InventoryComponent implements OnInit {
                     }
                     table.db.displayItems = []
 
-                    // if data is empty we know where to set the max for the pagination
-                    if(data?.length !== myWindow){
+                    /**
+                     if data
+                        is not defined
+                        is not equal to myWindow
+                        if the next page length is 0
+                        then we know we have come to end of page
+                     */
+                    if(![myWindow,undefined].includes(data?.length)){
+
                         table.pages.current.setLastPage({max:current,lastResultSize:data?.length})
                     }
                     //
@@ -211,13 +218,57 @@ export class InventoryComponent implements OnInit {
                 })
             ]
         }
+        //
+
+        // setup sort functaility in the headers
+        table.headers.items
+        .forEach((x:any,i)=>{
+            let click = (devObj)=>{
+                let {direction} = devObj
+                return ()=>{
+                    let key = x.view.subProp
+                    let current = parseInt( table.pages.current.input.value) -1
+                    let myWindow = parseInt(table.pages.per.input.value)
+
+                    table.db.displayItems =table.db.items
+                    .sort((a, b)=> {
+                        if( direction === "up"){
+                            return a[key] > b[key] ? 1 : -1 ;
+                        }
+                        else{
+                            return a[key] < b[key] ? 1 : -1 ;
+                        }
+                    })
+                    .slice(
+                        (current)*myWindow,
+                        (current+1)*myWindow
+                    )
+                    ref.detectChanges()
+                }
+
+
+            }
+            x.sort = {
+
+                up:{
+                    click:click({direction:"up"}),
+                },
+                down:{
+                    click:click({direction:"down"}),
+                },
+                ...x.sort
+            }
+        })
+        //
+
+
 
         let sub0 = table.db.xhrItems
         .pipe(
             ...table.pages.list.pipeFns
         )
         .subscribe()
-        subs.push(sub0)
+        subs.add(sub0)
         //
 
         // initalize the table
@@ -229,10 +280,7 @@ export class InventoryComponent implements OnInit {
 
 
     ngOnDestroy(): void {
-        this.subs
-        .forEach((x:any,i)=>{
-            x?.unsubscribe();
-        })
+        this.subs.unsubscribe()
     }
 
 }

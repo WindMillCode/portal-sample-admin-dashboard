@@ -91,10 +91,18 @@
 
                     [class]= "prefix.pods[2]({val:'Text0'})"
                     >{{ x.title.text}} </h2>
-                    <i
-                    *ngIf="x.sort.confirm"
-                    [class]= "'pi pi-sort-alt '+ prefix.pods[2]({val:'Icon0'})"
-                    ></i>
+
+
+                    <ng-container
+                    *ngFor="let y of ['up','down']"
+                    >
+                        <i
+                        (click)="x.sort[y].click()"
+                        *ngIf="x.sort.confirm"
+                        [class]= "'pi pi-caret-'+ y + ' '+ prefix.pods[2]({val:'Icon0'})"
+                        ></i>
+                    </ng-container>
+
 
                 </div>
 
