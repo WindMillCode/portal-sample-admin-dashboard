@@ -18,6 +18,7 @@
 ### Table create
 * MAKE SURE, you send correct data structure to backend
 
+
 ### Table search
 * test that topics are properly supported
 * test that when we search with startsWith we get corrently values

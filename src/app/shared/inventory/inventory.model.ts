@@ -1,4 +1,4 @@
-import { MonoTypeOperatorFunction } from "rxjs"
+import { MonoTypeOperatorFunction,OperatorFunction } from "rxjs"
 export type InventoryTable ={
     [k:string]:any,
     searchBy:{
@@ -107,9 +107,16 @@ export type InventoryTable ={
             clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn,
         },
         delete:{
+            loading:{
+                view:{
+                    [k:string]:any,
+                    style:{[k:string]:any}
+                }
+            },
             url:string,
             method:string,
-            click:()=> void
+            click:()=> void,
+            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn
         }
         values:{
             [k:string]:any,
@@ -136,6 +143,15 @@ export type InventoryTable ={
                 confirm:boolean
             }
         },
+        modifyResorucePipeFns:(devObj:{
+            resource:InventoryTableUtilModifyResorucePipeFnsResource,
+            action:string | "create"| "update"|"delete"
+        }) => [
+            MonoTypeOperatorFunction<{}>,
+            MonoTypeOperatorFunction<{}> ,
+            OperatorFunction<{}, Object | {}>,
+            MonoTypeOperatorFunction<{}>
+        ]
         keyvaluePipe:{
             unsorted:()=> any
         },
@@ -165,3 +181,9 @@ export type InventoryTableDetailsUpdatePullValuesReturn={
 export type InventoryTableDetailsUpdateClickAuxReturn ={
     body:any
 }
+
+export type InventoryTableDetailsDeleteClickAuxReturn = InventoryTableDetailsUpdateClickAuxReturn
+
+export type InventoryTableUtilModifyResorucePipeFnsResource =
+InventoryTableDetailsDeleteClickAuxReturn |
+InventoryTableDetailsUpdateClickAuxReturn

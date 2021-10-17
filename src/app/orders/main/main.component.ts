@@ -75,7 +75,6 @@ export class MainComponent implements OnInit {
                     clickAux:()=>{
                         let {table} = this.orders
                         let {target,meta} = table.details.values
-                        console.log(table.details.values)
 
                         let resource ={
                             body:{
@@ -119,8 +118,20 @@ export class MainComponent implements OnInit {
                     },
                 },
                 delete:{
+                    loading:this.ryber.loading,
                     url:`${env.backend.url}/order/adminDelete`,
-                    method:"DELETE"
+                    method:"DELETE",
+                    clickAux:()=>{
+                        let {target,meta} = this.orders.table.details.values
+
+                        return {
+                            body:{
+                                data:{
+                                    orderId: meta.orderId.value
+                                }
+                            }
+                        }
+                    }
                 }
             },
             pages:{

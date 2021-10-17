@@ -157,43 +157,10 @@ export class InventoryComponent implements OnInit {
                         // now make xhr
                         of({})
                         .pipe(
-                            take(1),
-                            tap(()=>{
-                                table.details.view.style.display = "none"
-                                table.details.update.loading.view.style.display = "flex"
-                                ref.detectChanges()
-                            }),
-                            concatMap(()=>{
-                                return iif(
-                                    () => table.util.mock.update.confirm,
-                                    http.request(
-                                        table.details.update.method,
-                                        table.details.update.url,
-                                        {
-                                            body:resource.body
-                                        }
-                                    ),
-                                    of({}).pipe(delay(2000))
-                                )
-                            }),
-                            tap(
-                                ()=>{
-
-                                    // remove the modify panel
-                                    table.details.update.loading.view.style.display = "none"
-                                    ref.detectChanges()
-                                    //
-
-                                    // refresh page to see changes
-                                    alert("refresh page to see changes")
-                                    //
-                                },
-                                (err:HttpErrorResponse)=>{
-                                    table.details.update.loading.view.style.display = "none"
-                                    ref.detectChanges()
-                                    table.util.mock.general.fn()
-                                }
-                            )
+                            ...table.util.modifyResorucePipeFns({
+                                resource,
+                                action:"update"
+                            })
                         )
                         .subscribe()
                         //
@@ -202,7 +169,24 @@ export class InventoryComponent implements OnInit {
                 ...table.details.update as any,
             },
             delete:{
-                ...table.details.delete,
+                click:()=>{
+                    let deleteChoice = confirm("Are you sure you want to delete this item from the resource");
+                    if(deleteChoice){
+                        let resource = table.details.delete.clickAux()
+
+                        // xhr to delete entry from resource
+                        of({})
+                        .pipe(
+                            ...table.util.modifyResorucePipeFns({
+                                resource,
+                                action:"delete"
+                            })
+                        )
+                        .subscribe()
+                        //
+                    }
+                },
+                ...table.details.delete as any,
             }
         }
         //
@@ -379,6 +363,50 @@ export class InventoryComponent implements OnInit {
                 create:{
                     confirm:true
                 }
+            },
+            modifyResorucePipeFns:(devObj)=>{
+                let{resource,action} = devObj
+                return [
+                    take(1),
+                    tap(()=>{
+                        table.details.view.style.display = "none"
+                        table.details.update.loading.view.style.display = "flex"
+                        ref.detectChanges()
+                    }),
+                    concatMap(()=>{
+
+                        let action = "delete"
+                        return iif(
+                            () => table.util.mock[action].confirm,
+                            http.request(
+                                table.details[action].method,
+                                table.details[action].url,
+                                {
+                                    body:resource.body
+                                }
+                            ),
+                            of({}).pipe(delay(2000))
+                        )
+                    }),
+                    tap(
+                        ()=>{
+
+                            // remove the modify panel
+                            table.details.update.loading.view.style.display = "none"
+                            ref.detectChanges()
+                            //
+
+                            // refresh page to see changes
+                            alert("refresh page to see changes")
+                            //
+                        },
+                        (err:HttpErrorResponse)=>{
+                            table.details.update.loading.view.style.display = "none"
+                            ref.detectChanges()
+                            table.util.mock.general.fn()
+                        }
+                    )
+                ]
             },
             ...table.util as any
         }
