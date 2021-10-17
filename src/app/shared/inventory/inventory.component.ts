@@ -5,7 +5,7 @@ import { classPrefix } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { catchError,tap,take, concatMap,delay } from 'rxjs/operators';
 import {
-    InventoryTable,
+    InventoryTable, InventoryTableDevObj,
 } from './inventory.model';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 
@@ -38,7 +38,7 @@ export class InventoryComponent implements OnInit {
     //
 
     // parent values
-    @Input() table:InventoryTable
+    @Input() table:InventoryTable 
     @Input() textEntry:TemplateRef<any>;
     @Input() viewEntry:TemplateRef<any>;
     @Input() modifyEntry:TemplateRef<any>;
@@ -116,7 +116,8 @@ export class InventoryComponent implements OnInit {
                     ...table.pages.list.pipeFns,
                 )
                 .subscribe()
-            }
+            },
+            ...table.search.reset as any
         }
 
         // setup the details modal
@@ -476,6 +477,7 @@ export class InventoryComponent implements OnInit {
 
         // initalize the table
         table.util.listItems()
+        console.log(table)
         //
 
     }

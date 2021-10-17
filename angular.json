@@ -217,6 +217,7 @@
                         //
                         "development": {
                             "port": 4203,
+                            "liveReload": false,
                             "browserTarget": "AngularApp:judima:development"
                         }
                     },

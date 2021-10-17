@@ -1,5 +1,5 @@
-import { MonoTypeOperatorFunction, OperatorFunction } from "rxjs"
-import { InventoryTable } from "./shared/inventory/inventory.model"
+import {  OperatorFunction } from "rxjs"
+import { InventoryTableDevObj } from "./shared/inventory/inventory.model"
 
 export  function mediaPrefix(devObj){
     let {media} = devObj
@@ -93,7 +93,7 @@ type SamePropTypeOnly<T> = {
 }
 export type Orders = {
     [k: string]: any;
-    table:Partial<InventoryTable> | any
+   table:InventoryTableDevObj | any //damn typescript too strict
 }
 
 

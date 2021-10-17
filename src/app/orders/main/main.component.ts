@@ -94,10 +94,10 @@ export class MainComponent implements OnInit {
                 },
                 button:{
                     text:""
-                }
-            },
-            reset:{
-                text:""
+                },
+                reset:{
+                    text:""
+                },
             },
             details:{
                 create:{
@@ -143,7 +143,7 @@ export class MainComponent implements OnInit {
                                 }
                             }
 
-                            table.util.toInputInPlace({myResult})
+                            table.util.toInputInPlace!({myResult})
 
                             return myResult
                         },
@@ -152,6 +152,7 @@ export class MainComponent implements OnInit {
                         text:"",
                         clickAux:()=>{
                             let {table,fn0} = this.orders
+                            // @ts-ignore
                             let {target} = table.details.values
                             let data =  fn0({table,target})
                             data.shipping.sameAsBilling = {
@@ -173,6 +174,7 @@ export class MainComponent implements OnInit {
                     method:"PATCH",
                     clickAux:()=>{
                         let {table,fn0} = this.orders
+                        // @ts-ignore
                         let {target,meta} = table.details.values
 
                         let resource ={
@@ -192,6 +194,7 @@ export class MainComponent implements OnInit {
                     url:`${env.backend.url}/order/adminDelete`,
                     method:"DELETE",
                     clickAux:()=>{
+                        // @ts-ignore
                         let {target,meta} = this.orders.table.details.values
 
                         return {
@@ -250,7 +253,7 @@ export class MainComponent implements OnInit {
 
 
                     iif(
-                        () => !orders.table.pages.list.retrieved.has(current),
+                        () => !orders.table.pages.list!.retrieved.has(current),
                         ryber.http.post(`${env.backend.url}/order/list`,
                             {
                                 data:{
@@ -267,7 +270,7 @@ export class MainComponent implements OnInit {
                         take(1),
                         pluck("message","list"),
                         tap((result:any)=>{
-                            orders.table.db.xhrItems.next({data:result})
+                            orders.table.db.xhrItems!.next({data:result})
                         })
                     )
                     .subscribe()
@@ -321,7 +324,7 @@ export class MainComponent implements OnInit {
                             .forEach((x:any,i)=>{
                                 myResult["cart Item " +(i+1)] =x
                             })
-                            orders.table.util.toInputInPlace({myResult})
+                            orders.table.util.toInputInPlace!({myResult})
 
                             return myResult
                             break;
@@ -369,7 +372,7 @@ export class MainComponent implements OnInit {
             ryber.translate.get("orders.reset")
             .pipe(tap((result:string)=>{
 
-                orders.table.reset.text = result;
+                orders.table.search.reset.text = result;
             })),
             ryber.translate.get("orders.create")
             .pipe(tap((result:string)=>{

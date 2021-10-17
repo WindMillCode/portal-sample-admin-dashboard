@@ -1,121 +1,14 @@
-import { MonoTypeOperatorFunction,OperatorFunction } from "rxjs"
+import { MonoTypeOperatorFunction,OperatorFunction, Subject } from "rxjs"
 export type InventoryTable ={
-    [k:string]:any,
-    searchBy:{
-        placeholder:{
-            text:string
-        },
-        options:{
-            items:Array<{
-                text:string,
-                click:()=>void,
-                style:{},
-                stateText:string
-            }>
-        },
-        icon:{
-            click:()=> void
-        }
-    },
-    search:{
-        label:{
-            text:string
-        },
-        button:{
-            text:string,
-            click:()=> void
-        },
-        query:{
-            input:{
-                value:string
-            },
-            state:string
-        },
-        reset:{
-            click:()=>void
-        }
-    },
-    pages:{
-        per:{
-            input:{
-                value:string,
-                focusout:()=> void
-            },
-            label:{
-                text:string
-            }
-        },
-        list:{
-            retrieved:Set<number>,
-            pipeFns:[
-                MonoTypeOperatorFunction<any>
-            ]
 
-        },
-        current:{
-            input:{
-                value:string,
-                disabled:boolean,
-                onAdd:()=>void,
-                onMinus:()=>void,
-                range:{
-                    max:number,
-                    min:number
-                }
-            },
-
-            lastPageSet:boolean,
-            setLastPage:({max,lastResultSize})=>void
-        }
-    },
-    headers:{
-        items:{
-            title:{
-                text:string
-            },
-            sort:{
-                confirm:boolean
-            },
-            view:{
-                subProp:string,
-                text:string,
-                type:string
-            }
-        }[]
+    db:{
+        displayItems:any[],
+        items:any[],
+        xhrItems:Subject<any>
     },
     details:{
-        view:{
-            style:{ [klass: string]: any; }
-        },
         close:{
             click:()=>void
-        },
-        [k:string]:any,
-        update:{
-            text:string,
-            url:string,
-            method:string,
-            loading:{
-                view:{
-                    [k:string]:any,
-                    style:{[k:string]:any}
-                }
-            }
-            click:()=> void,
-            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn,
-        },
-        delete:{
-            text:string,
-            loading:{
-                view:{
-                    [k:string]:any,
-                    style:{[k:string]:any}
-                }
-            },
-            url:string,
-            method:string,
-            click:()=> void,
-            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn
         },
         create:{
             loading:{
@@ -137,17 +30,141 @@ export type InventoryTable ={
             url:string,
             method:string,
         },
+        delete:{
+            text:string,
+            loading:{
+                view:{
+                    [k:string]:any,
+                    style:{[k:string]:any}
+                }
+            },
+            url:string,
+            method:string,
+            click:()=> void,
+            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn
+        },
+        update:{
+            text:string,
+            url:string,
+            method:string,
+            loading:{
+                view:{
+                    [k:string]:any,
+                    style:{[k:string]:any}
+                }
+            }
+            click:()=> void,
+            clickAux:()=> InventoryTableDetailsUpdateClickAuxReturn,
+        },
         values:{
-            [k:string]:any,
+            meta:any,
             state:"view"|"edit" |"create",
             target:{
                 [k:string]:{
-                    [k:string]:any
+                    [k:string]:{
+                        input:{
+                            value:string|number
+                        }
+                    }
                 }
             }
         },
+        view:{
+            style:{ [klass: string]: any; }
+        },
+    },
+    headers:{
+        items:{
+            title:{
+                text:string
+            },
+            sort:{
+                confirm:boolean,
+                down:{click:()=>void},
+                up:{click:()=>void}
+            },
+            view:{
+                subProp:string,
+                text:string,
+                type:string
+            }
+        }[]
+    },
+    pages:{
+        current:{
+            input:{
+                value:string,
+                disabled:boolean,
+                onAdd:()=>void,
+                onMinus:()=>void,
+                range:{
+                    max:number,
+                    min:number
+                }
+            },
+
+            lastPageSet:boolean,
+            setLastPage:(devObj:{max:number,lastResultSize:number})=>void
+        },
+        list:{
+            retrieved:Set<number>,
+            pipeFns:[
+                MonoTypeOperatorFunction<any>
+            ]
+
+        },
+        per:{
+            input:{
+                value:string,
+                focusout:()=> void
+            },
+            label:{
+                text:string
+            }
+        },
+    },
+    search:{
+        button:{
+            text:string,
+            click:()=> void
+        },
+        label:{
+            text:string
+        },
+        query:{
+            input:{
+                value:string
+            },
+            state:string
+        },
+        reset:{
+            text:string,
+            click:()=>void
+        }
+    },
+    searchBy:{
+        icon:{
+            click:()=> void
+        },
+        options:{
+            items:Array<{
+                text:string,
+                click:()=>void,
+                style:{},
+                stateText:string
+            }>
+        },
+        placeholder:{
+            text:string
+        },
     },
     util:{
+        customInteractMods:({key:string,item:any})=> any,
+        keyvaluePipe:{
+            unsorted:()=> any
+        },
+        listItems:()=>any,
+        metaForEntry:({entry:InventoryTableUtilMetaForEntryEntry}) => any,
         mock:{
             general:{
                 fn:()=>any
@@ -162,10 +179,6 @@ export type InventoryTable ={
                 confirm:boolean
             }
         },
-        pullValues:({
-            target:InventoryTableUtilPullValuesTarget
-        })=>InventoryTableUtilPullValuesReturn,
-        toInputInPlace:({myResult:any})=> InventoryTableUtilToInputInPlaceReturn,
         modifyResorucePipeFns:(devObj:{
             resource:InventoryTableUtilModifyResorucePipeFnsResource,
             action:string | "create"| "update"|"delete"
@@ -174,14 +187,143 @@ export type InventoryTable ={
             MonoTypeOperatorFunction<{}> ,
             OperatorFunction<{}, Object | {}>,
             MonoTypeOperatorFunction<{}>
-        ]
-        keyvaluePipe:{
-            unsorted:()=> any
+        ],
+        pullValues:({
+            target:InventoryTableUtilPullValuesTarget
+        })=>InventoryTableUtilPullValuesReturn,
+        toInputInPlace:({myResult:any})=> InventoryTableUtilToInputInPlaceReturn,
+
+    },
+
+}
+
+export type InventoryTableDevObj= {
+    db: {
+        items: never[];
+        displayItems: never[];
+        readonly xhrItems?:Subject<any>
+    },
+    details:{
+        create:{
+            loading: any;
+            url: string;
+            method: string;
+            confirm: {
+                text: string;
+                clickAux: () => any;
+            },
+            request:{
+                text: string;
+                clickAux: () => any;
+            }
+
         },
-        listItems:()=>any,
+        update: {
+            text: string;
+            loading: any;
+            url: string;
+            method: string;
+            clickAux: () => any;
+        },
+        delete: {
+            text: string;
+            loading: any;
+            url: string;
+            method: string;
+            clickAux: () => {
+                body: {
+                    data: {
+                        orderId: any;
+                    };
+                };
+            };
+        },
+        readonly values?:{
+            meta:any,
+            state:"view"|"edit" |"create",
+            target:{
+                [k:string]:{
+                    [k:string]:{
+                        input:{
+                            value:string|number
+                        }
+                    }
+                }
+            }
+        },
+
+    },
+    headers: {
+        items: {
+            title: {
+                text: string;
+            };
+            sort: {
+                confirm: boolean;
+            };
+            view: {
+                subProp: string;
+                text: string;
+                type: string;
+            };
+        }[];
+    },
+    pages: {
+        per: {
+            input: {
+                value: any ;
+            };
+            label: {
+                text: string;
+            };
+        };
+        readonly list?:{
+            retrieved:Set<number>,
+            pipeFns:[
+                MonoTypeOperatorFunction<any>
+            ]
+
+        }
+        current: {
+            input: {
+                value: string | number | any;
+            };
+        };
+    },
+    search: {
+        label: {
+            text: string;
+        };
+        button: {
+            text: string;
+        };
+        reset: {
+            text: string;
+        };
+    },
+    searchBy: {
+        placeholder: {
+            text: string;
+        };
+        options: {
+            items: {
+                text: string;
+                style: {};
+                stateText: string;
+            }[];
+        };
+        icon: {};
+    },
+    util:{
         customInteractMods:({key:string,item:any})=> any,
-        metaForEntry:({entry:InventoryTableUtilMetaForEntryEntry}) => any
-    }
+        listItems:()=>any,
+        metaForEntry:({entry:InventoryTableUtilMetaForEntryEntry}) => any,
+        readonly toInputInPlace?:({myResult:any})=> InventoryTableUtilToInputInPlaceReturn,
+
+
+
+    },
+
 }
 
 
@@ -194,6 +336,10 @@ export type InventoryTableUtilToInputInPlaceReturn = {
         }
     }
 }
+
+export type InventoryTableDetailsCreateRequestClickAuxReturn = InventoryTableUtilToInputInPlaceReturn
+
+
 export type InventoryTableUtilPullValuesTarget={
     [k:string]:{
         input:{
@@ -201,7 +347,8 @@ export type InventoryTableUtilPullValuesTarget={
         }
     }
 }
-export type InventoryTableDetailsCreateRequestClickAuxReturn = InventoryTableUtilPullValuesTarget
+
+
 
 
 export type InventoryTableUtilMetaForEntryEntry ={
