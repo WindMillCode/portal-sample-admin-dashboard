@@ -109,10 +109,24 @@
 
                 <div
                 [class]= "prefix.pods[2]({val:'ItemB'})"
-                [ngSwitch]="x.view.type"
+
                 *ngFor ="let y of table.db.displayItems;let j = index"
                 >
-                    <h2
+                    <ng-container
+                    appEntryPropertyType
+                    [entryPropertyType] ="{
+                        type:x.view.type,
+                        textEntry,
+                        viewEntry,
+                        modifyEntry,
+                        y,
+                        x,
+                        prefix
+                    }"
+                    #entryPropertyView>
+
+                    </ng-container>
+                    <!-- <h2
                     [class]= "prefix.pods[2]({val:'Text1'})"
                     *ngSwitchCase="'text'"
                     >{{y[x.view.subProp]}}</h2>
@@ -123,7 +137,7 @@
                     <button
                     [class]= "prefix.pods[2]({val:'Button1'})"
                     *ngSwitchCase="'modify'"
-                    >{{x.view.text}}</button>
+                    >{{x.view.text}}</button> -->
                 </div>
             </div>
         </div>

@@ -20,6 +20,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 import { UpdateInputValDirective } from './update-input-val.directive';
 import { PlusMinusComponent } from './plus-minus/plus-minus.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { EntryPropertyTypeDirective } from './inventory/directive/entry-property-type.directive';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { InventoryComponent } from './inventory/inventory.component';
         NavComponent,
         UpdateInputValDirective,
         PlusMinusComponent,
-        InventoryComponent
+        InventoryComponent,
+        EntryPropertyTypeDirective
     ],
     providers:[TranslateService],
     imports: [

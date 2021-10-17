@@ -13,9 +13,43 @@
     <app-inventory
     [table]= "orders.table"
     [class]= "prefix.main({val:'Pod0'})"
+    [textEntry]="text"
+    [viewEntry]="view"
+    [modifyEntry]="modify"
     >
 
         <h1 text >Some Text</h1>
         <button question>A button</button>
     </app-inventory>
 </main>
+
+
+<ng-template #text let-devObj>
+    <h2
+    [class]= "devObj.class"
+    >
+
+    {{devObj.y[devObj.x.view.subProp]}}
+    </h2>
+
+</ng-template>
+
+<ng-template #view let-devObj>
+
+    <button
+    [class]= "devObj.class"
+    >
+    {{devObj.x.view.text}}
+    </button>
+</ng-template>
+
+<ng-template #modify let-devObj>
+
+    <button
+    [class]= "devObj.class"
+
+    >
+
+    {{devObj.x.view.text}}
+    </button>
+</ng-template>

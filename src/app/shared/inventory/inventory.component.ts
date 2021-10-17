@@ -1,4 +1,4 @@
-import { EventEmitter,Component, OnInit,ChangeDetectionStrategy,Input,ChangeDetectorRef,HostBinding, HostListener,ViewContainerRef, Output } from '@angular/core';
+import { ViewEncapsulation,EventEmitter,Component,QueryList, OnInit,ChangeDetectionStrategy,Input,ChangeDetectorRef,HostBinding, HostListener,ViewContainerRef, Output, ViewChild, TemplateRef, ViewChildren } from '@angular/core';
 import {fromEvent,iif,Subscription,of,Subject} from 'rxjs';
 import { RyberService } from 'src/app/ryber.service';
 import { classPrefix } from 'src/app/customExports';
@@ -10,7 +10,8 @@ import { InventoryTable } from './inventory.model';
     selector: 'app-inventory',
     templateUrl: './inventory.component.html',
     styleUrls: ['./inventory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation:ViewEncapsulation.ShadowDom
 })
 export class InventoryComponent implements OnInit {
 
@@ -30,11 +31,14 @@ export class InventoryComponent implements OnInit {
         })
     }
     subs: Subscription =  new Subscription;
+    @ViewChildren('entryPropertyView',{read:ViewContainerRef}) entryPropertyView:QueryList<ViewContainerRef>
     //
 
     // parent values
     @Input() table:InventoryTable
-
+    @Input() textEntry:TemplateRef<any>;
+    @Input() viewEntry:TemplateRef<any>;
+    @Input() modifyEntry:TemplateRef<any>;
     //
 
 
@@ -46,7 +50,7 @@ export class InventoryComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        let {table,ref,subs}= this;
+        let {table,ref,subs,entryPropertyView,textEntry,viewEntry,modifyEntry}= this;
 
         // setup icon to open the dropdown
         table.searchBy.icon.click = ()=>{
@@ -276,6 +280,8 @@ export class InventoryComponent implements OnInit {
         //
 
     }
+
+
 
 
 
