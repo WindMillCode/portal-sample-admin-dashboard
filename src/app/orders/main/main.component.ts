@@ -313,7 +313,7 @@ export class MainComponent implements OnInit {
                                 billing:item.billing.items,
                                 shipping:{
                                     ...item.shipping.info.items,
-                                    sameAsBilling:item.shipping.sameAsBilling.checked // cant use this either true or false
+                                    // sameAsBilling:item.shipping.sameAsBilling.checked // cant use this either true or false
                                 },
                                 total:{
                                     value:item.total

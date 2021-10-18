@@ -5,8 +5,7 @@ import {Route} from '@angular/router';
 import { eventDispatcher,flatDeep,numberParse } from './customExports';
 import { of,Subscription,fromEvent } from 'rxjs';
 import { delay,tap,concatMap, pluck } from 'rxjs/operators';
-import faker from 'faker';
-import { KeyValuePipe } from '@angular/common';
+// import faker from 'faker'
 
 @Component({
     selector: 'app-root',

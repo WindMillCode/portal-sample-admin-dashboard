@@ -1,196 +1,53 @@
-<main [class]="prefix.view({val:'View'})">
-    <section [class]="prefix.main({val:'Pod'})">
-        <h1 [class]="prefix.main({val:'Title0'})">{{'users.title' | translate }}</h1>
+<main [class]= "prefix.main({val:'Pod'})">
 
-        <section
-        [class]= "prefix.pods[0]({val:''})"
-        >
-            <div
-            [class]= "prefix.pods[0]({val:'Item0'})"
-            >
-                <div
-                [class]= "prefix.pods[0]({val:'Item1'})"
-                >
-                    <label>{{'users.form.query.search.label' | translate}}</label>
-                    <input
 
-                    appUpdateInputVal [updateInputVal]="users.query.input"
-                    [class]= "prefix.pods[0]({val:'Input0'})"
-                    />
-                </div>
-                <button
-                (click)="users.query.search.click($event)"
-                [class]= "prefix.pods[0]({val:'Button1'})">
-                {{'users.form.query.search.button' | translate}}
-                </button>
-                <button
-                (click)="x.click($event)"
-                [ngStyle]="x.style"
-                [class]= "prefix.pods[0]({val:'Button0'})"
-                *ngFor="let x of users.query.searchBy.items;let i = index">
-                {{'users.form.query.searchBy.items.' + i   | translate}}</button>
-                <button
-                (click)="users.query.reset.click($event)"
-                [class]= "prefix.pods[0]({val:'Button2'})">
-                {{'users.form.query.reset' | translate}}
-                </button>
-                <button
-                (click)="users.query.create.request.click()"
-                [class]= "prefix.pods[0]({val:'Button3'})">
-                {{'users.form.query.create.request' | translate}}
-                </button>
+    <section [class]="prefix.pods[0]({val:''})">
+        <h1 [class]=" prefix.pods[0]({val:'Title0'})">{{'users.title' | translate }}</h1>
 
-            </div>
-        </section>
-        <section
-        [class]= "prefix.pods[3]({val:''})"
-        >
-            <div
-            [class]= "prefix.pods[3]({val:'Item0'})"
-            >
-                <h2>{{'users.form.pages.perPage' | translate }}:</h2>
-                <input
-                appUpdateInputVal [updateInputVal]="users.pages.perPage.input"
-                [class]= "prefix.pods[3]({val:'Input0'})"
-                type="number"
-                [value]="users.pages.perPage.input.value"
-                />
-                <app-plus-minus
-                [input]="users.pages.current.input"
-                ></app-plus-minus>
-            </div>
-        </section>
-        <section [class]="prefix.pods[1]({val:''})">
-            <div
-            [class]= "prefix.pods[1]({val:'ItemA'+i})"
-            *ngFor="let x of users.table.header.items;let i = index"
-            >
-                <div
-                [class]= "prefix.pods[1]({val:'Item5'})"
-                >
-
-                    <div
-                    [class]= "prefix.pods[1]({val:'Item11'})"
-                    >
-                        <h2
-                        [class]= "prefix.pods[1]({val:'Text0'})"
-                        >{{ 'users.form.headers.' + i + '.label' | translate}} </h2>
-                        <i
-                        (click)="users.table.header.items[i].sort.click()"
-                        *ngIf="users.table.header.items[i].sort.confirm"
-                        [class]= "'pi pi-sort-alt '+ prefix.pods[1]({val:'Icon0'})"
-                        ></i>
-
-                    </div>
-
-                    <div
-                    [class]= "prefix.pods[1]({val:'ItemB'+ (6+i)})"
-                    [ngSwitch]="i"
-                    *ngFor ="let y of users.table.db.displayItems;let j = index"
-                    >
-
-                        <h2
-                        *ngSwitchCase="0"
-                        >{{y.user}}</h2>
-
-                        <h2
-                        *ngSwitchCase="1"
-                        [class]= "prefix.pods[1]({val:'Text1'})"
-                        >{{y.meta.latestOrderId.value}}</h2>
-
-                        <button
-                        (click)="y.meta.interact.click({key:'orderId'})($event)"
-                        [class]= "prefix.pods[1]({val:'Button0'})"
-                        *ngSwitchCase="2"
-                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
-
-                        <button
-                        (click)="y.meta.interact.click({key:'shipping'})($event)"
-                        [class]= "prefix.pods[1]({val:'Button0'})"
-                        *ngSwitchCase="3"
-                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
-
-                        <button
-                        (click)="y.meta.interact.click({key:'billing'})($event)"
-                        [class]= "prefix.pods[1]({val:'Button0'})"
-                        *ngSwitchCase="4"
-                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
-
-                        <button
-                        (click)="y.meta.interact.click({key:'modify',perm:'edit'})($event)"
-                        [class]= "prefix.pods[1]({val:'Button1'})"
-                        *ngSwitchCase="5"
-                        >{{'users.form.headers.' + i + '.view' | translate}}</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </section>
-</main>
-<aside
-[ngStyle]="users.details.view.style"
-[class]= "prefix.pods[2]({val:'View'})"
->
-    <div
-    [class]= "prefix.pods[2]({val:'Item0'})"
+
+    <app-inventory
+    [table]= "target.table"
+    [class]= "prefix.main({val:'Pod0'})"
+    [textEntry]="text"
+    [viewEntry]="view"
+    [modifyEntry]="modify"
     >
-        <i
-        (click)="users.details.close.click($event)"
-        [class]= "'pi pi-times ' + prefix.pods[2]({val:'Icon0'})">
-        </i>
-        <div
-        [class]= "prefix.pods[2]({val:'Item1'})">
-            <div
-            [class]= "prefix.pods[2]({val:'Item2'})"
-            *ngFor="let x of users.details.values.target | keyvalue:ryber.meta.keyvaluePipe.unsorted;let i = index">
-                <h2>{{x.key}}: </h2>
-                <div
-                [ngSwitch]="users.details.values.state"
-                [class]= "prefix.pods[2]({val:'Item3'})">
-                    <div
 
-                    *ngFor="let y of x.value | keyvalue:ryber.meta.keyvaluePipe.unsorted;let j = index"
-                    [class]= "prefix.pods[2]({val:'Item4'})">
-                        <h3>{{y.key | titlecase }}:</h3>
-                        <div
+    </app-inventory>
+</main>
 
-                        [class]= "prefix.pods[2]({val:'Item5'})"
-                        >
-                            <h3
-                            *ngSwitchCase="'view'"
-                            >{{y.value}}</h3>
-                            <textarea
-                            appUpdateInputVal [updateInputVal]="y.value.input"
-                            *ngSwitchCase="'edit'"
-                            [class]= "prefix.pods[2]({val:'Input0'})"
-                            >{{y.value.input.value}}</textarea>
-                            <textarea
-                            appUpdateInputVal [updateInputVal]="y.value.input"
-                            *ngSwitchCase="'create'"
-                            [class]= "prefix.pods[2]({val:'Input0'})"
-                            >{{y.value.input.value}}</textarea>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-        <button
-        (click)="users.query.create.confirm.click()"
-        *ngIf="users.details.values.state === 'create'"
-        [class]= "prefix.pods[2]({val:'Button0'})"
-        >{{ 'users.form.query.create.confirm'| translate}}</button>
-        <button
-        (click)="users.details.update.click()"
-        *ngIf="users.details.values.state === 'edit'"
-        [class]= "prefix.pods[2]({val:'Button0'})"
-        >{{ 'users.form.details.update'| translate}}</button>
-        <button
-        *ngIf="users.details.values.state === 'edit'"
-        (click)="users.details.delete.click()"
-        [class]= "prefix.pods[2]({val:'Button1'})"
-        >{{ 'users.form.details.delete'| translate}}</button>
 
-    </div>
 
-</aside>
+
+<ng-template #text let-devObj>
+    <h2
+    [class]= "devObj.class"
+    >
+
+    {{devObj.y[devObj.x.view.subProp]}}
+    </h2>
+
+</ng-template>
+
+<ng-template #view let-devObj>
+
+    <button
+    [class]= "devObj.class"
+    (click)="devObj.click()"
+    >
+    {{devObj.x.view.text}}
+    </button>
+</ng-template>
+
+<ng-template #modify let-devObj>
+
+    <button
+    [class]= "devObj.class"
+    (click)="devObj.click()"
+    >
+
+    {{devObj.x.view.text}}
+    </button>
+</ng-template>

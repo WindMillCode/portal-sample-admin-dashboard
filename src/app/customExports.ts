@@ -96,28 +96,9 @@ export type Orders = {
    table:InventoryTableDevObj | any //damn typescript too strict
 }
 
-
-export type  MyTable ={
-    [k:string]:any,
-    pages:{
-        [k:string]:any,
-        list:{
-            retrived:Set<number>,
-            pipeFns:[OperatorFunction<Object, Object>,OperatorFunction<Object, Object>]
-        }
-    },
-    details:{
-        [k:string]:any
-        values:{
-            target:{
-                [k:string]:{
-                    [k:string]:any
-                }
-            } ,
-            meta:any,
-            state:string
-        }
-    }
+export type Users = {
+    [k: string]: any;
+   table:InventoryTableDevObj | any //damn typescript too strict
 }
 
 (Array.prototype as any).insert = function(i,...rest){

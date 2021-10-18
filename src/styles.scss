@@ -174,313 +174,39 @@
     &Users{
         &View{
             @include view0;
-            font-size:12px;
+            font-size: 16px;
+            // @include outline;
         }
         &Main{
             &Pod{
-                display:flex;
-                flex-direction: column ;
-                justify-content: flex-start;
-                align-items: center;
-                height:600px;
-                flex:1 0 100%;
-                padding:20px;
+                display: flex;
+                width: 100%;
+                flex-flow:wrap;
+                justify-content: center;
 
-            }
-
-            &Title{
                 &0{
-                    font-size:4em;
-                    width:60%;
-                    @include tac;
+                    max-width: 1200px;
                 }
             }
-        }
 
+
+        }
         &Pod{
 
-            &0{
-                display:flex;
-                // max-width:var(--width0);
-
-                &Button{
-                    @for $i from 0 through 3 {
-                        &#{$i}{
-                            @include button0;
-                            font-size:1.5em;
-                            margin:0px 40px;
-                            white-space: nowrap;
-                        }
-                    }
-
-                    &0{
-                        background: var(--radial-bg-orange);
-                    }
-
-                    &1{
-                        background: var(--radial-bg-blue);
-
-                    }
-                    &2{
-                        background: var(--radial-bg-red);
-                    }
-
-                    &3{
-                        background: var(--radiial-bg-ripebanana);
-                    }
-                }
-                &Input{
-                    &0{
-                        font-size:1.5em;
-                        padding:2px;
-                    }
-                }
-                &Item{
-                    &0{
-                        display:flex;
-                        flex:1 0 100%;
-                        height:100px;
-                        border-radius: 10px;
-                        margin:20px 0 ;
-                        border: 1px solid var(--color0);
-                        padding:20px;
-                        justify-content: center;
-                        // @include outline;
-                    }
-
-                    &1{
-                        display: flex;
-                        flex-flow: column wrap;
-                    }
-                }
-            }
-            &1{
-                display: flex;
-                // width:70%;
-                position:relative;
-
-                &Icon{
-                    &0{
-                        color:var(--color1);
-                        border:1px solid var(--color1);
-                        padding:5px;
-                    }
-                }
-
-                &Text{
-                    &0{
-                        color:var(--color1);
-                        padding:20px ;
-                        background-color: var(--color0);
-                        height:68px;
-                        @include tac;
-                        white-space: nowrap;
-
-                    }
-
-                    &1{
-                        word-break: keep-all;
-                        white-space: nowrap;
-                    }
-
-                }
-
-                &Button{
-                    &0{
-                        padding:10px 20px;
-                        background: var(--radial-bg-blue);
-                        font-size: 1em;
-                    }
-
-                    &1{
-                        padding:10px 20px;
-                        background: var(--radial-bg-green);
-                        font-size: 1em;
-                    }
-                }
-
-
-                &Item{
-
-                    &A{
-                        @for $i from 0 through 5 {
-                            &#{$i}{
-                                display:flex;
-                                flex-flow:column wrap;
-                                position:relative;
-                                // flex: 0 0 20%;
-                                border-left: 1px solid var(--color1);
-                            }
-                        }
-                    }
-
-                    &5{
-                        display:flex;
-                        flex-flow:column wrap;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    &B{
-                        @for $i from 6 through 11 {
-                            &#{$i}{
-                                display:flex;
-                                position:relative;
-                                background-color:var(--color2);
-                                width:100%;
-                                border-bottom: 1px solid var(--color1);
-                                justify-content: center;
-                                align-items: center;
-                                height:68px;
-                                overflow-y: scroll;
-                            }
-                        }
-                    }
-
-                    &7{
-                        // overflow-x: scroll;
-
-                    }
-
-                    &11{
-                        background-color: var(--color0);
-                        width:100%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding:0 20px ;
-                    }
-
-                }
-            }
-            &2{
-
-                &View{
-                    background: var(--color3);
-                    z-index:5;
-                    position:fixed;
-                    top: 0;
-                    left: 0;
-                    height:100vh;
-                    width:100vw;
-                    display: none;
+            @for $i from 0 through 3 {
+                &#{$i}{
+                    display:flex;
                     justify-content: center;
-                    align-items: center;
-                    font-size:16px;
+                    flex:1 0 100%;
+                    margin:40px 0 0 0;
                 }
-
-                &Icon{
-                    &0{
-                        justify-self: flex-end;
-                        font-size: 3em;
-                        margin: 0 0 20px auto;
-                    }
-                }
-
-                &Item{
-                    &0{
-                        @include glassmorphism;
-                        border-radius: 10px;
-                        flex:0 0 45%;
-                        height: 90%;
-                        background-color:var(--color4);
-                        padding:20px;
-                        display: flex;
-                        align-content: flex-start;
-                        justify-content: space-evenly;
-                        flex-wrap: wrap;
-                    }
-                    &1{
-                        border:1px solid var(--color0);
-                        flex:1 0 100%;
-                        display:flex;
-                        flex-flow: column ;
-                        overflow: scroll;
-                        max-height:80%;
-                    }
-                    &2{
-                        display:flex;
-                        padding:20px;
-                        justify-content: space-between;
-
-
-                    }
-                    &3{
-                        flex:0 0 65%;
-                    }
-                    &4{
-                        display: flex;
-                        justify-content: space-between;
-                        padding:10px 20px;
-                        margin:0 0 10px  0;
-                        border:1px solid var(--color0);
-                    }
-                    &5{
-                        overflow:scroll;
-                        flex: 0 1 65%;
-                        max-height:70px;
-                        display: flex;
-
-                    }
-
-                }
-
-                &Input{
-                    &0{
-                        @include textarea0();
-                        flex: 1 0 100%;
-
-                    }
-                    &1{
-
-                    }
-                }
-
-                &Button{
-
-                    @for $i from 0 through 2 {
-                        &#{$i}{
-                            @include button0;
-                            font-size:1.5em;
-                            color:var(--color1);
-                            margin:10px 0 0 0;
-                        }
-                    }
-                    &0{
-                        background: var(--radial-bg-blue);
-                    }
-                    &1{
-                        background: var(--radial-bg-red);
-                    }
-                }
-
-
             }
-            &3{
-                display: flex;
-                margin:0 0 20px 0;
-                &Input{
-                    &0{
-                        @include input0();
-                        flex:0 0 70px;
-                        margin:0 0 0 20px;
-                        -webkit-appearance: none;
 
-                        &::-webkit-outer-spin-button,
-                        &::-webkit-inner-spin-button,
-                        &[type="number"]{
-                            -webkit-appearance: none;
-                            margin: 0;
-                            -moz-appearance: textfield;
-                        }
-
-                    }
-                }
-                &Item{
+            &0{
+                &Title{
                     &0{
-                        border:1px solid var(--color0);
-                        border-radius: 10px;
-                        display:flex;
-                        padding:20px;
+                        @include tac;
+                        font-size: 4em;
                     }
                 }
             }

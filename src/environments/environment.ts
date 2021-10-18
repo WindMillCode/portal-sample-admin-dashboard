@@ -4,7 +4,7 @@
 
 export const environment:any = {
     production: false,
-    startURL:"/orders",
+    startURL:"/users",
     backend:{
         url: "http://127.0.0.1:5000",
     },

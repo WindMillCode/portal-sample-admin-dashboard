@@ -38,7 +38,7 @@ export class InventoryComponent implements OnInit {
     //
 
     // parent values
-    @Input() table:InventoryTable 
+    @Input() table:InventoryTable
     @Input() textEntry:TemplateRef<any>;
     @Input() viewEntry:TemplateRef<any>;
     @Input() modifyEntry:TemplateRef<any>;
@@ -477,7 +477,6 @@ export class InventoryComponent implements OnInit {
 
         // initalize the table
         table.util.listItems()
-        console.log(table)
         //
 
     }

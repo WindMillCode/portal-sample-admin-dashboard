@@ -187,12 +187,12 @@
         (click)="table.details.update.click()"
         *ngIf=  "table.details.values.state === 'edit'"
         [class]= "prefix.pods[3]({val:'Button0'})"
-        >{{ 'users.form.details.update'| translate}}</button>
+        >{{ table.details.update.text}}</button>
         <button
         *ngIf=  "table.details.values.state === 'edit'"
         (click)="table.details.delete.click()"
         [class]= "prefix.pods[3]({val:'Button1'})"
-        >{{ 'users.form.details.delete'| translate}}</button>
+        >{{ table.details.delete.text}}</button>
 
     </div>
 
