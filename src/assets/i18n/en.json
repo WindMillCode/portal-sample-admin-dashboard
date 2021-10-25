@@ -118,5 +118,52 @@
             }
         ]
 
+    },
+    "products":{
+        "title":"Products",
+        "search":{
+            "label":"Search",
+            "button":"Search"
+        },
+        "searchBy":{
+            "placeholder":"Search By",
+            "options":[
+                "Title",
+                "Price",
+                "Quantity",
+                "Description"
+            ]
+        },
+        "reset":"Reset",
+        "create":"Create",
+        "update":"Save",
+        "delete":"Delete",
+        "pages":{
+            "per":{
+                "label":"Per Page:"
+            }
+        },
+        "headers":[
+            {
+                "title":"Title"
+            },
+            {
+                "title":"Image"
+            },
+            {
+                "title":"Price"
+            },
+            {
+                "title":"Quantity"
+            },
+            {
+                "title":"Description"
+            },
+            {
+                "title":"Modify",
+                "view":"Modify"
+            }
+        ]
+
     }
 }

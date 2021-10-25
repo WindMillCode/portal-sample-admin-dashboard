@@ -96,6 +96,8 @@ export type Orders = {
    table:InventoryTableDevObj | any //damn typescript too strict
 }
 
+export type Products = Orders;
+
 export type Users = {
     [k: string]: any;
    table:InventoryTableDevObj | any //damn typescript too strict

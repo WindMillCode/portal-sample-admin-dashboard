@@ -25,7 +25,7 @@ export class NavComponent implements OnInit {
             return classPrefix({view:`${this.meta.name}Pod`+i})
         })
     }
-    subs: Subscription[] = [];
+    subs: Subscription = new Subscription();
     //
 
     constructor(
@@ -45,17 +45,14 @@ export class NavComponent implements OnInit {
             items:Array(4).fill(null)
             .map((x:any,i)=>{
                 return {
-                    routerLink:["login","users","orders"][i]
+                    routerLink:["login","users","orders","products"][i]
                 }
             })
         }
     }
 
     ngOnDestroy(): void {
-        this.subs
-        .forEach((x:any,i)=>{
-            x?.unsubscribe();
-        })
+        this.subs.unsubscribe();
     }
 
 }
