@@ -157,7 +157,8 @@
                 "title":"Quantity"
             },
             {
-                "title":"Description"
+                "title":"Description",
+                "view":"View"
             },
             {
                 "title":"Modify",

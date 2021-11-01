@@ -203,7 +203,7 @@ import {Cloudinary} from "@cloudinary/url-gen";
                         view:{
                             subProp:["title","img_url","price","quantity","desc","modify"][i],
                             text:"",
-                            type:["text","image","text","text","text","modify"][i]
+                            type:["text","image","text","text","view","modify"][i]
                         }
                     }
                 })
@@ -259,6 +259,15 @@ import {Cloudinary} from "@cloudinary/url-gen";
                     let {key,item} = devObj
                     let myResult
                     switch (key){
+                        case "desc":
+                            myResult = {
+                                description:{
+                                    "":item,
+                                }
+                            }
+
+                            return myResult
+
                         case "img_url":
                             myResult = {
                                 img_url:{
