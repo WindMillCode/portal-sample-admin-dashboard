@@ -11,8 +11,8 @@ Only members of the project can read the README.md from the ignore folder
 ## Frontend
 * Angular v12.2.7
 ## Backend
-* python v3.9.7
-* flask v 2.0.1
+* python v3.10.0
+* flask v 2.0.2
 
 ## Testing
 * Docker, (tes in docker containers from linux VM) v20.10.7
@@ -33,6 +33,8 @@ Only members of the project can read the README.md from the ignore folder
 ## Hosting
 
 ### CMS
+* Cloudinary  
+
 
 ### Logging
 

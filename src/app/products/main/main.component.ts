@@ -4,6 +4,7 @@ import { RyberService } from 'src/app/ryber.service';
 import { classPrefix, Products } from 'src/app/customExports';
 import { environment as env } from 'src/environments/environment';
 import { pluck, take, tap } from 'rxjs/operators';
+import {Cloudinary} from "@cloudinary/url-gen";
 
 
 @Component({
@@ -33,6 +34,26 @@ import { pluck, take, tap } from 'rxjs/operators';
     model:Products = {
         title:{
             text:"products.title"
+        },
+        fn0:(devObj)=>{
+            let {table,target} = devObj
+            return {
+                title:table.util.pullValues({
+                    target:target.title
+                }).title,
+                price:table.util.pullValues({
+                    target:target.price
+                }).price,
+                img_url:table.util.pullValues({
+                    target:target.img_url
+                }).image,
+                desc:table.util.pullValues({
+                    target:target.desc
+                }).description,
+                quantity:table.util.pullValues({
+                    target:target.quantity
+                }).amount,
+            }
         },
         table:{
             searchBy:{
@@ -74,17 +95,22 @@ import { pluck, take, tap } from 'rxjs/operators';
                             let {table} = this.model
 
                             let myResult = {
-                                user:{
-                                    username:""
+                                title:{
+                                    title:""
                                 },
-                                total:{
-                                    value:""
+                                price:{
+                                    price:""
                                 },
-                                "cart Item 1":{
-                                    name:"",
-                                    price:"",
-                                    quantity:""
+                                img_url:{
+                                    image:""
+                                },
+                                desc:{
+                                    description:""
+                                },
+                                quantity:{
+                                    amount:""
                                 }
+
                             }
 
                             table.util.toInputInPlace!({myResult})
@@ -99,9 +125,7 @@ import { pluck, take, tap } from 'rxjs/operators';
                             // @ts-ignore
                             let {target} = table.details.values
                             let data =  fn0({table,target})
-                            data.shipping.sameAsBilling = {
-                                checked:false
-                            }
+
                             let resource = {
                                 body:{
                                     data
@@ -114,8 +138,8 @@ import { pluck, take, tap } from 'rxjs/operators';
                 update:{
                     text:"",
                     loading:this.ryber.loading,
-                    url:`${env.backend.url}/product/adminUpdate`,
                     method:"PATCH",
+                    url:`${env.backend.url}/product/update`,
                     clickAux:()=>{
                         let {table,fn0} = this.model
                         // @ts-ignore
@@ -124,7 +148,7 @@ import { pluck, take, tap } from 'rxjs/operators';
                         let resource ={
                             body:{
                                 data:{
-                                    orderId:meta.orderId.value,
+                                    title:meta.title.value,
                                     update_body:fn0({table,target})
                                 }
                             }
@@ -135,7 +159,7 @@ import { pluck, take, tap } from 'rxjs/operators';
                 delete:{
                     text:"",
                     loading:this.ryber.loading,
-                    url:`${env.backend.url}/product/adminDelete`,
+                    url:`${env.backend.url}/product/delete`,
                     method:"DELETE",
                     clickAux:()=>{
                         // @ts-ignore
@@ -144,7 +168,7 @@ import { pluck, take, tap } from 'rxjs/operators';
                         return {
                             body:{
                                 data:{
-                                    orderId: meta.orderId.value
+                                    title: meta.title.value
                                 }
                             }
                         }
@@ -179,7 +203,7 @@ import { pluck, take, tap } from 'rxjs/operators';
                         view:{
                             subProp:["title","img_url","price","quantity","desc","modify"][i],
                             text:"",
-                            type:["text","text","text","text","text","modify"][i]
+                            type:["text","image","text","text","text","modify"][i]
                         }
                     }
                 })
@@ -233,6 +257,40 @@ import { pluck, take, tap } from 'rxjs/operators';
                 customInteractMods:(devObj)=>{
                     let {model}= this
                     let {key,item} = devObj
+                    let myResult
+                    switch (key){
+                        case "img_url":
+                            myResult = {
+                                img_url:{
+                                    image:item,
+                                }
+                            }
+
+                            return myResult
+
+                        case"modify":
+
+                            myResult = {
+                                title:{
+                                    title:item.title
+                                },
+                                price:{
+                                    price:item.price
+                                },
+                                img_url:{
+                                    image:item.img_url
+                                },
+                                desc:{
+                                    description:item.desc
+                                },
+                                quantity:{
+                                    amount:item.quantity
+                                }
+
+                            }
+                            model.table.util.toInputInPlace!({myResult})
+                            return myResult
+                    }
                     return false
                 }
             }

@@ -5,7 +5,7 @@ import {Route} from '@angular/router';
 import { eventDispatcher,flatDeep,numberParse } from './customExports';
 import { of,Subscription,fromEvent } from 'rxjs';
 import { delay,tap,concatMap, pluck } from 'rxjs/operators';
-// import faker from 'faker'
+import faker from 'faker'
 
 @Component({
     selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent {
 
     constructor(
         public ryber: RyberService,
-        private vcf: ViewContainerRef
+        private vcf: ViewContainerRef,
     ){}
     ngOnInit() {
         let {ryber,subs} =this;

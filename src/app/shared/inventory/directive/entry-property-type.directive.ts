@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive,Input, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Directive,Input, TemplateRef,  ViewContainerRef } from '@angular/core';
 
 @Directive({
     selector: '[appEntryPropertyType]'
@@ -10,6 +10,7 @@ export class EntryPropertyTypeDirective {
         textEntry:TemplateRef<any>
         viewEntry:TemplateRef<any>
         modifyEntry:TemplateRef<any>,
+        imageEntry:TemplateRef<any>
         y:any,
         x:any,
         prefix:any,
@@ -29,7 +30,26 @@ export class EntryPropertyTypeDirective {
         this.extras = this.entryPropertyType
         let {extras,vcf,ref} = this
         let {prefix,x,y} = extras
+
         switch (extras.type) {
+
+            case "image":
+                vcf.createEmbeddedView(
+                    extras.imageEntry,
+                        {
+                            $implicit:{
+                            x:x,
+                            y:y,
+                            click:y.meta.interact.click({
+                                key:x.view.subProp,perm:"img"
+                            }),
+                            class:x.title.class ?? prefix.pods[2]({val:'Img0'})
+                        }
+                    }
+                )
+
+                break;
+
             case "text":
                 vcf.createEmbeddedView(
                     extras.textEntry,

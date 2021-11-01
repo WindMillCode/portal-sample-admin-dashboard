@@ -227,7 +227,6 @@
                     }
                 }
 
-
                 &Item{
 
                     &A{
@@ -237,11 +236,7 @@
                         position:relative;
                         // flex: 0 0 20%;
                         border-left: 1px solid var(--color1);
-                        @for $i from 0 through 5 {
-                            &#{$i}{
 
-                            }
-                        }
                     }
 
                     &5{
@@ -261,11 +256,7 @@
                         align-items: center;
                         height:68px;
                         overflow-y: scroll;
-                        @for $i from 0 through 11 {
-                            &#{$i}{
 
-                            }
-                        }
                     }
 
                     &7{
@@ -282,6 +273,13 @@
                         padding:0 20px ;
                     }
 
+                }
+
+                &Img{
+                    &0{
+                        height:40px;
+                        width: 40px;
+                    }
                 }
             }
 
@@ -350,9 +348,13 @@
                     &5{
                         overflow:scroll;
                         flex: 0 1 65%;
-                        max-height:70px;
+                        max-height:200px;
                         display: flex;
 
+                    }
+                    &6{
+                        overflow:scroll;
+                        display: flex;
                     }
 
                 }
@@ -383,6 +385,13 @@
                     }
                     &1{
                         background: var(--radial-bg-red);
+                    }
+                }
+
+                &Img{
+                    &0{
+                        height:300px;
+                        width: 300px;
                     }
                 }
 

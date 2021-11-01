@@ -58,7 +58,7 @@ export type InventoryTable ={
         },
         values:{
             meta:any,
-            state:"view"|"edit" |"create",
+            state:"view"|"edit" |"create" | "img",
             target:{
                 [k:string]:{
                     [k:string]:{

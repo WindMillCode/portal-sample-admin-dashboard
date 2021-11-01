@@ -293,3 +293,83 @@ of({})
 )
 .subscribe()
 //
+
+
+// create  product resource
+let {ryber}= this
+of({})
+.pipe(
+    delay(1000),
+    tap(()=>{
+        let createButton=
+            document
+            .querySelector("app-inventory")!
+            .shadowRoot!
+            .querySelector(".a_p_p_InventoryPod0Button2")
+
+        eventDispatcher({
+            element:createButton  as HTMLButtonElement ,
+            event:"click"
+        })
+    }),
+    delay(1000),
+    tap(()=>{
+
+        let myValues = [
+            faker.commerce.productName(),
+            faker.commerce.price(),
+            "",
+            faker.commerce.productDescription(),
+            Math.floor(Math.random()*100)
+        ]
+        document
+        .querySelector("app-inventory")!
+        .shadowRoot!
+        .querySelectorAll(".a_p_p_InventoryPod3Input0")
+        .forEach((x:any,i)=>{
+
+            x.value = myValues[i];
+            eventDispatcher({
+                element:x,
+                event:"focusout"
+            })
+        })
+    })
+)
+.subscribe()
+//
+
+
+//
+
+//
+
+of({})
+.pipe(
+    delay(1000),
+    tap(
+        ()=>{
+            let row = Math.floor(Math.random()*6);
+
+
+            // let buttonArray = [cart0Button,shipping0Button,billing0Button,modify0Button]
+            let buttonArray = Array(1).fill(null)
+            .map((x: HTMLButtonElement,i=4)=>{
+
+                return document
+                .querySelector("app-inventory")!
+                .shadowRoot!
+                .querySelector(`main >
+                section.a_p_p_InventoryPod2 >
+                div:nth-child(${i+5}) > div > div:nth-child(${row}) > button`)
+
+            })
+            eventDispatcher({
+                element:buttonArray[3] as HTMLButtonElement,
+                event:"click"
+            })
+        }
+    )
+)
+.subscribe()
+//

@@ -115,6 +115,7 @@
                         textEntry,
                         viewEntry,
                         modifyEntry,
+                        imageEntry,
                         y,
                         x,
                         prefix
@@ -156,12 +157,13 @@
                     [class]= "prefix.pods[3]({val:'Item4'})">
                         <h3>{{y.key | titlecase }}:</h3>
                         <div
-
+                        *ngIf="table.details.values.state !== 'img'"
                         [class]= "prefix.pods[3]({val:'Item5'})"
                         >
                             <h3
                             *ngSwitchCase="'view'"
                             >{{y.value}}</h3>
+
                             <textarea
                             appUpdateInputVal [updateInputVal]="y.value.input"
                             *ngSwitchCase="'edit'"
@@ -172,6 +174,16 @@
                             *ngSwitchCase="'create'"
                             [class]= "prefix.pods[3]({val:'Input0'})"
                             >{{y.value.input.value}}</textarea>
+                        </div>
+                        <div
+                        *ngIf="table.details.values.state === 'img'"
+                        [class]= "prefix.pods[3]({val:'Item6'})"
+                        >
+                            <img
+                            *ngSwitchCase="'img'"
+                            [src]=y.value
+                            [class]= "prefix.pods[3]({val:'Img0'})"
+                            />
                         </div>
                     </div>
 

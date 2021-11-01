@@ -15,6 +15,7 @@
     [textEntry]="text"
     [viewEntry]="view"
     [modifyEntry]="modify"
+    [imageEntry]="image"
     >
     </app-inventory>
 
@@ -46,8 +47,15 @@
     <button
     [class]= "devObj.class"
     (click)="devObj.click()"
-    >
+    >{{devObj.x.view.text}}</button>
+</ng-template>
 
-    {{devObj.x.view.text}}
-    </button>
+
+
+<ng-template #image let-devObj>
+    <img
+    [class]= "devObj.class"
+    (click)="devObj.click()"
+    [src]="devObj.y[devObj.x.view.subProp]"
+    />
 </ng-template>

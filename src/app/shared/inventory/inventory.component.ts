@@ -42,6 +42,7 @@ export class InventoryComponent implements OnInit {
     @Input() textEntry:TemplateRef<any>;
     @Input() viewEntry:TemplateRef<any>;
     @Input() modifyEntry:TemplateRef<any>;
+    @Input() imageEntry:TemplateRef<any>;
     //
 
 
