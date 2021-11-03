@@ -21,49 +21,150 @@
     },
     "users":{
         "title":"Users",
-        "form":{
-            "query":{
-                "search":{
-                    "label":"Search",
-                    "button":"Search"
-                },
-                "reset":"Reset",
-                "searchBy":{
-                    "title":"Sort By",
-                    "items":[
-                        "User",
-                        "Latest OrderId"
-                    ]
-                }
-            },
-            "headers":[
-                {
-                    "label":"User"
-                },
-                {
-                    "label":"Latest OrderId"
-                },
-                {
-                    "label":"All Orders",
-                    "view":"View"
-                },
-                {
-                    "label":"Shipping",
-                    "view":"View"
-                },
-                {
-                    "label":"Billing",
-                    "view":"View"
-                },
-                {
-                    "label":"Modify",
-                    "view":"Modify"
-                }
-            ],
-            "details":{
-                "update":"Save",
-                "delete":"Delete"
+        "search":{
+            "label":"Search",
+            "button":"Search"
+        },
+        "searchBy":{
+            "placeholder":"Search By",
+            "options":[
+                "User",
+                "Latest OrderId"
+            ]
+        },
+        "reset":"Reset",
+        "create":"Create",
+        "update":"Save",
+        "delete":"Delete",
+        "pages":{
+            "per":{
+                "label":"Per Page:"
             }
-        }
+        },
+        "headers":[
+            {
+                "title":"User"
+            },
+            {
+                "title":"Latest OrderId"
+            },
+            {
+                "title":"All Orders",
+                "view":"View"
+            },
+            {
+                "title":"Shipping",
+                "view":"View"
+            },
+            {
+                "title":"Billing",
+                "view":"View"
+            },
+            {
+                "title":"Modify",
+                "view":"Modify"
+            }
+        ]
+
+    },
+    "orders":{
+        "title":"Orders",
+        "search":{
+            "label":"Search",
+            "button":"Search"
+        },
+        "searchBy":{
+            "placeholder":"Search By",
+            "options":[
+                "User",
+                "Total",
+                "OrderId"
+            ]
+        },
+        "reset":"Reset",
+        "create":"Create",
+        "update":"Save",
+        "delete":"Delete",
+        "pages":{
+            "per":{
+                "label":"Per Page:"
+            }
+        },
+        "headers":[
+            {
+                "title":"User"
+            },
+            {
+                "title":"Total"
+            },
+            {
+                "title":"OrderId"
+            },
+            {
+                "title":"Cart",
+                "view":"View"
+            },
+            {
+                "title":"Billing",
+                "view":"View"
+            },
+            {
+                "title":"Shipping",
+                "view":"View"
+            },
+            {
+                "title":"Modify",
+                "view":"Modify"
+            }
+        ]
+
+    },
+    "products":{
+        "title":"Products",
+        "search":{
+            "label":"Search",
+            "button":"Search"
+        },
+        "searchBy":{
+            "placeholder":"Search By",
+            "options":[
+                "Title",
+                "Price",
+                "Quantity",
+                "Description"
+            ]
+        },
+        "reset":"Reset",
+        "create":"Create",
+        "update":"Save",
+        "delete":"Delete",
+        "pages":{
+            "per":{
+                "label":"Per Page:"
+            }
+        },
+        "headers":[
+            {
+                "title":"Title"
+            },
+            {
+                "title":"Image"
+            },
+            {
+                "title":"Price"
+            },
+            {
+                "title":"Quantity"
+            },
+            {
+                "title":"Description",
+                "view":"View"
+            },
+            {
+                "title":"Modify",
+                "view":"Modify"
+            }
+        ]
+
     }
 }
